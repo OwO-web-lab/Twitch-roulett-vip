@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VIP ROULETTE — Twitch giveaway</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0612;
+    --bg-elev: #15102a;
+    --bg-card: #1a1334;
+    --border: #2d1f4d;
+    --border-bright: #4a2f7a;
+    --twitch: #9146ff;
+    --twitch-bright: #b072ff;
+    --pink: #ff2e97;
+    --lime: #c5f500;
+    --text: #e8e3f5;
+    --text-dim: #8a7fb0;
+    --danger: #ff4a4a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(145,70,255,0.18), transparent 45%),
+      radial-gradient(circle at 85% 90%, rgba(255,46,151,0.12), transparent 45%),
+      repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(255,255,255,0.012) 2px, rgba(255,255,255,0.012) 3px);
+    background-attachment: fixed;
+  }
+  .scanlines::before {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent 0, transparent 3px, rgba(0,0,0,0.15) 3px, rgba(0,0,0,0.15) 4px);
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Header */
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .brand-mark {
+    display: inline-block;
+    width: 14px; height: 14px;
+    background: var(--lime);
+    border-radius: 50%;
+    box-shadow: 0 0 16px var(--lime);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.55; transform: scale(0.85); }
+  }
+  h1 {
+    font-family: 'Rubik Mono One', monospace;
+    font-size: clamp(28px, 6vw, 44px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--text) 0%, var(--twitch-bright) 60%, var(--pink) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 32px;
+    padding-left: 26px;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px; right: -1px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--twitch), var(--pink), var(--lime));
+    opacity: 0.5;
+  }
+  .card-title {
+    font-family: 'Rubik Mono One', monospace;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-title::before {
+    content: '▸';
+    color: var(--lime);
+  }
+
+  /* Inputs */
+  label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  input[type="text"] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  input[type="text"]:focus {
+    border-color: var(--twitch);
+    box-shadow: 0 0 0 3px rgba(145,70,255,0.18);
+  }
+  .field { margin-bottom: 14px; }
+  .hint {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+  .hint a { color: var(--twitch-bright); }
+  .copy-row {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+  }
+  .copy-row input {
+    font-size: 12px;
+    color: var(--lime);
+  }
+  .copy-btn {
+    padding: 0 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { border-color: var(--lime); color: var(--lime); }
+  .copy-btn.copied { background: var(--lime); color: var(--bg); border-color: var(--lime); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 20px;
+    background: var(--twitch);
+    color: white;
+    border: none;
+    font-family: 'Rubik Mono One', monospace;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s ease;
+    text-decoration: none;
+    width: 100%;
+  }
+  .btn:hover:not(:disabled) {
+    background: var(--twitch-bright);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(145,70,255,0.4);
+  }
+  .btn:active:not(:disabled) { transform: translateY(0); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn.secondary {
+    background: transparent;
+    border: 1px solid var(--border-bright);
+    color: var(--text);
+  }
+  .btn.secondary:hover:not(:disabled) {
+    background: var(--bg-elev);
+    border-color: var(--twitch);
+  }
+  .btn.lime {
+    background: var(--lime);
+    color: var(--bg);
+  }
+  .btn.lime:hover:not(:disabled) {
+    background: #d6ff33;
+    box-shadow: 0 6px 20px rgba(197,245,0,0.4);
+  }
+  .btn.danger {
+    background: transparent;
+    border: 1px solid var(--danger);
+    color: var(--danger);
+  }
+  .btn.huge {
+    padding: 28px;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+  }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-row .btn { flex: 1; min-width: 140px; }
+
+  /* User badge */
+  .user-badge {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    margin-bottom: 16px;
+  }
+  .user-badge img {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--twitch);
+  }
+  .user-badge .uname {
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .user-badge .urole {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .user-badge .logout {
+    margin-left: auto;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 12px;
+    font-family: inherit;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  .user-badge .logout:hover { color: var(--danger); border-color: var(--danger); }
+
+  /* Toggles */
+  .toggles { display: flex; flex-direction: column; gap: 8px; }
+  .toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.15s;
+  }
+  .toggle:hover { border-color: var(--border-bright); }
+  .toggle input { display: none; }
+  .toggle .box {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--border-bright);
+    border-radius: 2px;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .toggle input:checked + .box {
+    background: var(--lime);
+    border-color: var(--lime);
+  }
+  .toggle input:checked + .box::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .toggle .label-text { font-size: 13px; }
+
+  /* Stats */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin: 16px 0;
+  }
+  .stat {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 14px;
+    text-align: center;
+  }
+  .stat .num {
+    font-family: 'Rubik Mono One', monospace;
+    font-size: 28px;
+    color: var(--lime);
+    line-height: 1;
+  }
+  .stat .lbl {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+
+  /* Slot machine */
+  .slot {
+    background: #000;
+    border: 2px solid var(--border-bright);
+    border-radius: 4px;
+    height: 140px;
+    margin: 16px 0;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 40px rgba(145,70,255,0.2);
+  }
+  .slot.spinning { border-color: var(--twitch); }
+  .slot.landed { border-color: var(--lime); animation: winFlash 0.6s ease-out; }
+  @keyframes winFlash {
+    0% { box-shadow: inset 0 0 40px rgba(197,245,0,0.8), 0 0 60px rgba(197,245,0,0.6); }
+    100% { box-shadow: inset 0 0 40px rgba(197,245,0,0.3), 0 0 0 rgba(197,245,0,0); }
+  }
+  .slot-window {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg,
+      rgba(0,0,0,0.6) 0%,
+      transparent 30%,
+      transparent 70%,
+      rgba(0,0,0,0.6) 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .slot-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 1px solid rgba(197,245,0,0.3);
+    border-bottom: 1px solid rgba(197,245,0,0.3);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .slot-reel {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0s linear;
+  }
+  .slot-name {
+    font-family: 'Rubik Mono One', monospace;
+    font-size: 32px;
+    text-align: center;
+    padding: 14px 20px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    width: 100%;
+    word-break: break-all;
+  }
+  .slot.landed .slot-name { color: var(--lime); text-shadow: 0 0 20px var(--lime); }
+  .slot.idle .slot-name { color: var(--text-dim); font-size: 22px; opacity: 0.5; }
+
+  /* Winner reveal */
+  .winner {
+    background: linear-gradient(135deg, var(--bg-card) 0%, #2a1850 100%);
+    border: 1px solid var(--lime);
+    border-radius: 4px;
+    padding: 24px;
+    margin-top: 16px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(197,245,0,0.2);
+    animation: winnerIn 0.4s ease-out;
+  }
+  @keyframes winnerIn {
+    from { opacity: 0; transform: translateY(10px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .winner-label {
+    font-size: 11px;
+    color: var(--lime);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+  .winner-name {
+    font-family: 'Rubik Mono One', monospace;
+    font-size: clamp(22px, 5vw, 32px);
+    color: var(--text);
+    margin-bottom: 16px;
+    word-break: break-all;
+  }
+
+  /* Status */
+  .status {
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+    font-size: 12px;
+    border: 1px solid;
+  }
+  .status.error { background: rgba(255,74,74,0.08); border-color: var(--danger); color: var(--danger); }
+  .status.success { background: rgba(197,245,0,0.08); border-color: var(--lime); color: var(--lime); }
+  .status.info { background: rgba(145,70,255,0.08); border-color: var(--twitch); color: var(--twitch-bright); }
+
+  /* Steps */
+  .steps {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+  }
+  .steps li {
+    counter-increment: step;
+    padding: 8px 0 8px 32px;
+    position: relative;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0; top: 8px;
+    width: 22px; height: 22px;
+    border: 1px solid var(--twitch);
+    color: var(--twitch-bright);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .steps li code {
+    background: var(--bg);
+    color: var(--lime);
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-size: 12px;
+  }
+
+  /* Hidden */
+  .hidden { display: none !important; }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 11px;
+    margin-top: 40px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  @media (max-width: 480px) {
+    .stats { grid-template-columns: 1fr; }
+    .slot-name { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+<div class="container">
+  <div class="brand">
+    <span class="brand-mark"></span>
+    <h1>VIP ROULETTE</h1>
+  </div>
+  <div class="subtitle">Twitch giveaway machine</div>
+
+  <!-- SETUP SCREEN -->
+  <div id="setup" class="hidden">
+    <div class="card">
+      <div class="card-title">Подключение к Twitch</div>
+      <p style="color:var(--text-dim); font-size:13px; margin-bottom:16px;">
+        Сайт работает напрямую с твоим Twitch-аккаунтом. Нужно один раз создать бесплатное приложение на dev.twitch.tv и вставить сюда Client ID.
+      </p>
+      <ol class="steps">
+        <li>Зайди на <a href="https://dev.twitch.tv/console/apps/create" target="_blank" style="color:var(--twitch-bright)">dev.twitch.tv/console/apps/create</a></li>
+        <li>Name — любое (например <code>vip-roulette</code>). Category — <code>Website Integration</code>. Client Type — <code>Confidential</code> можно <code>Public</code></li>
+        <li>В <b>OAuth Redirect URLs</b> добавь URL ниже (это адрес этой страницы):
+          <div class="copy-row" style="margin-top:8px;">
+            <input id="redirectURI" type="text" readonly>
+            <button class="copy-btn" onclick="copyRedirect(this)">copy</button>
+          </div>
+        </li>
+        <li>Сохрани приложение, скопируй <b>Client ID</b> и вставь сюда:</li>
+      </ol>
+      <div class="field" style="margin-top:14px;">
+        <label for="clientIdInput">Client ID</label>
+        <input id="clientIdInput" type="text" placeholder="например: gp762nuuoqcoxypju8c569th9wz7q5" autocomplete="off">
+      </div>
+      <button class="btn" onclick="startLogin()" id="loginBtn">
+        Войти через Twitch
+      </button>
+      <div id="setupStatus"></div>
+    </div>
+  </div>
+
+  <!-- MAIN SCREEN -->
+  <div id="main" class="hidden">
+    <div class="user-badge">
+      <img id="userAvatar" src="" alt="">
+      <div>
+        <div class="uname" id="userName"></div>
+        <div class="urole">авторизован</div>
+      </div>
+      <button class="logout" onclick="logout()">Выйти</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Канал и фильтры</div>
+      <div class="field">
+        <label for="channelInput">Канал (логин стримера)</label>
+        <input id="channelInput" type="text" placeholder="my_channel" autocomplete="off">
+        <div class="hint">Ты должен быть стримером или модератором этого канала. По умолчанию — твой канал.</div>
+      </div>
+      <div class="toggles">
+        <label class="toggle">
+          <input type="checkbox" id="excludeBots" checked>
+          <span class="box"></span>
+          <span class="label-text">Исключать ботов (nightbot, streamlabs и др.)</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="excludeBroadcaster" checked>
+          <span class="box"></span>
+          <span class="label-text">Исключать самого стримера</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="excludeWinners">
+          <span class="box"></span>
+          <span class="label-text">Не выбирать тех, кто уже выиграл в этой сессии</span>
+        </label>
+      </div>
+      <div class="btn-row" style="margin-top:16px;">
+        <button class="btn secondary" id="loadBtn" onclick="loadChatters()">Загрузить чат</button>
+      </div>
+      <div id="loadStatus"></div>
+    </div>
+
+    <div class="card" id="rouletteCard">
+      <div class="card-title">Розыгрыш</div>
+      <div class="stats">
+        <div class="stat">
+          <div class="num" id="statTotal">0</div>
+          <div class="lbl">в чате</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="statEligible">0</div>
+          <div class="lbl">допущено</div>
+        </div>
+      </div>
+
+      <div class="slot idle" id="slot">
+        <div class="slot-line"></div>
+        <div class="slot-window"></div>
+        <div class="slot-reel" id="slotReel">
+          <div class="slot-name">— ожидание —</div>
+        </div>
+      </div>
+
+      <button class="btn huge" id="rollBtn" onclick="roll()" disabled>
+        ▶ КРУТИТЬ
+      </button>
+
+      <div id="winnerArea"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  unofficial · uses twitch helix api · open source vibes
+</footer>
+
+<script>
+'use strict';
+
+// ============ STATE ============
+const SCOPES = 'moderator:read:chatters channel:manage:vips';
+const KNOWN_BOTS = new Set([
+  'nightbot','streamlabs','streamelements','moobot','fossabot','sery_bot',
+  'wizebot','soundalerts','pretzelrocks','commanderroot','anotherttvviewer',
+  'kattah','spielhof','vei_bot','aliceydra','cloudbot','dixperbro','streamhatchet',
+  'lurxx','0_applepie_0','frwrdbot','ahahahahhhahahaahahhahahaaha','electricallongboard',
+  'lattemotte','iceposeidon','aten','virgoproz','ttvtoolsbot','fossabot','songlistbot',
+  'creatisbot','own3d','blerp','restreambot','fightthebots'
+]);
+
+const state = {
+  clientId: null,
+  token: null,
+  user: null,         // { id, login, display_name, profile_image_url }
+  broadcaster: null,  // { id, login, display_name }
+  chatters: [],       // raw
+  eligible: [],       // filtered
+  winners: new Set(), // user_logins of past winners
+  spinning: false,
+};
+
+// ============ INIT ============
+document.getElementById('redirectURI').value = window.location.origin + window.location.pathname;
+
+function showSetup() {
+  document.getElementById('setup').classList.remove('hidden');
+  document.getElementById('main').classList.add('hidden');
+}
+function showMain() {
+  document.getElementById('setup').classList.add('hidden');
+  document.getElementById('main').classList.remove('hidden');
+}
+
+// On load: parse URL hash if returning from OAuth
+(function init() {
+  const hash = window.location.hash.substring(1);
+  if (hash && hash.includes('access_token')) {
+    const params = new URLSearchParams(hash);
+    const token = params.get('access_token');
+    const stateParam = params.get('state');
+    let clientId = null;
+    try {
+      const decoded = JSON.parse(atob(stateParam || ''));
+      clientId = decoded.cid;
+    } catch (e) {}
+
+    if (token && clientId) {
+      state.token = token;
+      state.clientId = clientId;
+      // Clean URL
+      history.replaceState(null, '', window.location.pathname);
+      // Fetch user
+      fetchSelf().then(() => {
+        showMain();
+        document.getElementById('channelInput').value = state.user.login;
+      }).catch(err => {
+        setStatus('setupStatus', 'error', 'Не удалось получить профиль: ' + err.message);
+        showSetup();
+      });
+      return;
+    }
+  }
+  // Check for OAuth error
+  if (hash && hash.includes('error')) {
+    const params = new URLSearchParams(hash);
+    const errDesc = params.get('error_description') || params.get('error') || 'unknown';
+    history.replaceState(null, '', window.location.pathname);
+    showSetup();
+    setStatus('setupStatus', 'error', 'Twitch отказал: ' + errDesc);
+    return;
+  }
+  showSetup();
+})();
+
+// ============ AUTH ============
+function startLogin() {
+  const cid = document.getElementById('clientIdInput').value.trim();
+  if (!cid) {
+    setStatus('setupStatus', 'error', 'Вставь Client ID из dev.twitch.tv');
+    return;
+  }
+  // Encode client_id in `state` so we get it back after redirect
+  const stateData = btoa(JSON.stringify({ cid: cid, n: Math.random().toString(36).slice(2) }));
+  const redirect = window.location.origin + window.location.pathname;
+  const url = 'https://id.twitch.tv/oauth2/authorize'
+    + '?response_type=token'
+    + '&client_id=' + encodeURIComponent(cid)
+    + '&redirect_uri=' + encodeURIComponent(redirect)
+    + '&scope=' + encodeURIComponent(SCOPES)
+    + '&state=' + encodeURIComponent(stateData);
+  window.location.href = url;
+}
+
+function logout() {
+  // Best effort: revoke
+  if (state.token && state.clientId) {
+    fetch('https://id.twitch.tv/oauth2/revoke?client_id=' + encodeURIComponent(state.clientId) + '&token=' + encodeURIComponent(state.token), { method: 'POST' }).catch(()=>{});
+  }
+  state.token = null;
+  state.clientId = null;
+  state.user = null;
+  state.chatters = [];
+  state.eligible = [];
+  state.winners.clear();
+  showSetup();
+}
+
+// ============ API ============
+async function api(path, opts = {}) {
+  const res = await fetch('https://api.twitch.tv/helix' + path, {
+    ...opts,
+    headers: {
+      'Authorization': 'Bearer ' + state.token,
+      'Client-Id': state.clientId,
+      ...(opts.headers || {}),
+    },
+  });
+  if (res.status === 401) {
+    logout();
+    throw new Error('Сессия истекла, войди заново');
+  }
+  if (!res.ok) {
+    let msg = 'HTTP ' + res.status;
+    try { const j = await res.json(); if (j.message) msg = j.message; } catch (e) {}
+    throw new Error(msg);
+  }
+  if (res.status === 204) return null;
+  return res.json();
+}
+
+async function fetchSelf() {
+  const data = await api('/users');
+  if (!data.data || !data.data[0]) throw new Error('пустой ответ /users');
+  state.user = data.data[0];
+  document.getElementById('userAvatar').src = state.user.profile_image_url;
+  document.getElementById('userName').textContent = state.user.display_name;
+}
+
+async function fetchUserByLogin(login) {
+  const data = await api('/users?login=' + encodeURIComponent(login));
+  return (data.data && data.data[0]) || null;
+}
+
+async function fetchChatters(broadcasterId, moderatorId) {
+  const all = [];
+  let cursor = null;
+  let pages = 0;
+  do {
+    const params = new URLSearchParams({
+      broadcaster_id: broadcasterId,
+      moderator_id: moderatorId,
+      first: '1000',
+    });
+    if (cursor) params.set('after', cursor);
+    const data = await api('/chat/chatters?' + params.toString());
+    if (data.data) all.push(...data.data);
+    cursor = data.pagination && data.pagination.cursor;
+    pages++;
+  } while (cursor && pages < 20);
+  return all;
+}
+
+async function addVIP(broadcasterId, userId) {
+  return api('/channels/vips?broadcaster_id=' + broadcasterId + '&user_id=' + userId, {
+    method: 'POST',
+  });
+}
+
+// ============ FLOW ============
+async function loadChatters() {
+  const channelLogin = document.getElementById('channelInput').value.trim().toLowerCase();
+  if (!channelLogin) {
+    setStatus('loadStatus', 'error', 'Укажи логин канала');
+    return;
+  }
+  const btn = document.getElementById('loadBtn');
+  btn.disabled = true;
+  btn.textContent = 'Загрузка...';
+  setStatus('loadStatus', 'info', 'Получаю список чата...');
+
+  try {
+    // Resolve broadcaster
+    const target = (channelLogin === state.user.login)
+      ? state.user
+      : await fetchUserByLogin(channelLogin);
+    if (!target) throw new Error('Канал ' + channelLogin + ' не найден');
+    state.broadcaster = target;
+
+    const chatters = await fetchChatters(target.id, state.user.id);
+    state.chatters = chatters;
+    applyFilters();
+
+    setStatus('loadStatus', 'success',
+      'Загружено: ' + chatters.length + ' чел. в чате, ' + state.eligible.length + ' допущено к розыгрышу');
+    document.getElementById('rollBtn').disabled = state.eligible.length === 0;
+    renderSlot('— готово к розыгрышу —', 'idle');
+  } catch (err) {
+    let msg = err.message || 'неизвестная ошибка';
+    if (msg.toLowerCase().includes('moderator')) {
+      msg += ' — нужно быть стримером или модератором этого канала';
+    }
+    setStatus('loadStatus', 'error', 'Ошибка: ' + msg);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Загрузить чат';
+  }
+}
+
+function applyFilters() {
+  const excludeBots = document.getElementById('excludeBots').checked;
+  const excludeBroadcaster = document.getElementById('excludeBroadcaster').checked;
+  const excludeWinners = document.getElementById('excludeWinners').checked;
+  const broadcasterLogin = state.broadcaster && state.broadcaster.login;
+
+  state.eligible = state.chatters.filter(c => {
+    const login = (c.user_login || '').toLowerCase();
+    if (excludeBots && KNOWN_BOTS.has(login)) return false;
+    if (excludeBroadcaster && login === broadcasterLogin) return false;
+    if (excludeWinners && state.winners.has(login)) return false;
+    return true;
+  });
+
+  document.getElementById('statTotal').textContent = state.chatters.length;
+  document.getElementById('statEligible').textContent = state.eligible.length;
+}
+
+// Re-apply filters on toggle
+['excludeBots','excludeBroadcaster','excludeWinners'].forEach(id => {
+  document.getElementById(id).addEventListener('change', () => {
+    if (state.chatters.length) {
+      applyFilters();
+      document.getElementById('rollBtn').disabled = state.eligible.length === 0 || state.spinning;
+    }
+  });
+});
+
+// ============ ROULETTE ============
+function renderSlot(text, cls) {
+  const reel = document.getElementById('slotReel');
+  reel.innerHTML = '<div class="slot-name">' + escapeHtml(text) + '</div>';
+  const slot = document.getElementById('slot');
+  slot.classList.remove('idle','spinning','landed');
+  if (cls) slot.classList.add(cls);
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+function roll() {
+  if (state.spinning) return;
+  if (state.eligible.length === 0) return;
+
+  state.spinning = true;
+  document.getElementById('rollBtn').disabled = true;
+  document.getElementById('winnerArea').innerHTML = '';
+
+  const slot = document.getElementById('slot');
+  const reel = document.getElementById('slotReel');
+  slot.classList.remove('idle','landed');
+  slot.classList.add('spinning');
+
+  // Pick winner cryptographically
+  const idx = secureRandomIndex(state.eligible.length);
+  const winner = state.eligible[idx];
+
+  // Animate: rapid name changes, decelerating
+  const total = 2800; // ms
+  const start = performance.now();
+  let last = 0;
+
+  function frame(now) {
+    const t = now - start;
+    if (t >= total) {
+      reel.innerHTML = '<div class="slot-name">' + escapeHtml(winner.user_name) + '</div>';
+      slot.classList.remove('spinning');
+      slot.classList.add('landed');
+      revealWinner(winner);
+      state.spinning = false;
+      document.getElementById('rollBtn').disabled = state.eligible.length === 0;
+      return;
+    }
+    // ease-out: faster at start, slower at end
+    const progress = t / total;
+    const interval = 40 + Math.pow(progress, 2.5) * 360; // 40ms → 400ms
+    if (now - last >= interval) {
+      const r = state.eligible[Math.floor(Math.random() * state.eligible.length)];
+      reel.innerHTML = '<div class="slot-name">' + escapeHtml(r.user_name) + '</div>';
+      last = now;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+function secureRandomIndex(n) {
+  if (window.crypto && window.crypto.getRandomValues) {
+    const max = Math.floor(0xFFFFFFFF / n) * n;
+    const buf = new Uint32Array(1);
+    do { window.crypto.getRandomValues(buf); } while (buf[0] >= max);
+    return buf[0] % n;
+  }
+  return Math.floor(Math.random() * n);
+}
+
+function revealWinner(w) {
+  state.winners.add((w.user_login || '').toLowerCase());
+  const isOwnChannel = state.broadcaster && state.broadcaster.id === state.user.id;
+  const area = document.getElementById('winnerArea');
+  area.innerHTML = `
+    <div class="winner">
+      <div class="winner-label">★ победитель ★</div>
+      <div class="winner-name">${escapeHtml(w.user_name)}</div>
+      <div class="btn-row">
+        ${isOwnChannel
+          ? '<button class="btn lime" onclick="grantVIP(\''+escapeHtml(w.user_id)+'\', \''+escapeHtml(w.user_name)+'\', this)">Выдать VIP</button>'
+          : '<div class="hint" style="text-align:center; flex:1; padding:10px;">Выдать VIP может только сам стример канала, скопируй ник и сделай вручную: <code>/vip '+escapeHtml(w.user_login)+'</code></div>'}
+        <button class="btn secondary" onclick="rerollExcluding('${escapeHtml(w.user_login)}')">Перекрутить (без него)</button>
+      </div>
+      <div id="vipStatus"></div>
+    </div>`;
+}
+
+async function grantVIP(userId, userName, btn) {
+  btn.disabled = true;
+  btn.textContent = 'Выдаю...';
+  try {
+    await addVIP(state.broadcaster.id, userId);
+    btn.textContent = '✓ VIP выдан';
+    setStatus('vipStatus', 'success', userName + ' получил(а) VIP на канале');
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Выдать VIP';
+    let msg = err.message;
+    if (msg && msg.toLowerCase().includes('already')) msg = 'У этого юзера уже есть VIP';
+    setStatus('vipStatus', 'error', 'Не получилось: ' + msg);
+  }
+}
+
+function rerollExcluding(login) {
+  state.winners.add(login.toLowerCase());
+  // Force re-filter ignoring "exclude winners" toggle if needed
+  document.getElementById('excludeWinners').checked = true;
+  applyFilters();
+  document.getElementById('winnerArea').innerHTML = '';
+  if (state.eligible.length === 0) {
+    setStatus('loadStatus', 'info', 'Никого больше не осталось — обнови чат заново');
+    return;
+  }
+  roll();
+}
+
+// ============ UTIL ============
+function setStatus(elId, kind, msg) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  el.innerHTML = '<div class="status ' + kind + '">' + escapeHtml(msg) + '</div>';
+}
+
+function copyRedirect(btn) {
+  const inp = document.getElementById('redirectURI');
+  inp.select();
+  navigator.clipboard.writeText(inp.value).then(() => {
+    btn.classList.add('copied');
+    btn.textContent = 'copied';
+    setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'copy'; }, 1500);
+  }).catch(()=>{
+    document.execCommand('copy');
+    btn.classList.add('copied');
+    btn.textContent = 'copied';
+    setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'copy'; }, 1500);
+  });
+}
+</script>
+</body>
+</html>
