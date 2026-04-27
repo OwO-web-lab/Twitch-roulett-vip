@@ -6,9 +6,8 @@
 <title>VIP TERMINAL — UNIT 04-B</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Major+Mono+Display&family=Workbench&family=Oswald:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Major+Mono+Display&family=Workbench&family=Oswald:wght@500;700&family=Rubik+Mono+One&display=swap" rel="stylesheet">
 <style>
-/* ---- Departure Mono via @font-face (free, public CDN) ---- */
 @font-face {
   font-family: 'Departure Mono';
   src: url('https://cdn.jsdelivr.net/gh/dse/departure-mono@main/fonts/webfonts/DepartureMono-Regular.woff2') format('woff2');
@@ -17,31 +16,31 @@
 }
 
 :root {
-  /* Cabinet */
-  --hazard:        #c9a227;
-  --hazard-warm:   #d4a82a;
-  --hazard-deep:   #8a6e15;
-  --metal-dark:    #1a1612;
-  --metal-darker:  #0d0b08;
+  --hazard:        #b8941d;
+  --hazard-warm:   #c9a227;
+  --hazard-bright: #d8b633;
+  --hazard-deep:   #6e5410;
+  --metal-dark:    #15110b;
+  --metal-darker:  #08060300;
   --metal-mid:     #2a251f;
   --paint-white:   #d4cfc0;
   --paint-dirty:   #b8b09c;
   --rust:          #6e3a18;
+  --rust-deep:     #3d1f0a;
 
-  /* CRT phosphors */
   --amber:         #ffb347;
   --amber-deep:    #ff9a2e;
   --amber-dim:     #c97e1c;
   --cyan:          #4ad9e0;
+  --cyan-dim:      #2b8b91;
   --red:           #ff4530;
+  --red-deep:      #c2200a;
   --green:         #6ee05a;
   --magenta:       #d854a8;
   --crt-bg:        #0a0805;
-  --crt-bg-2:      #160e05;
 
-  /* Type stacks */
   --mono:    'Departure Mono','JetBrains Mono', ui-monospace, Menlo, monospace;
-  --display: 'Major Mono Display','Workbench', var(--mono);
+  --display: 'Rubik Mono One','Major Mono Display','Workbench', var(--mono);
   --stencil: 'Oswald','Arial Black', Impact, sans-serif;
 }
 
@@ -52,13 +51,28 @@ body {
   font-family: var(--mono);
   color: var(--amber);
   background:
-    radial-gradient(1400px 900px at 50% 30%, #1a140a 0%, #0a0705 55%, #050402 100%);
+    radial-gradient(1600px 1000px at 50% 25%, #1c160a 0%, #0a0705 55%, #030201 100%);
   overflow-x: hidden;
   -webkit-font-smoothing: none;
-  text-rendering: geometricPrecision;
+}
+body::before {
+  /* room ambient grain */
+  content:'';
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity:.55;
+  mix-blend-mode: overlay;
+}
+body::after{
+  /* subtle warm spotlight from above the cabinet */
+  content:'';
+  position:fixed; inset:auto 0 0 0; height:100vh; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(900px 500px at 50% 0%, rgba(255,170,80,.06), transparent 70%),
+    radial-gradient(60% 100% at 50% 100%, rgba(0,0,0,.6), transparent 70%);
 }
 
-/* ============ ROOM / FLOOR ============ */
 .room {
   min-height: 100vh;
   padding: 28px 16px 60px;
@@ -66,15 +80,7 @@ body {
   flex-direction: column;
   align-items: center;
   position: relative;
-}
-.room::before {
-  /* concrete floor grime under cabinet */
-  content: '';
-  position: fixed; inset: auto 0 0 0; height: 220px;
-  background:
-    radial-gradient(60% 100% at 50% 100%, rgba(0,0,0,.7), transparent 70%),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.012) 0 2px, transparent 2px 6px);
-  pointer-events: none;
+  z-index: 1;
 }
 
 /* ============ CABINET ============ */
@@ -82,74 +88,86 @@ body {
   width: min(1180px, 100%);
   position: relative;
   background:
-    /* darker bottom, lighter shoulders */
-    linear-gradient(180deg, #b89220 0%, #c9a227 12%, #b88f1d 60%, #8e6e16 100%);
-  border-radius: 14px 14px 18px 18px;
-  padding: 0 0 22px 0;
+    /* top hi-light, body, bottom shadow */
+    linear-gradient(180deg,
+      #d8b536 0%,
+      #c9a227 6%,
+      #b8941d 40%,
+      #9c7d18 75%,
+      #6e5410 100%);
+  border-radius: 12px 12px 18px 18px;
+  padding: 0 0 0 0;
   box-shadow:
-    inset 0 2px 0 rgba(255,255,255,.18),
-    inset 0 -10px 30px rgba(0,0,0,.55),
-    inset 0 0 0 2px #0d0b08,
+    inset 0 1px 0 rgba(255,230,150,.5),
+    inset 0 -14px 40px rgba(0,0,0,.7),
+    inset 0 0 0 2px #08060300,
+    inset 0 0 0 3px rgba(0,0,0,.5),
     0 30px 60px rgba(0,0,0,.7),
-    0 80px 120px rgba(0,0,0,.55);
+    0 80px 140px rgba(0,0,0,.55);
   isolation: isolate;
   overflow: hidden;
 }
 
-/* paint scratches + grime on the cabinet */
+/* paint scratches + grime */
 .cabinet::before {
   content: '';
   position: absolute; inset: 0;
   pointer-events: none;
   background:
-    /* large blotches */
-    radial-gradient(120px 40px at 12% 22%, rgba(0,0,0,.22), transparent 70%),
-    radial-gradient(220px 60px at 88% 14%, rgba(0,0,0,.18), transparent 70%),
-    radial-gradient(80px 30px at 30% 88%, rgba(0,0,0,.32), transparent 70%),
-    radial-gradient(180px 50px at 70% 92%, rgba(0,0,0,.28), transparent 70%),
-    /* paint chips */
-    radial-gradient(2px 2px at 18% 36%, rgba(0,0,0,.5), transparent 100%),
-    radial-gradient(3px 1px at 72% 41%, rgba(0,0,0,.45), transparent 100%),
-    radial-gradient(1px 4px at 44% 70%, rgba(0,0,0,.4), transparent 100%),
-    /* fiber/noise */
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  background-size: auto, auto, auto, auto, auto, auto, auto;
+    radial-gradient(160px 50px at 8% 18%, rgba(0,0,0,.32), transparent 70%),
+    radial-gradient(280px 80px at 92% 12%, rgba(0,0,0,.22), transparent 70%),
+    radial-gradient(140px 40px at 22% 86%, rgba(0,0,0,.4), transparent 70%),
+    radial-gradient(220px 60px at 78% 92%, rgba(0,0,0,.34), transparent 70%),
+    radial-gradient(60px 30px at 50% 50%, rgba(110,58,24,.18), transparent 80%),
+    /* scratches */
+    radial-gradient(2px 2px at 18% 36%, rgba(0,0,0,.55), transparent 100%),
+    radial-gradient(3px 1px at 72% 41%, rgba(0,0,0,.5), transparent 100%),
+    radial-gradient(1px 4px at 44% 70%, rgba(0,0,0,.45), transparent 100%),
+    radial-gradient(2px 1px at 60% 25%, rgba(0,0,0,.5), transparent 100%),
+    radial-gradient(1px 6px at 28% 52%, rgba(0,0,0,.4), transparent 100%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   mix-blend-mode: multiply;
   z-index: 1;
 }
 .cabinet::after {
-  /* horizontal brushed metal sheen */
   content:'';
   position:absolute; inset:0;
   pointer-events:none;
-  background: repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px);
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px),
+    /* faint vertical seams (panel lines) */
+    linear-gradient(90deg, transparent 0%, transparent 4%, rgba(0,0,0,.25) 4%, transparent 4.2%, transparent 95.8%, rgba(0,0,0,.25) 95.8%, transparent 96%);
   mix-blend-mode: overlay;
   z-index: 1;
 }
 
 /* ============ HAZARD STRIPES ============ */
 .hazard {
-  height: 22px;
+  height: 26px;
   background: repeating-linear-gradient(
     -45deg,
-    var(--hazard-warm) 0 22px,
-    #0d0b08 22px 44px
+    var(--hazard-bright) 0 26px,
+    #0d0b08 26px 52px
   );
   position: relative;
   border-top: 2px solid #0d0b08;
   border-bottom: 2px solid #0d0b08;
   z-index: 2;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.15), inset 0 -3px 6px rgba(0,0,0,.4);
 }
 .hazard::after {
   content:''; position:absolute; inset:0;
   background:
-    radial-gradient(100% 100% at 50% 0%, rgba(0,0,0,.35), transparent 60%),
-    radial-gradient(2px 2px at 12% 60%, rgba(0,0,0,.6), transparent 100%),
-    radial-gradient(3px 1px at 78% 40%, rgba(0,0,0,.4), transparent 100%);
+    radial-gradient(100% 100% at 50% 0%, rgba(0,0,0,.4), transparent 60%),
+    radial-gradient(3px 2px at 12% 60%, rgba(0,0,0,.7), transparent 100%),
+    radial-gradient(4px 2px at 78% 40%, rgba(0,0,0,.5), transparent 100%),
+    radial-gradient(2px 3px at 36% 30%, rgba(0,0,0,.6), transparent 100%),
+    radial-gradient(80px 14px at 30% 50%, rgba(110,58,24,.4), transparent 80%),
+    radial-gradient(120px 10px at 80% 50%, rgba(110,58,24,.3), transparent 80%);
   mix-blend-mode: multiply;
 }
 
-/* ============ TOP STRIP: serial / title / led row ============ */
+/* ============ CAB TOP STRIP ============ */
 .cab-top {
   position: relative;
   z-index: 2;
@@ -157,86 +175,106 @@ body {
   grid-template-columns: 1fr auto 1fr;
   gap: 24px;
   align-items: center;
-  padding: 22px 28px 18px;
+  padding: 26px 32px 22px;
 }
 
-/* Serial sticker */
 .sticker {
   display: inline-block;
-  background: #d4cfc0;
+  background: #e8e3d2;
   color: #1a1612;
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: .12em;
-  padding: 6px 10px 5px;
-  line-height: 1.2;
-  border: 1px solid #6b6457;
-  box-shadow: 0 2px 0 rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.4);
-  transform: rotate(-1.2deg);
+  padding: 7px 11px 6px;
+  line-height: 1.45;
+  white-space: nowrap;
+  border: 1px solid #5c5547;
+  box-shadow:
+    0 2px 0 rgba(0,0,0,.4),
+    0 6px 12px rgba(0,0,0,.3),
+    inset 0 0 0 1px rgba(255,255,255,.5);
   position: relative;
 }
-.sticker.dirty {
-  filter: contrast(1) saturate(.9);
-}
+.sticker.s1 { transform: rotate(-1.4deg); }
+.sticker.s2 { transform: rotate(1.6deg); }
 .sticker::before {
-  /* peeling corner */
   content:'';
-  position:absolute; right:-3px; top:-3px;
-  width: 14px; height: 14px;
-  background: linear-gradient(135deg, transparent 50%, #b8b09c 50%);
-  box-shadow: -1px 1px 0 rgba(0,0,0,.4);
+  position:absolute; right:-2px; top:-2px;
+  width: 16px; height: 16px;
+  background: linear-gradient(135deg, transparent 50%, #c9c2b0 50%);
+  box-shadow: -1px 1px 1px rgba(0,0,0,.5);
 }
-.sticker .label { font-weight: 700; }
+.sticker .label { font-weight: 700; letter-spacing: .18em; }
 .sticker .row   { display:block; }
+.sticker .row.dim { color: #5c5547; }
 
 .cab-top-left  { display:flex; gap: 14px; align-items:flex-start; }
 .cab-top-right { display:flex; gap: 14px; align-items:center; justify-content:flex-end; }
 
-/* Title plate */
+/* Title plate — engraved black metal */
 .title-plate {
-  background: linear-gradient(180deg, #2a251f 0%, #15110d 100%);
-  border: 2px solid #0d0b08;
+  background:
+    linear-gradient(180deg, #2a251f 0%, #0d0b08 60%, #15110d 100%);
+  border: 2px solid #050402;
   border-radius: 4px;
-  padding: 12px 28px 10px;
+  padding: 14px 36px 12px;
   text-align: center;
   position: relative;
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.05),
-    inset 0 2px 6px rgba(0,0,0,.7),
-    0 4px 0 rgba(0,0,0,.4);
+    inset 0 0 0 1px rgba(255,255,255,.04),
+    inset 0 2px 6px rgba(0,0,0,.8),
+    inset 0 -2px 0 rgba(255,255,255,.03),
+    0 4px 0 rgba(0,0,0,.5),
+    0 8px 14px rgba(0,0,0,.45);
 }
 .title-plate::before, .title-plate::after {
-  content:''; position:absolute; width:8px; height:8px; border-radius:50%;
-  background: radial-gradient(circle at 35% 35%, #4a443b 0%, #1a1612 60%, #050402 100%);
+  content:''; position:absolute; width:9px; height:9px; border-radius:50%;
+  background: radial-gradient(circle at 35% 30%, #5a5247 0%, #1a1612 60%, #050402 100%);
   top: 50%; transform: translateY(-50%);
-  box-shadow: inset 0 0 0 1px #0d0b08;
+  box-shadow: inset 0 0 0 1px #0d0b08, 0 1px 0 rgba(255,255,255,.05);
 }
-.title-plate::before { left: 8px; }
-.title-plate::after  { right: 8px; }
+.title-plate::before { left: 9px; }
+.title-plate::after  { right: 9px; }
 .title-plate .name {
   font-family: var(--display);
-  font-size: 28px;
+  font-size: clamp(22px, 2.6vw, 30px);
   letter-spacing: .14em;
-  color: var(--hazard-warm);
-  text-shadow: 0 1px 0 #000, 0 0 8px rgba(201,162,39,.25);
+  color: var(--hazard-bright);
+  text-shadow:
+    0 -1px 0 rgba(0,0,0,.9),
+    0 1px 0 rgba(255,200,80,.15),
+    0 0 14px rgba(216,182,51,.35);
   display: block;
   line-height: 1;
+  text-transform: uppercase;
 }
 .title-plate .unit {
   font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: .3em;
-  color: var(--paint-dirty);
-  margin-top: 6px;
+  letter-spacing: .35em;
+  color: #6b6457;
+  margin-top: 8px;
   display: block;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.6);
 }
 
 /* LED row */
-.led-row { display:flex; gap: 14px; align-items:center; }
+.led-row {
+  display:flex; gap: 14px; align-items:center;
+  padding: 10px 14px;
+  background: linear-gradient(180deg, #0d0b08, #050402);
+  border: 1px solid #050402;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04), inset 0 -2px 4px rgba(0,0,0,.6);
+  flex-wrap: nowrap;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.cab-top-right { flex-wrap: nowrap; min-width: 0; }
 .led {
   display:flex; flex-direction:column; align-items:center; gap: 4px;
-  font-family: var(--mono); font-size: 8px; letter-spacing:.18em;
-  color: var(--paint-dirty);
+  font-family: var(--mono); font-size: 8px; letter-spacing: .22em;
+  color: #6b6457;
 }
 .led .bulb {
   width: 12px; height: 12px; border-radius: 50%;
@@ -247,9 +285,8 @@ body {
 .led .bulb::after{
   content:''; position:absolute; inset:2px; border-radius:50%;
   background: var(--c, #2a251f);
-  box-shadow: 0 0 6px var(--c, transparent), 0 0 14px var(--c, transparent);
+  box-shadow: 0 0 8px var(--c, transparent), 0 0 18px var(--c, transparent);
   opacity: var(--on, 0);
-  transition: opacity .08s steps(1);
 }
 .led.power  { --c: #6ee05a; }
 .led.ready  { --c: #ffb347; }
@@ -266,162 +303,193 @@ body {
 .bezel-wrap {
   position: relative;
   z-index: 2;
-  margin: 0 28px;
-  padding: 22px;
-  border-radius: 8px;
-  background: linear-gradient(180deg, #1a1612 0%, #0d0b08 100%);
+  margin: 0 32px;
+  padding: 24px;
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, #1a1612 0%, #0d0b08 50%, #050402 100%);
   box-shadow:
-    inset 0 2px 0 rgba(255,255,255,.04),
+    inset 0 2px 0 rgba(255,255,255,.05),
     inset 0 -2px 0 rgba(0,0,0,.6),
     inset 0 0 0 2px #050402,
-    0 6px 0 rgba(0,0,0,.4);
+    inset 0 0 80px rgba(0,0,0,.6),
+    0 8px 0 rgba(0,0,0,.4),
+    0 14px 24px rgba(0,0,0,.5);
 }
 .bezel-wrap::before {
-  /* rust at bezel inner corners */
-  content:''; position:absolute; inset:6px;
-  border-radius: 6px;
+  /* rust around bezel inner */
+  content:''; position:absolute; inset:8px;
+  border-radius: 8px;
   pointer-events:none;
   background:
-    radial-gradient(40px 30px at 0% 0%, rgba(110,58,24,.55), transparent 70%),
-    radial-gradient(50px 30px at 100% 0%, rgba(110,58,24,.4), transparent 70%),
-    radial-gradient(50px 40px at 0% 100%, rgba(110,58,24,.5), transparent 70%),
-    radial-gradient(60px 30px at 100% 100%, rgba(110,58,24,.45), transparent 70%);
-  filter: blur(3px);
+    radial-gradient(50px 40px at 0% 0%, rgba(110,58,24,.55), transparent 70%),
+    radial-gradient(60px 40px at 100% 0%, rgba(110,58,24,.4), transparent 70%),
+    radial-gradient(60px 50px at 0% 100%, rgba(110,58,24,.5), transparent 70%),
+    radial-gradient(70px 40px at 100% 100%, rgba(110,58,24,.45), transparent 70%);
+  filter: blur(4px);
   mix-blend-mode: screen;
 }
+.bezel-wrap::after{
+  /* faint inner highlight + screen-printed warning text */
+  content:'PROC. UNIT 04-B  ·  CAUTION: HIGH VOLTAGE  ·  DO NOT SERVICE WHILE POWERED';
+  position:absolute; left:24px; right:24px; bottom:6px;
+  font-family: var(--mono); font-size: 8px; letter-spacing: .3em;
+  color: rgba(212,207,192,.18);
+  text-align:center;
+  pointer-events:none;
+}
 
-/* Screws */
 .screw {
   position: absolute;
   width: 18px; height: 18px; border-radius: 50%;
   background:
-    radial-gradient(circle at 35% 30%, #4a443b 0%, #1a1612 55%, #050402 100%);
+    radial-gradient(circle at 35% 30%, #5a5247 0%, #1a1612 55%, #050402 100%);
   box-shadow:
     inset 0 0 0 1px #0d0b08,
-    inset 0 -2px 3px rgba(0,0,0,.8),
-    0 1px 0 rgba(255,255,255,.05);
+    inset 0 -2px 3px rgba(0,0,0,.85),
+    0 1px 0 rgba(255,255,255,.06),
+    0 2px 4px rgba(0,0,0,.6);
   z-index: 3;
 }
 .screw::before, .screw::after {
   content:''; position:absolute; left:50%; top:50%;
-  background: #0a0805;
-  box-shadow: 0 0 0 1px rgba(255,255,255,.03);
+  background: #050402;
   transform-origin: center;
 }
-.screw::before { width: 10px; height: 2px; transform: translate(-50%,-50%) rotate(var(--r, 22deg)); }
-.screw::after  { width: 2px; height: 10px; transform: translate(-50%,-50%) rotate(var(--r, 22deg)); }
-.screw.tl { top: 6px;  left: 6px;  --r: 18deg; }
-.screw.tr { top: 6px;  right: 6px; --r: -27deg; }
-.screw.bl { bottom: 6px; left: 6px; --r: -8deg; }
-.screw.br { bottom: 6px; right: 6px; --r: 35deg; }
+.screw::before { width: 11px; height: 2px; transform: translate(-50%,-50%) rotate(var(--r, 22deg)); }
+.screw::after  { width: 2px; height: 11px; transform: translate(-50%,-50%) rotate(var(--r, 22deg)); }
+.screw.tl { top: 7px;  left: 7px;  --r: 18deg; }
+.screw.tr { top: 7px;  right: 7px; --r: -27deg; }
+.screw.bl { bottom: 7px; left: 7px; --r: -8deg; }
+.screw.br { bottom: 7px; right: 7px; --r: 35deg; }
 
 /* CRT */
 .crt {
   position: relative;
-  height: clamp(360px, 56vh, 540px);
-  border-radius: 14px;
+  height: clamp(380px, 58vh, 560px);
+  border-radius: 22px / 16px;
   background:
-    radial-gradient(120% 80% at 50% 40%, #1a0f06 0%, #0a0705 60%, #050402 100%);
+    radial-gradient(120% 80% at 50% 40%, #1d1108 0%, #0a0705 55%, #050402 100%);
   overflow: hidden;
   box-shadow:
     inset 0 0 0 2px #050402,
-    inset 0 0 80px rgba(0,0,0,.85),
-    inset 0 0 30px rgba(255,154,46,.04);
-  filter: contrast(1.05) saturate(1.05);
+    inset 0 0 100px rgba(0,0,0,.95),
+    inset 0 0 40px rgba(255,154,46,.08),
+    inset 0 -30px 80px rgba(0,0,0,.8);
 }
-/* Barrel-distortion via subtle scale curve using inset shadow + transform */
+/* curvature highlight (top-left glare) */
+.crt::before{
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:7;
+  background:
+    radial-gradient(80% 50% at 25% -10%, rgba(255,255,255,.06), transparent 60%),
+    radial-gradient(60% 40% at 80% 110%, rgba(255,154,46,.05), transparent 60%);
+}
 .crt-inner {
   position: absolute; inset: 0;
-  transform: perspective(1200px) rotateX(.5deg);
-  animation: crt-jitter 2.8s steps(2,end) infinite;
+  transform: perspective(1400px) rotateX(.6deg);
+  animation: crt-jitter 3.2s steps(2,end) infinite;
 }
 @keyframes crt-jitter {
-  0%, 96% { transform: perspective(1200px) rotateX(.5deg) translateY(0); }
-  97% { transform: perspective(1200px) rotateX(.5deg) translateY(-1px); }
-  98% { transform: perspective(1200px) rotateX(.5deg) translateY(1px); }
-  99%,100% { transform: perspective(1200px) rotateX(.5deg) translateY(0); }
+  0%, 96% { transform: perspective(1400px) rotateX(.6deg) translateY(0); }
+  97% { transform: perspective(1400px) rotateX(.6deg) translateY(-1px); }
+  98% { transform: perspective(1400px) rotateX(.6deg) translateY(1px); }
+  99%,100% { transform: perspective(1400px) rotateX(.6deg) translateY(0); }
 }
-
-/* Scanlines */
 .scanlines {
   position: absolute; inset: 0;
   background: repeating-linear-gradient(0deg,
-    rgba(0,0,0,.32) 0 1px,
+    rgba(0,0,0,.36) 0 1px,
     transparent 1px 3px);
   pointer-events: none;
   mix-blend-mode: multiply;
-  z-index: 6;
+  z-index: 8;
 }
-/* Rolling scan glitch */
+.scanlines::after{
+  /* slow rolling brightness band (CRT refresh) */
+  content:''; position:absolute; inset:-20% 0;
+  background: linear-gradient(180deg, transparent 0%, transparent 40%, rgba(255,255,255,.03) 50%, transparent 60%, transparent 100%);
+  animation: refresh 6s linear infinite;
+}
+@keyframes refresh {
+  0% { transform: translateY(-30%); }
+  100% { transform: translateY(30%); }
+}
 .scanglitch {
   position:absolute; left:0; right:0; height: 80px;
   top: -100px;
-  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,.07) 40%, rgba(255,255,255,.18) 50%, rgba(255,255,255,.07) 60%, transparent 100%);
-  pointer-events:none; z-index:7;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,.06) 40%, rgba(255,255,255,.18) 50%, rgba(255,255,255,.06) 60%, transparent 100%);
+  pointer-events:none; z-index:9;
   mix-blend-mode: screen;
 }
-.scanglitch.run { animation: scanrun .35s linear 1; }
+.scanglitch.run { animation: scanrun .4s linear 1; }
 @keyframes scanrun {
   0%   { top: -120px; }
   100% { top: 100%; }
 }
-
-/* Vignette */
 .vignette {
   position:absolute; inset:0; pointer-events:none; z-index: 8;
   background:
-    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0,0,0,.7) 100%);
+    radial-gradient(120% 90% at 50% 50%, transparent 50%, rgba(0,0,0,.85) 100%);
 }
 
 /* ============ CRT CONTENT ============ */
 .sys-line {
-  position: absolute; top: 14px; left: 18px; right: 18px;
+  position: absolute; top: 16px; left: 22px; right: 22px;
   display: flex; justify-content: space-between; align-items: baseline;
   font-family: var(--mono);
   font-size: 11px;
-  letter-spacing: .18em;
+  letter-spacing: .22em;
   color: var(--cyan);
-  text-shadow: 0 0 6px rgba(74,217,224,.35);
+  text-shadow: 0 0 8px rgba(74,217,224,.4), 0 0 2px rgba(74,217,224,.6);
   z-index: 3;
+  text-transform: uppercase;
 }
-.sys-line .right { color: var(--amber-dim); text-shadow: 0 0 6px rgba(255,154,46,.25); }
+.sys-line .left { display:flex; gap: 22px; align-items:baseline; }
+.sys-line .right { color: var(--amber-dim); text-shadow: 0 0 6px rgba(255,154,46,.3); }
+.sys-line .pip { display:inline-block; width:7px; height:7px; background:var(--cyan); margin-right:6px; box-shadow:0 0 6px var(--cyan); }
+.sys-line .pip.red { background: var(--red); box-shadow: 0 0 6px var(--red); }
 .sys-line .blink { animation: blink-slow 1.4s steps(2,end) infinite; }
 
 /* Reel viewport */
 .reel-viewport {
   position: absolute;
   left: 0; right: 0;
-  top: 44px; bottom: 56px;
+  top: 50px; bottom: 64px;
   overflow: hidden;
   z-index: 2;
 }
 .reel-fade {
   position: absolute; inset: 0; pointer-events: none; z-index: 4;
   background:
-    linear-gradient(180deg, rgba(10,8,5,1) 0%, rgba(10,8,5,.85) 8%, rgba(10,8,5,0) 30%, rgba(10,8,5,0) 70%, rgba(10,8,5,.85) 92%, rgba(10,8,5,1) 100%);
+    linear-gradient(180deg,
+      rgba(10,8,5,.95) 0%,
+      rgba(10,8,5,.7) 8%,
+      rgba(10,8,5,0) 24%,
+      rgba(10,8,5,0) 76%,
+      rgba(10,8,5,.7) 92%,
+      rgba(10,8,5,.95) 100%);
 }
 .reel {
   position: absolute;
   left: 0; right: 0;
   top: 50%;
   will-change: transform;
-  transform: translateY(0);
 }
 .name {
   font-family: var(--display);
   text-align: center;
-  letter-spacing: .06em;
+  letter-spacing: .04em;
   color: var(--amber);
   text-shadow:
-    0 0 0 #fff,
-    -1px 0 0 rgba(255,69,48,.35),
-    1px 0 0 rgba(74,217,224,.35),
-    0 0 8px rgba(255,154,46,.4),
-    0 0 18px rgba(255,154,46,.18);
+    -1px 0 0 rgba(255,69,48,.4),
+    1px 0 0 rgba(74,217,224,.4),
+    0 0 8px rgba(255,154,46,.45),
+    0 0 22px rgba(255,154,46,.22);
   white-space: nowrap;
   line-height: 1;
-  transition: color .08s, text-shadow .08s;
   user-select: none;
+  text-transform: uppercase;
+  font-weight: 400;
 }
 
 /* Payline */
@@ -432,48 +500,80 @@ body {
   pointer-events: none;
 }
 .payline .bar {
-  position: absolute; left: 36px; right: 36px; top: -1px;
+  position: absolute; left: 60px; right: 60px; top: -1px;
   height: 2px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,69,48,.0) 5%, rgba(255,69,48,.85) 50%, rgba(255,69,48,0) 95%, transparent 100%);
-  box-shadow: 0 0 8px rgba(255,69,48,.6);
+  background: linear-gradient(90deg, transparent 0%, rgba(255,69,48,0) 4%, rgba(255,69,48,.85) 50%, rgba(255,69,48,0) 96%, transparent 100%);
+  box-shadow: 0 0 10px rgba(255,69,48,.7);
   animation: payline-pulse 1.4s ease-in-out infinite;
 }
+.payline .bar::before, .payline .bar::after {
+  /* corner brackets */
+  content:''; position:absolute; top: -7px;
+  width: 14px; height: 14px;
+  border: 2px solid var(--red);
+  filter: drop-shadow(0 0 4px rgba(255,69,48,.7));
+}
+.payline .bar::before { left: 0; border-right:none; border-bottom:none; }
+.payline .bar::after  { right: 0; border-left:none; border-bottom:none; }
 @keyframes payline-pulse {
   0%,100% { opacity: .85; }
   50% { opacity: 1; }
 }
 .payline .arrow {
-  position: absolute; top: -10px; width: 0; height: 0;
-  filter: drop-shadow(0 0 6px rgba(255,69,48,.6));
+  position: absolute; top: -11px; width: 0; height: 0;
+  filter: drop-shadow(0 0 7px rgba(255,69,48,.7));
 }
-.payline .arrow.left  { left: 8px;  border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 16px solid var(--red); }
-.payline .arrow.right { right: 8px; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 16px solid var(--red); }
+.payline .arrow.left  { left: 18px;  border-top: 11px solid transparent; border-bottom: 11px solid transparent; border-left: 18px solid var(--red); }
+.payline .arrow.right { right: 18px; border-top: 11px solid transparent; border-bottom: 11px solid transparent; border-right: 18px solid var(--red); }
 
-/* Counters */
+/* Counters bar (under reel) */
 .counters {
-  position: absolute; left: 18px; right: 18px; bottom: 12px;
+  position: absolute; left: 22px; right: 22px; bottom: 16px;
   display: flex; justify-content: space-between; align-items: center;
-  font-family: var(--mono); font-size: 11px; letter-spacing: .18em;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .22em;
   z-index: 3;
+  text-transform: uppercase;
 }
 .counter { color: var(--amber-dim); text-shadow: 0 0 6px rgba(255,154,46,.2); }
-.counter b { color: var(--amber); font-weight: 400; }
+.counter b { color: var(--amber); font-weight: 400; text-shadow: 0 0 8px rgba(255,154,46,.45); }
 
-/* Setup screen overlay (when not authed) */
+/* WIN BANNER */
+.win-banner {
+  position: absolute; left: 22px; right: 22px; top: 50px;
+  text-align: center;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .4em;
+  color: var(--red);
+  text-shadow: 0 0 10px rgba(255,69,48,.8);
+  opacity: 0; pointer-events: none; z-index: 4;
+}
+.win-banner.show { opacity: 1; animation: blink-fast .35s steps(2,end) infinite; }
+
+/* ============ SETUP OVERLAY ============ */
 .setup {
   position: absolute; inset: 0;
   z-index: 10;
   display: flex; flex-direction: column; justify-content: center; align-items: center;
   padding: 30px 36px;
-  background: radial-gradient(120% 80% at 50% 40%, rgba(20,12,5,.4), rgba(5,3,1,.6));
+  background:
+    radial-gradient(120% 80% at 50% 40%, #100a04 0%, #060402 70%, #030201 100%);
+}
+.setup::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,.4) 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
 }
 .setup h1 {
   font-family: var(--display);
-  font-size: clamp(28px, 4vw, 44px);
+  font-size: clamp(26px, 3.6vw, 40px);
   color: var(--amber);
-  text-shadow: 0 0 14px rgba(255,154,46,.6), -1px 0 0 rgba(255,69,48,.5), 1px 0 0 rgba(74,217,224,.5);
-  letter-spacing: .12em; margin: 0 0 6px;
+  text-shadow:
+    -1.5px 0 0 rgba(255,69,48,.6),
+    1.5px 0 0 rgba(74,217,224,.5),
+    0 0 16px rgba(255,154,46,.6),
+    0 0 32px rgba(255,154,46,.3);
+  letter-spacing: .12em; margin: 0 0 8px;
   animation: title-flicker 4s steps(1,end) infinite;
+  text-transform: uppercase;
 }
 @keyframes title-flicker {
   0%, 92%, 100% { opacity: 1; }
@@ -487,388 +587,485 @@ body {
   text-shadow: 0 0 6px rgba(74,217,224,.4);
 }
 .setup .log {
-  width: min(700px, 100%); height: 160px; overflow: hidden;
+  width: min(720px, 100%); height: 170px; overflow: hidden;
   font-family: var(--mono); font-size: 12px; line-height: 1.55;
   color: var(--amber-dim);
-  border-top: 1px dashed rgba(255,154,46,.25);
-  border-bottom: 1px dashed rgba(255,154,46,.25);
-  padding: 10px 12px;
-  text-shadow: 0 0 6px rgba(255,154,46,.2);
+  border: 1px dashed rgba(255,154,46,.22);
+  padding: 10px 14px;
+  text-shadow: 0 0 6px rgba(255,154,46,.18);
+  background: rgba(0,0,0,.35);
+  box-shadow: inset 0 0 30px rgba(255,154,46,.05);
 }
 .setup .log .line { display:block; }
-.setup .log .ok { color: var(--green); }
-.setup .log .warn { color: var(--red); }
-.setup .log .info { color: var(--cyan); }
+.setup .log .ok { color: var(--green); text-shadow: 0 0 6px rgba(110,224,90,.45); }
+.setup .log .warn { color: var(--red); text-shadow: 0 0 6px rgba(255,69,48,.5); }
+.setup .log .info { color: var(--cyan); text-shadow: 0 0 6px rgba(74,217,224,.45); }
 .setup .form {
-  margin-top: 14px;
-  width: min(700px, 100%);
-  display: flex; gap: 8px; align-items: stretch;
+  margin-top: 16px;
+  width: min(720px, 100%);
+  display: flex; gap: 10px; align-items: stretch;
 }
 .setup .form input {
   flex: 1;
   background: #0a0805;
   border: 1px solid rgba(255,154,46,.4);
   color: var(--amber);
-  font-family: var(--mono); font-size: 13px; letter-spacing: .12em;
-  padding: 10px 12px;
+  font-family: var(--mono); font-size: 13px; letter-spacing: .14em;
+  padding: 11px 14px;
   outline: none;
   text-shadow: 0 0 6px rgba(255,154,46,.4);
+  box-shadow: inset 0 0 12px rgba(0,0,0,.6);
 }
-.setup .form input:focus { border-color: var(--amber); box-shadow: inset 0 0 0 1px var(--amber-deep); }
+.setup .form input:focus {
+  border-color: var(--amber);
+  box-shadow: inset 0 0 0 1px var(--amber-deep), 0 0 10px rgba(255,154,46,.3);
+}
 .setup .form button {
-  background: var(--amber-deep); color: #15100a;
-  border: 1px solid #0d0b08; padding: 8px 18px;
-  font-family: var(--stencil); font-weight: 700; letter-spacing: .2em; font-size: 13px;
+  background: linear-gradient(180deg, #ffb347 0%, #d6841d 100%);
+  color: #15100a;
+  border: 1px solid #0d0b08;
+  padding: 8px 22px;
+  font-family: var(--stencil); font-weight: 700; letter-spacing: .22em; font-size: 13px;
   cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 3px 0 #6b4a10;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.5),
+    inset 0 -2px 0 rgba(0,0,0,.2),
+    0 3px 0 #6b4a10,
+    0 5px 8px rgba(0,0,0,.4);
 }
-.setup .form button:active { transform: translateY(2px); box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 1px 0 #6b4a10; }
-
-.setup .hint { font-size: 10px; color: var(--paint-dirty); margin-top: 8px; letter-spacing: .14em; }
-.setup .hint a { color: var(--cyan); }
-
-/* Win banner */
-.win-banner {
-  position: absolute; left: 0; right: 0; top: 14px;
-  text-align: center;
-  font-family: var(--mono); font-size: 11px; letter-spacing: .35em;
-  color: var(--red);
-  text-shadow: 0 0 8px rgba(255,69,48,.7);
-  opacity: 0; pointer-events: none; z-index: 4;
+.setup .form button:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 1px 0 #6b4a10;
 }
-.win-banner.show { opacity: 1; animation: blink-fast .35s steps(2,end) infinite; }
+.setup .hint { font-size: 10px; color: #8a8475; margin-top: 10px; letter-spacing: .14em; max-width: 720px; text-align: center; line-height: 1.5; }
+.setup .hint code { color: var(--cyan); background: rgba(74,217,224,.06); padding: 1px 4px; border: 1px solid rgba(74,217,224,.2); }
 
 /* ============ CONTROL PANEL ============ */
 .panel {
   position: relative; z-index: 2;
-  margin: 22px 28px 0;
-  padding: 20px 22px 22px;
+  margin: 24px 32px 0;
+  padding: 24px 26px 26px;
   background:
-    linear-gradient(180deg, #2a251f 0%, #15110d 100%);
-  border: 2px solid #0d0b08;
-  border-radius: 6px 6px 8px 8px;
+    linear-gradient(180deg, #2a251f 0%, #15110d 60%, #08060300 100%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 1px 2px);
+  border: 2px solid #050402;
+  border-radius: 8px;
   box-shadow:
-    inset 0 2px 0 rgba(255,255,255,.05),
-    inset 0 -10px 30px rgba(0,0,0,.6),
-    0 6px 0 rgba(0,0,0,.5);
+    inset 0 2px 0 rgba(255,255,255,.06),
+    inset 0 -10px 30px rgba(0,0,0,.7),
+    inset 0 0 0 1px rgba(110,58,24,.15),
+    0 6px 0 rgba(0,0,0,.5),
+    0 14px 30px rgba(0,0,0,.5);
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 28px;
+  gap: 30px;
   align-items: center;
 }
+.panel::before{
+  /* drilled mounting holes top corners */
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(6px 6px at 16px 14px, #050402 70%, transparent 71%),
+    radial-gradient(6px 6px at calc(100% - 16px) 14px, #050402 70%, transparent 71%),
+    radial-gradient(6px 6px at 16px calc(100% - 14px), #050402 70%, transparent 71%),
+    radial-gradient(6px 6px at calc(100% - 16px) calc(100% - 14px), #050402 70%, transparent 71%);
+}
+
 .panel .left {
   display: grid;
   grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 18px 14px;
+  gap: 14px;
 }
 
 /* Tumblers */
 .tumbler {
-  display: flex; align-items: flex-end; gap: 10px;
-  padding: 10px 12px 10px 10px;
-  background: linear-gradient(180deg, #0d0b08 0%, #050402 100%);
+  display: flex; align-items: stretch; gap: 12px;
+  padding: 12px 12px 12px 10px;
+  background: linear-gradient(180deg, #1a1612 0%, #050402 100%);
   border: 1px solid #050402;
   border-radius: 4px;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.04),
-    inset 0 0 0 1px #1a1612;
+    inset 0 1px 0 rgba(255,255,255,.05),
+    inset 0 -2px 4px rgba(0,0,0,.5),
+    0 2px 0 rgba(0,0,0,.4);
   cursor: pointer;
   user-select: none;
+  position: relative;
+}
+.tumbler::before{
+  /* engraved label slot */
+  content:''; position:absolute; left:8px; right:8px; bottom: 4px;
+  height: 1px; background: rgba(255,255,255,.04);
 }
 .tumbler .switch {
   position: relative;
-  width: 22px; height: 56px;
-  background: linear-gradient(180deg, #2a251f, #0d0b08);
+  width: 28px; height: 64px;
+  background: linear-gradient(180deg, #2a251f 0%, #050402 60%, #15110d 100%);
   border: 1px solid #050402;
-  border-radius: 4px;
+  border-radius: 6px;
   flex: 0 0 auto;
+  box-shadow: inset 0 0 8px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.tumbler .switch::before{
+  /* metallic slot for lever */
+  content:''; position:absolute; left:50%; top:8px; bottom:8px; width: 4px;
+  transform: translateX(-50%);
+  background: #050402;
+  box-shadow: inset 0 0 0 1px #08060300;
 }
 .tumbler .lever {
   position: absolute; left: 50%; top: 50%;
-  width: 12px; height: 30px;
-  background: linear-gradient(180deg, #b8b09c 0%, #6b6457 60%, #2a251f 100%);
-  border-radius: 3px 3px 6px 6px;
+  width: 14px; height: 36px;
+  background:
+    linear-gradient(180deg, #e8e3d2 0%, #b8b09c 45%, #6b6457 80%, #2a251f 100%);
+  border-radius: 4px 4px 7px 7px;
   border: 1px solid #050402;
   transform-origin: 50% 100%;
-  transform: translate(-50%, -100%) rotate(20deg);
-  transition: transform .12s cubic-bezier(.2,1.6,.4,1);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 2px 0 rgba(0,0,0,.5);
-}
-.tumbler.on .lever { transform: translate(-50%, -100%) rotate(-20deg); }
-.tumbler .switch::after {
-  /* tiny LED below */
-  content:''; position:absolute; left:50%; bottom:-2px; transform: translate(-50%, 100%);
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #ff4530;
-  box-shadow: 0 0 5px #ff4530;
-  opacity: .9;
-}
-.tumbler.on .switch::after {
-  background: #6ee05a;
-  box-shadow: 0 0 6px #6ee05a;
-}
-.tumbler .meta {
-  display:flex; flex-direction: column; gap: 2px; padding-bottom: 4px;
-}
-.tumbler .meta .k {
-  font-family: var(--mono); font-size: 9px; letter-spacing: .22em;
-  color: var(--paint-dirty);
-}
-.tumbler .meta .v {
-  font-family: var(--stencil); font-size: 12px; letter-spacing: .15em;
-  color: var(--paint-white);
-}
-.tumbler.on .meta .v { color: var(--green); }
-.tumbler:not(.on) .meta .v { color: var(--paint-dirty); }
-
-/* Channel slot — label-maker sticker */
-.channel-slot {
-  grid-column: span 3;
-  display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center;
-  padding: 10px 12px;
-  background: linear-gradient(180deg, #0d0b08, #050402);
-  border: 1px solid #050402; border-radius: 4px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
-}
-.channel-slot .k {
-  font-family: var(--mono); font-size: 9px; letter-spacing: .22em; color: var(--paint-dirty);
-  padding-right: 8px; border-right: 1px dashed rgba(212,207,192,.2);
-}
-.channel-slot .label-maker {
-  background: #2b2622;
-  color: #d4cfc0;
-  font-family: var(--mono); font-size: 14px; letter-spacing: .18em;
-  padding: 8px 12px; border-radius: 2px;
-  text-transform: uppercase;
+  transform: translate(-50%, -100%) rotate(22deg);
+  transition: transform .14s cubic-bezier(.2,1.6,.4,1);
   box-shadow:
-    inset 0 0 0 1px #050402,
-    inset 0 1px 0 rgba(255,255,255,.06),
-    inset 0 -1px 0 rgba(0,0,0,.4);
+    inset 0 1px 0 rgba(255,255,255,.6),
+    inset -2px 0 3px rgba(0,0,0,.3),
+    0 3px 0 rgba(0,0,0,.5),
+    0 5px 6px rgba(0,0,0,.4);
+}
+.tumbler .lever::after{
+  /* knob top */
+  content:''; position:absolute; top:-6px; left:50%; transform: translateX(-50%);
+  width: 18px; height: 10px; border-radius: 50%;
+  background: radial-gradient(circle at 50% 30%, #f0ebda 0%, #b8b09c 50%, #6b6457 100%);
+  box-shadow: 0 1px 2px rgba(0,0,0,.5);
+}
+.tumbler.on .lever { transform: translate(-50%, -100%) rotate(-22deg); }
+
+/* indicator LED to the right of lever */
+.tumbler .ind-led{
+  width: 8px; height: 8px; border-radius: 50%;
+  align-self: flex-end;
+  margin-bottom: 6px;
+  background: radial-gradient(circle at 35% 30%, #2a251f, #050402);
+  box-shadow: inset 0 0 0 1px #050402;
   position: relative;
 }
+.tumbler .ind-led::after{
+  content:''; position:absolute; inset:1px; border-radius:50%;
+  background: var(--red);
+  box-shadow: 0 0 6px var(--red);
+}
+.tumbler.on .ind-led::after{ background: var(--green); box-shadow: 0 0 6px var(--green); }
+
+.tumbler .meta {
+  display:flex; flex-direction: column; gap: 3px; padding: 4px 0 0 0;
+  flex: 1;
+}
+.tumbler .meta .k {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .26em;
+  color: #6b6457;
+}
+.tumbler .meta .v {
+  font-family: var(--stencil); font-weight: 700;
+  font-size: 13px; letter-spacing: .14em;
+  color: var(--paint-white);
+  line-height: 1.1;
+}
+.tumbler.on .meta .v { color: var(--green); text-shadow: 0 0 8px rgba(110,224,90,.4); }
+.tumbler:not(.on) .meta .v { color: #6b6457; }
+.tumbler .meta .s {
+  font-family: var(--mono); font-size: 8px; letter-spacing: .2em;
+  margin-top:2px;
+}
+.tumbler.on .meta .s { color: var(--green); }
+.tumbler:not(.on) .meta .s { color: var(--red); opacity:.7; }
+
+/* Channel slot */
+.channel-slot {
+  grid-column: span 3;
+  display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center;
+  padding: 12px 14px;
+  background: linear-gradient(180deg, #1a1612, #050402);
+  border: 1px solid #050402; border-radius: 4px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), inset 0 -2px 4px rgba(0,0,0,.5);
+}
+.channel-slot .k {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .26em; color: #6b6457;
+  padding-right: 12px; border-right: 1px dashed rgba(212,207,192,.18);
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.channel-slot .label-maker {
+  background:
+    linear-gradient(180deg, #36302a 0%, #221d18 50%, #36302a 100%);
+  color: #e8e3d2;
+  font-family: var(--mono); font-size: 15px; letter-spacing: .26em;
+  padding: 10px 14px; border-radius: 3px;
+  text-transform: uppercase;
+  text-align: center;
+  box-shadow:
+    inset 0 0 0 1px #050402,
+    inset 0 1px 0 rgba(255,255,255,.08),
+    inset 0 -1px 0 rgba(0,0,0,.5),
+    inset 0 0 0 3px rgba(0,0,0,.25);
+  position: relative;
+  text-shadow: 0 1px 0 rgba(0,0,0,.6);
+}
 .channel-slot .label-maker::before {
-  /* embossed text effect */
-  content:''; position:absolute; inset:0;
-  background: repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 2px);
+  content:''; position:absolute; inset:0; border-radius:3px;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 2px),
+    radial-gradient(80% 100% at 50% 0%, rgba(255,255,255,.05), transparent 70%);
   pointer-events:none; mix-blend-mode: overlay;
 }
 .channel-slot .edit {
   background: transparent; color: var(--amber-dim);
   border: 1px dashed rgba(255,154,46,.4);
-  font-family: var(--mono); font-size: 10px; letter-spacing: .2em;
-  padding: 6px 10px; cursor: pointer;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .22em;
+  padding: 8px 14px; cursor: pointer;
 }
 .channel-slot .edit:hover { color: var(--amber); border-color: var(--amber); }
 
-/* ============ ROLL BUTTON ============ */
+/* ROLL BUTTON */
 .roll-wrap {
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  padding: 0 14px;
 }
 .roll-ring {
   position: relative;
-  width: 150px; height: 150px;
+  width: 168px; height: 168px;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 50% 40%, #4a443b 0%, #1a1612 60%, #0d0b08 100%);
+    radial-gradient(circle at 50% 35%, #5a5247 0%, #1a1612 55%, #08060300 100%);
   box-shadow:
     inset 0 0 0 2px #050402,
-    inset 0 -6px 12px rgba(0,0,0,.7),
-    inset 0 6px 12px rgba(255,255,255,.06),
-    0 6px 0 rgba(0,0,0,.5);
+    inset 0 -8px 16px rgba(0,0,0,.8),
+    inset 0 8px 14px rgba(255,255,255,.08),
+    0 6px 0 rgba(0,0,0,.5),
+    0 12px 24px rgba(0,0,0,.5);
   display: grid; place-items: center;
 }
+.roll-ring::before{
+  /* engraved arc text */
+  content:''; position:absolute; inset:6px; border-radius:50%;
+  border: 1px dashed rgba(110,58,24,.25);
+}
 .roll-btn {
-  width: 110px; height: 110px;
+  width: 122px; height: 122px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
   position: relative;
   background:
-    radial-gradient(circle at 50% 35%, #ff7060 0%, #d63522 50%, #8a1a10 100%);
+    radial-gradient(circle at 50% 30%, #ff8270 0%, #e63a26 45%, #a01a10 80%, #6e0f08 100%);
   box-shadow:
-    inset 0 -10px 20px rgba(0,0,0,.5),
-    inset 0 6px 14px rgba(255,255,255,.25),
+    inset 0 -12px 22px rgba(0,0,0,.55),
+    inset 0 8px 16px rgba(255,255,255,.3),
     inset 0 0 0 2px #4a0e08,
-    0 12px 0 #4a0e08,
-    0 14px 24px rgba(0,0,0,.5);
+    0 14px 0 #4a0e08,
+    0 16px 28px rgba(0,0,0,.55),
+    0 0 32px rgba(255,69,48,.15);
   transition: transform .08s cubic-bezier(.2,1.4,.4,1), box-shadow .08s;
-  font-family: var(--stencil);
+  font-family: var(--stencil); font-weight: 700;
   color: #fff;
-  letter-spacing: .26em;
-  font-size: 18px;
-  text-shadow: 0 -1px 0 rgba(0,0,0,.6), 0 0 6px rgba(255,255,255,.4);
+  letter-spacing: .28em;
+  font-size: 20px;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.7), 0 0 8px rgba(255,255,255,.5);
 }
 .roll-btn::before {
   content:''; position:absolute; inset:14px; border-radius:50%;
-  border: 1px dashed rgba(255,255,255,.18);
+  border: 1px dashed rgba(255,255,255,.22);
+  pointer-events:none;
+}
+.roll-btn::after{
+  /* glossy highlight */
+  content:''; position:absolute; left:18%; right:18%; top:14%; height:30%;
+  background: radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,.35), transparent 70%);
+  border-radius: 50%;
   pointer-events:none;
 }
 .roll-btn:hover {
   filter: brightness(1.08);
   box-shadow:
-    inset 0 -10px 20px rgba(0,0,0,.45),
-    inset 0 6px 14px rgba(255,255,255,.35),
+    inset 0 -12px 22px rgba(0,0,0,.45),
+    inset 0 8px 16px rgba(255,255,255,.4),
     inset 0 0 0 2px #4a0e08,
-    inset 0 0 30px rgba(255,200,180,.2),
-    0 12px 0 #4a0e08,
-    0 14px 28px rgba(255,69,48,.35);
+    inset 0 0 36px rgba(255,200,180,.25),
+    0 14px 0 #4a0e08,
+    0 16px 32px rgba(255,69,48,.45),
+    0 0 60px rgba(255,69,48,.35);
 }
 .roll-btn:active, .roll-btn.pressed {
-  transform: translateY(8px);
+  transform: translateY(10px);
   box-shadow:
-    inset 0 -6px 12px rgba(0,0,0,.6),
-    inset 0 4px 10px rgba(255,255,255,.15),
+    inset 0 -6px 14px rgba(0,0,0,.6),
+    inset 0 4px 10px rgba(255,255,255,.18),
     inset 0 0 0 2px #4a0e08,
     0 4px 0 #4a0e08,
     0 6px 10px rgba(0,0,0,.6);
 }
-.roll-btn[disabled] { filter: grayscale(.5) brightness(.7); cursor: not-allowed; }
+.roll-btn[disabled] { filter: grayscale(.55) brightness(.65); cursor: not-allowed; }
 .roll-label {
-  font-family: var(--stencil); font-size: 10px; letter-spacing: .35em;
-  color: var(--paint-dirty);
+  font-family: var(--stencil); font-weight: 700;
+  font-size: 10px; letter-spacing: .42em;
+  color: #6b6457;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(0,0,0,.6);
 }
 
-/* ============ BOTTOM STRIP ============ */
+/* ============ BOTTOM ============ */
 .cab-bottom {
   position: relative; z-index: 2;
-  display: grid; grid-template-columns: 1fr auto 1fr;
-  gap: 16px; align-items: center;
-  padding: 18px 28px 0;
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 18px; align-items: center;
+  padding: 22px 32px 16px;
 }
 .operator {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: #d4cfc0; color: #1a1612;
-  padding: 6px 10px;
+  display: inline-flex; align-items: center; gap: 12px;
+  background: #e8e3d2; color: #1a1612;
+  padding: 7px 12px;
   font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
-  border: 1px solid #6b6457;
-  transform: rotate(.6deg);
-  box-shadow: 0 2px 0 rgba(0,0,0,.35);
+  border: 1px solid #5c5547;
+  transform: rotate(-.6deg);
+  box-shadow: 0 2px 0 rgba(0,0,0,.4), 0 6px 12px rgba(0,0,0,.3);
 }
 .operator .av {
-  width: 28px; height: 28px; border-radius: 2px;
+  width: 32px; height: 32px; border-radius: 2px;
   background: #2a251f; color: var(--amber);
   display:grid; place-items:center;
-  font-family: var(--display); font-size: 14px;
+  font-family: var(--display); font-size: 13px;
+  border: 1px solid #5c5547;
 }
 .operator .av img { width:100%; height:100%; object-fit:cover; border-radius:2px; }
-.operator .meta b { font-weight: 700; letter-spacing: .12em; }
-.operator .meta div { color:#3a342c; }
+.operator .meta b { font-weight: 700; letter-spacing: .14em; font-size: 11px; }
+.operator .meta div { color:#3a342c; font-size: 9px; letter-spacing: .2em; margin-top: 2px; }
 
 .serial-bottom {
   text-align: right;
-  font-family: var(--mono); font-size: 10px; letter-spacing: .22em;
-  color: var(--metal-darker);
+  font-family: var(--mono); font-size: 10px; letter-spacing: .26em;
+  color: #15110d;
   text-shadow: 0 1px 0 rgba(255,255,255,.1);
-  opacity: .75;
+  opacity: .7;
 }
 
 .tag-stencil {
   font-family: var(--stencil); font-weight: 700;
-  font-size: 12px; letter-spacing: .25em;
+  font-size: 11px; letter-spacing: .35em;
   color: #15110d;
-  background: transparent;
   text-align: center;
-  text-shadow: 0 1px 0 rgba(255,255,255,.15);
+  text-shadow: 0 1px 0 rgba(255,255,255,.18);
+  opacity: .75;
 }
 
-/* Help panel */
+/* Help/error strip */
 .help {
   position: relative; z-index: 2;
-  margin: 18px 28px 0;
-  padding: 10px 14px;
+  margin: 0 32px;
+  padding: 8px 0 0;
   display: flex; justify-content: space-between; gap: 14px; align-items: center;
-  font-family: var(--mono); font-size: 10px; letter-spacing: .18em;
-  color: #15110d; opacity: .85;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .22em;
+  color: #15110d; opacity: .8;
 }
+.help .keys { display: flex; gap: 14px; }
 .help b { font-weight: 700; }
 .help .err {
   color: #ff4530;
   background: #15110d;
-  padding: 4px 8px;
+  padding: 4px 10px;
   text-shadow: 0 0 6px rgba(255,69,48,.6);
+  border: 1px solid #050402;
 }
 
-/* Big "WARNING" stencil sticker on side */
+/* Side warning sticker */
 .cab-warning {
   position: absolute;
-  right: 18px; top: 60px;
-  width: 110px;
-  background: var(--hazard-warm);
+  right: 22px; top: 78px;
+  width: 118px;
+  background: var(--hazard-bright);
   border: 2px solid #0d0b08;
   padding: 6px 8px 8px;
-  transform: rotate(2deg);
+  transform: rotate(2.2deg);
   z-index: 2;
-  box-shadow: 0 2px 0 rgba(0,0,0,.4);
+  box-shadow: 0 3px 0 rgba(0,0,0,.45), 0 6px 12px rgba(0,0,0,.35);
 }
 .cab-warning .stripe {
   height: 6px;
-  background: repeating-linear-gradient(-45deg, #0d0b08 0 6px, var(--hazard-warm) 6px 12px);
+  background: repeating-linear-gradient(-45deg, #0d0b08 0 6px, var(--hazard-bright) 6px 12px);
   margin-bottom: 4px;
 }
 .cab-warning .ttl {
   font-family: var(--stencil); font-weight: 700;
-  font-size: 14px; color: #0d0b08; letter-spacing: .12em;
+  font-size: 14px; color: #0d0b08; letter-spacing: .14em;
   text-align: center; line-height: 1;
 }
 .cab-warning .body {
-  font-family: var(--stencil); font-weight: 700; font-size: 8px;
+  font-family: var(--stencil); font-weight: 500; font-size: 8px;
   letter-spacing: .15em; color: #0d0b08; text-align: center;
-  margin-top: 4px; line-height: 1.2;
+  margin-top: 4px; line-height: 1.3;
 }
 
 /* Hidden when authed */
 .hidden { display: none !important; }
 
-/* CRT idle: subtle vertical jitter on names */
-.reel.idle .name { animation: idle-jitter 2.4s steps(1,end) infinite; }
-@keyframes idle-jitter {
-  0%, 88%, 100% { filter: blur(0); }
-  92% { filter: blur(.4px); }
+/* idle blur jitter */
+.reel.idle .name { animation: idle-flicker 5s steps(1,end) infinite; }
+@keyframes idle-flicker {
+  0%, 96%, 100% { filter: blur(0); }
+  97% { filter: blur(.5px); opacity: .9; }
+  98% { filter: blur(0); opacity: 1; }
 }
 
-/* Win pulse */
 .name.winner {
   color: #ffe5a8;
   text-shadow:
-    0 0 0 #fff,
-    -1.5px 0 0 rgba(255,69,48,.7),
-    1.5px 0 0 rgba(74,217,224,.5),
-    0 0 14px rgba(255,154,46,.9),
-    0 0 26px rgba(255,154,46,.6),
-    0 0 40px rgba(255,69,48,.4);
-  animation: winner-pulse 1s ease-in-out infinite;
-}
-@keyframes winner-pulse {
-  0%,100% { transform: translateY(-50%) scale(var(--s,1)); }
-  50% { transform: translateY(-50%) scale(calc(var(--s,1) * 1.04)); }
+    -1.8px 0 0 rgba(255,69,48,.8),
+    1.8px 0 0 rgba(74,217,224,.6),
+    0 0 16px rgba(255,154,46,.95),
+    0 0 32px rgba(255,154,46,.7),
+    0 0 60px rgba(255,69,48,.5);
 }
 
 /* Toast / system messages */
 .toast {
   position: absolute; left: 50%; bottom: 36px; transform: translateX(-50%);
-  background: rgba(10,8,5,.85);
-  border: 1px solid rgba(255,154,46,.4);
-  padding: 6px 10px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: .2em;
+  background: rgba(10,8,5,.92);
+  border: 1px solid rgba(255,154,46,.5);
+  padding: 8px 14px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .24em;
   color: var(--amber);
-  text-shadow: 0 0 6px rgba(255,154,46,.4);
-  z-index: 9; pointer-events: none;
+  text-shadow: 0 0 6px rgba(255,154,46,.5);
+  z-index: 11; pointer-events: none;
   opacity: 0; transition: opacity .15s steps(2,end);
+  box-shadow: 0 0 18px rgba(0,0,0,.6);
+  text-transform: uppercase;
 }
 .toast.show { opacity: 1; }
 
+/* ribbon over CRT for empty state */
+.empty-msg {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  z-index: 3; pointer-events: none;
+}
+.empty-msg span {
+  font-family: var(--display);
+  font-size: 22px; letter-spacing: .2em;
+  color: var(--amber-dim);
+  text-shadow: 0 0 10px rgba(255,154,46,.3);
+  border: 1px dashed rgba(255,154,46,.25);
+  padding: 12px 22px;
+  background: rgba(0,0,0,.4);
+}
+
 /* small screens */
-@media (max-width: 760px) {
-  .cab-top { grid-template-columns: 1fr; }
+@media (max-width: 820px) {
+  .cab-top { grid-template-columns: 1fr; gap: 14px; }
   .cab-top-left, .cab-top-right { justify-content: center; }
   .panel { grid-template-columns: 1fr; }
   .panel .left { grid-template-columns: 1fr 1fr; }
   .channel-slot { grid-column: span 2; }
   .roll-wrap { justify-self: center; }
   .cab-warning { display:none; }
-  .cab-bottom { grid-template-columns: 1fr; text-align:center; }
+  .cab-bottom { grid-template-columns: 1fr; text-align:center; gap: 10px; }
   .operator, .serial-bottom { justify-self: center; }
   .serial-bottom { text-align:center; }
+  .help { flex-direction: column; gap: 6px; }
 }
 </style>
 </head>
@@ -883,19 +1080,20 @@ body {
     <!-- CAB TOP -->
     <div class="cab-top">
       <div class="cab-top-left">
-        <div class="sticker">
-          <span class="row"><span class="label">UNIT</span> 04-B</span>
-          <span class="row">MFR. TWITCH ARCADES INC.</span>
-          <span class="row">CAL. 1985-04-27</span>
+        <div class="sticker s1">
+          <span class="row"><span class="label">UNIT</span> 04-B · REV 7</span>
+          <span class="row dim">MFR. TWITCH ARCADES INC.</span>
+          <span class="row dim">CAL. 1985-04-27</span>
         </div>
-        <div class="sticker" style="transform: rotate(1.4deg);">
+        <div class="sticker s2">
           <span class="row"><span class="label">CHK</span> ✓ A-G7</span>
-          <span class="row">PSU 12V / 4.2A</span>
+          <span class="row dim">PSU 12V / 4.2A</span>
+          <span class="row dim">QC INSP. 04</span>
         </div>
       </div>
       <div class="title-plate">
-        <span class="name">vip terminal</span>
-        <span class="unit">MODEL 04-B  ·  CHANNEL DRAW UNIT</span>
+        <span class="name">VIP TERMINAL</span>
+        <span class="unit">UNIT 04-B  ·  CHANNEL DRAW SUBSYSTEM</span>
       </div>
       <div class="cab-top-right">
         <div class="led-row">
@@ -924,22 +1122,25 @@ body {
 
       <div class="crt" id="crt">
         <div class="crt-inner">
-          <!-- system status top -->
+          <!-- system status -->
           <div class="sys-line" id="sysLine">
-            <span><span id="sysState">PROC. STATE</span>: <span id="sysStateVal" class="blink">IDLE</span></span>
+            <span class="left">
+              <span><span class="pip" id="sysPip"></span>STATE: <span id="sysStateVal" class="blink">IDLE</span></span>
+              <span style="color: var(--amber-dim);">LOC: <span id="sysLoc">— UNCONFIGURED</span></span>
+            </span>
             <span class="right" id="sysClock">SN 1985-04-27 · 00:00:00</span>
           </div>
 
           <!-- Reel viewport -->
           <div class="reel-viewport" id="viewport">
             <div class="reel idle" id="reel"></div>
-            <!-- payline -->
             <div class="payline">
               <div class="bar"></div>
               <div class="arrow left"></div>
               <div class="arrow right"></div>
             </div>
             <div class="reel-fade"></div>
+            <div class="empty-msg hidden" id="emptyMsg"><span>— STANDBY —</span></div>
           </div>
 
           <!-- WIN BANNER -->
@@ -952,14 +1153,13 @@ body {
             <div class="counter">SEED <b id="cntSeed">--------</b></div>
           </div>
 
-          <!-- glitch + scanlines + vignette -->
           <div class="scanglitch" id="glitch"></div>
         </div>
         <div class="scanlines"></div>
         <div class="vignette"></div>
 
         <!-- Setup overlay -->
-        <div class="setup" id="setup">
+        <div class="setup hidden" id="setup">
           <h1>AUTHORIZATION REQUIRED</h1>
           <div class="sub">— TWITCH UPLINK · IMPLICIT FLOW —</div>
           <div class="log" id="setupLog"></div>
@@ -967,7 +1167,7 @@ body {
             <input id="clientIdInput" autocomplete="off" spellcheck="false" placeholder="ENTER CLIENT ID · 30 CHARS"/>
             <button id="authBtn">CONNECT</button>
           </div>
-          <div class="hint">REGISTER AT dev.twitch.tv/console/apps · OAuth Redirect: <span id="redirHint"></span> · SCOPE: moderator:read:chatters channel:manage:vips</div>
+          <div class="hint">Register an app at <code>dev.twitch.tv/console/apps</code> · OAuth Redirect: <code id="redirHint"></code> · Scope: <code>moderator:read:chatters channel:manage:vips</code></div>
           <div class="toast" id="toast"></div>
         </div>
       </div>
@@ -978,50 +1178,53 @@ body {
       <div class="left">
         <div class="tumbler on" data-key="excludeBots">
           <div class="switch"><div class="lever"></div></div>
-          <div class="meta"><span class="k">FLT.01</span><span class="v">EXCL. BOTS</span></div>
+          <div class="ind-led"></div>
+          <div class="meta"><span class="k">FLT.01</span><span class="v">EXCL. BOTS</span><span class="s">ENABLED</span></div>
         </div>
         <div class="tumbler on" data-key="excludeBroadcaster">
           <div class="switch"><div class="lever"></div></div>
-          <div class="meta"><span class="k">FLT.02</span><span class="v">EXCL. OPER</span></div>
+          <div class="ind-led"></div>
+          <div class="meta"><span class="k">FLT.02</span><span class="v">EXCL. OPER</span><span class="s">ENABLED</span></div>
         </div>
         <div class="tumbler on" data-key="noRepeat">
           <div class="switch"><div class="lever"></div></div>
-          <div class="meta"><span class="k">FLT.03</span><span class="v">NO REPEAT</span></div>
+          <div class="ind-led"></div>
+          <div class="meta"><span class="k">FLT.03</span><span class="v">NO REPEAT</span><span class="s">ENABLED</span></div>
         </div>
 
         <div class="channel-slot">
-          <span class="k">ROLL CHAMBER · TARGET CHANNEL</span>
+          <span class="k">ROLL CHAMBER<br/>TGT. CHANNEL</span>
           <span class="label-maker" id="channelLbl">— UNCONFIGURED —</span>
           <button class="edit" id="editChannel">EDIT</button>
         </div>
       </div>
 
       <div class="roll-wrap">
-        <button class="roll-btn" id="rollBtn" disabled>ROLL</button>
+        <div class="roll-ring">
+          <button class="roll-btn" id="rollBtn" disabled>ROLL</button>
+        </div>
         <span class="roll-label">EXECUTE · DRAW</span>
       </div>
     </div>
 
-    <!-- HELP/error strip -->
+    <!-- HELP -->
     <div class="help">
-      <span><b>F1</b> AUTH · <b>SPACE</b> ROLL · <b>1/2/3</b> TUMBLERS</span>
+      <span class="keys"><span><b>F1</b> AUTH</span><span><b>SPACE</b> ROLL</span><span><b>1/2/3</b> TUMBLERS</span></span>
       <span id="errStrip"></span>
     </div>
 
-    <!-- Bottom (operator + serial) -->
+    <!-- Bottom strip -->
     <div class="cab-bottom">
-      <div>
-        <div class="operator" id="operatorTag">
-          <div class="av" id="opAv">??</div>
-          <div class="meta"><b id="opName">OPERATOR</b><div id="opSub">— SIGNED OUT —</div></div>
-        </div>
+      <div class="operator" id="operatorTag">
+        <div class="av" id="opAv">??</div>
+        <div class="meta"><b id="opName">OPERATOR</b><div id="opSub">— SIGNED OUT —</div></div>
       </div>
       <div class="tag-stencil">PROPERTY OF TWITCH ARCADES INC · EST. 2014 · TRUST NO MOD</div>
       <div class="serial-bottom">SN: 1985-04-27 · BUILD 04B · KOR-12</div>
     </div>
 
     <!-- BOTTOM HAZARD -->
-    <div class="hazard" style="margin-top:18px;"></div>
+    <div class="hazard"></div>
   </div>
 </div>
 
@@ -1042,12 +1245,11 @@ const Audio = (() => {
     g.gain.exponentialRampToValueAtTime(peak, t + a);
     g.gain.exponentialRampToValueAtTime(0.0001, t + a + p + r);
   }
-  function thunk() { // ROLL button heavy thunk
+  function thunk() {
     const c = ensure(), t = c.currentTime;
     const o = c.createOscillator(), g = c.createGain();
     o.type = 'sine'; o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(38, t+0.18);
     o.connect(g).connect(c.destination); env(g,t,0.005,0.04,0.18,0.7); o.start(t); o.stop(t+0.3);
-    // metallic click on top
     const n = c.createBufferSource(), buf = c.createBuffer(1, c.sampleRate*0.05, c.sampleRate), d = buf.getChannelData(0);
     for (let i=0;i<d.length;i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/d.length, 4);
     n.buffer = buf;
@@ -1094,11 +1296,9 @@ const Audio = (() => {
   }
   function kerchunk() {
     const c = ensure(), t = c.currentTime;
-    // low thud
     const o = c.createOscillator(), g = c.createGain();
     o.type='sine'; o.frequency.setValueAtTime(180, t); o.frequency.exponentialRampToValueAtTime(28, t+0.4);
     o.connect(g).connect(c.destination); env(g,t,0.005,0.05,0.45,0.9); o.start(t); o.stop(t+0.55);
-    // metallic clack
     const n = c.createBufferSource(), buf = c.createBuffer(1, c.sampleRate*0.12, c.sampleRate), d = buf.getChannelData(0);
     for (let i=0;i<d.length;i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/d.length, 3);
     n.buffer = buf;
@@ -1113,7 +1313,6 @@ const Audio = (() => {
     f.type='lowpass'; f.frequency.value=900;
     g.gain.value = 0.0001;
     o.connect(f).connect(g).connect(c.destination);
-    // AAAOOWWW: pitch sweeps up then down
     o.frequency.setValueAtTime(180, t);
     o.frequency.linearRampToValueAtTime(420, t+0.55);
     o.frequency.linearRampToValueAtTime(160, t+1.6);
@@ -1138,8 +1337,8 @@ const Audio = (() => {
    ============================================================ */
 const state = {
   filters: { excludeBots: true, excludeBroadcaster: true, noRepeat: true },
-  channel: null,           // { id, login, display_name, profile_image_url }
-  user:    null,           // operator (the authed user)
+  channel: null,
+  user:    null,
   token:   sessionStorage.getItem('vt_token') || null,
   clientId: localStorage.getItem('vt_client_id') || '',
   chatters: [],
@@ -1151,26 +1350,35 @@ const KNOWN_BOTS = new Set([
   'nightbot','streamelements','streamlabs','moobot','fossabot','wizebot','soundalerts','blerp','sery_bot','kofistreambot','pretzelrocks','commanderroot','own3d','tangiabot','songlistbot','songlistgg'
 ]);
 
+/* Demo names for visual atmosphere when not authed */
+const DEMO_NAMES = [
+  'NIGHTSHIFT_77','UNIT_04B','OPERATOR_K','SIG.ALPHA','ROUTINE_GUEST','CRT_HEAD','BIT_FOREMAN',
+  'COLDBOOT','SOLARFLARE','HAZARD.YELLOW','HEX_DRIFTER','HUM_CASTLE','GHOST_OF_HELIX','LATE_VOID',
+  'M.PROTOCOL','NULL.CHANNEL','PIXELRAT','PRION_X','RUSTED_SIGNAL','S.A.R.A','TUNGSTEN_77','VHS_SCREAM',
+  'WARMGREY','XENON_OP','YIELDLINE','ZEROTH_FLOOR','LOCH.SECURITY','PALEHORSE','TEMP_AGENT_19'
+];
+
+const REDIR = location.origin + location.pathname;
+document.getElementById('redirHint').textContent = REDIR;
+
 /* ============================================================
    CRT TYPEWRITER LOG (setup)
    ============================================================ */
 const setupLog = document.getElementById('setupLog');
-const REDIR = location.origin + location.pathname;
-document.getElementById('redirHint').textContent = REDIR;
 
 const bootLines = [
-  ['info', 'BOOT...UNIT 04-B'],
-  ['',     'POST 01: PSU.......OK'],
-  ['',     'POST 02: CRT.......OK'],
-  ['',     'POST 03: REEL......OK'],
-  ['',     'POST 04: SOLENOID..OK'],
-  ['warn', 'POST 05: UPLINK....HALT  --  CREDENTIALS MISSING'],
+  ['info', '[BOOT] UNIT 04-B / FIRMWARE 7.04'],
+  ['',     'POST 01 · PSU.......OK'],
+  ['',     'POST 02 · CRT.......OK'],
+  ['',     'POST 03 · REEL......OK'],
+  ['',     'POST 04 · SOLENOID..OK'],
+  ['warn', 'POST 05 · UPLINK....HALT  --  CREDENTIALS MISSING'],
   ['',     ''],
-  ['info', 'INSTRUCTION 04-B / SECTION 7.2.1'],
+  ['info', '[INSTRUCTION 04-B / SECTION 7.2.1]'],
   ['',     '> REGISTER APPLICATION AT dev.twitch.tv/console/apps'],
   ['',     '> SET REDIRECT TO ABOVE STRING (EXACT MATCH)'],
   ['',     '> COPY CLIENT ID INTO INPUT BELOW'],
-  ['',     '> ENGAGE [CONNECT] · IMPLICIT FLOW · NO SERVER NEEDED'],
+  ['',     '> ENGAGE [CONNECT] · IMPLICIT FLOW · NO SERVER REQUIRED'],
   ['ok',   'AWAITING OPERATOR INPUT...'],
 ];
 async function typeLine(cls, text) {
@@ -1180,7 +1388,7 @@ async function typeLine(cls, text) {
   setupLog.scrollTop = setupLog.scrollHeight;
   for (let i=0; i<text.length; i++) {
     el.textContent += text[i];
-    if (text[i] !== ' ' && Math.random() < 0.4) Audio.typeBeep();
+    if (text[i] !== ' ' && Math.random() < 0.35) Audio.typeBeep();
     await new Promise(r => setTimeout(r, 8 + Math.random()*16));
   }
   setupLog.scrollTop = setupLog.scrollHeight;
@@ -1193,7 +1401,7 @@ async function runTypewriter() {
 }
 
 /* ============================================================
-   CLOCK (system status)
+   CLOCK
    ============================================================ */
 function tickClock() {
   const d = new Date();
@@ -1204,7 +1412,7 @@ function tickClock() {
 setInterval(tickClock, 500); tickClock();
 
 /* ============================================================
-   GLITCH (random scanline pass)
+   GLITCH
    ============================================================ */
 const glitch = document.getElementById('glitch');
 function scheduleGlitch() {
@@ -1225,8 +1433,10 @@ document.querySelectorAll('.tumbler').forEach(t => {
   t.addEventListener('click', () => {
     t.classList.toggle('on');
     state.filters[t.dataset.key] = t.classList.contains('on');
+    t.querySelector('.s').textContent = t.classList.contains('on') ? 'ENABLED' : 'DISABLED';
     Audio.clickPlastic();
     refreshCounts();
+    seedReel();
   });
 });
 
@@ -1234,7 +1444,7 @@ document.querySelectorAll('.tumbler').forEach(t => {
    CHANNEL EDIT
    ============================================================ */
 document.getElementById('editChannel').addEventListener('click', () => {
-  if (!state.token) { showToast('SIGN IN FIRST'); return; }
+  if (!state.token) { showToast('AUTH REQUIRED'); return; }
   promptChannel();
 });
 
@@ -1248,6 +1458,7 @@ async function promptChannel() {
     if (!u.data?.[0]) { showToast('CHANNEL NOT FOUND'); return; }
     state.channel = u.data[0];
     document.getElementById('channelLbl').textContent = login.toUpperCase();
+    document.getElementById('sysLoc').textContent = login.toUpperCase();
     enableRollIfReady();
     await loadChatters();
   } catch (e) { showToast('LOOKUP FAILED'); }
@@ -1318,9 +1529,10 @@ async function bootAuth() {
     const me = await helix('users');
     state.user = me.data?.[0];
     if (!state.user) throw new Error('no user');
-    state.channel = state.user; // default target = self
+    state.channel = state.user;
     paintOperator();
     document.getElementById('channelLbl').textContent = (state.user.login || '').toUpperCase();
+    document.getElementById('sysLoc').textContent = (state.user.login || '').toUpperCase();
     showSetup(false);
     setSysState('READY', 'amber');
     await loadChatters();
@@ -1354,7 +1566,7 @@ function showSetup(show, errMsg) {
 async function loadChatters() {
   if (!state.token || !state.channel || !state.user) return;
   const broad = state.channel.id;
-  const mod   = state.user.id; // helix requires moderator_id
+  const mod   = state.user.id;
   let cursor = null, all = [];
   setSysState('LOADING POOL', 'cyan');
   try {
@@ -1394,19 +1606,11 @@ function refreshCounts() {
    REEL
    ============================================================ */
 const reel = document.getElementById('reel');
-const viewport = document.getElementById('viewport');
-
-const ROW_HEIGHT = 64;        // pixel step between names
-const VISIBLE_ROWS = 9;       // build a virtual strip with this many around the payline
-
-let stripNames = [];          // current names painted in DOM
-let reelOffset = 0;           // current translateY (negative = up)
+const ROW_HEIGHT = 64;
+const VISIBLE_ROWS = 9;
 let rowEls = [];
 
 function buildStrip(centerName, padNames) {
-  // we will render a strip of >>> rows. Index 0 is the payline center.
-  // Visual order: ... -2, -1, 0(center), 1, 2 ...
-  // Names array given as [center, ...rest] — we just place center then random.
   reel.innerHTML = '';
   rowEls = [];
   const HALF = Math.floor(VISIBLE_ROWS/2);
@@ -1414,8 +1618,8 @@ function buildStrip(centerName, padNames) {
     const row = document.createElement('div');
     row.className = 'name';
     const dist = Math.abs(i);
-    const scale = Math.max(0.55, 1 - dist*0.13);
-    const opacity = Math.max(0.12, 1 - dist*0.20);
+    const scale = Math.max(0.45, 1 - dist*0.13);
+    const opacity = Math.max(0.08, 1 - dist*0.20);
     row.style.position = 'absolute';
     row.style.left = '0'; row.style.right = '0';
     row.style.top = `calc(50% + ${i*ROW_HEIGHT}px)`;
@@ -1424,19 +1628,28 @@ function buildStrip(centerName, padNames) {
     row.style.opacity = opacity;
     row.style.fontSize = `${Math.round(40*scale)}px`;
     if (dist === 0) {
-      row.textContent = centerName || '— EMPTY POOL —';
+      row.textContent = centerName || '— STANDBY —';
     } else {
-      row.textContent = (padNames[(Math.abs(i*3)+i*7) % padNames.length] || '—').toUpperCase();
+      row.textContent = (padNames[(Math.abs(i*3)+i*7+13) % Math.max(1,padNames.length)] || '—').toUpperCase();
     }
     reel.appendChild(row);
     rowEls.push(row);
   }
 }
 
-function seedReel() {
+function poolNames() {
   const el = eligible();
-  const names = el.length ? el.map(c => (c.user_name || c.user_login).toUpperCase()) : ['— EMPTY POOL —'];
-  buildStrip(names[Math.floor(Math.random()*names.length)] || '—', names);
+  if (el.length) return el.map(c => (c.user_name || c.user_login).toUpperCase());
+  return DEMO_NAMES.slice();
+}
+
+function seedReel() {
+  const names = poolNames();
+  const center = state.token ? (names[Math.floor(Math.random()*names.length)] || '— STANDBY —') : '— OFFLINE —';
+  buildStrip(center, names);
+  const empty = document.getElementById('emptyMsg');
+  if (state.token && eligible().length === 0) empty.classList.remove('hidden');
+  else empty.classList.add('hidden');
 }
 
 function setCenterName(name) {
@@ -1447,15 +1660,17 @@ function setCenterName(name) {
 
 function setSysState(text, tone) {
   const v = document.getElementById('sysStateVal');
+  const pip = document.getElementById('sysPip');
   v.textContent = text;
   v.style.color = tone === 'red' ? 'var(--red)' :
                   tone === 'green' ? 'var(--green)' :
                   tone === 'cyan' ? 'var(--cyan)' :
                   tone === 'amber' ? 'var(--amber)' : 'var(--cyan)';
   v.style.textShadow = '0 0 6px currentColor';
+  pip.classList.toggle('red', tone === 'red');
 }
 
-/* ---- Spin animation ---- */
+/* Spin animation */
 function spinReel(winnerName, onDone) {
   if (state.spinning) return;
   state.spinning = true;
@@ -1465,25 +1680,18 @@ function spinReel(winnerName, onDone) {
   document.getElementById('ledWin').classList.remove('on');
   document.getElementById('winBanner').classList.remove('show');
   reel.classList.remove('idle');
+  const half = (rowEls.length - 1) / 2;
+  if (rowEls[half]) rowEls[half].classList.remove('winner');
   Audio.humStart();
 
-  const pool = eligible().map(c => (c.user_name || c.user_login).toUpperCase());
-  if (!pool.length) pool.push('— NO ELIGIBLE —');
-
-  // We build a long roll of names that scrolls through the payline.
-  // The center row will keep getting its text replaced as we "tick".
-  // Logical offset (in rows) advances over time. After deceleration,
-  // we overshoot by 2 rows then bounce back to land on winner.
-
-  const total = 60 + Math.floor(Math.random()*15);   // logical ticks
-  const overshoot = 2;                               // ratchet back
-  const finalIndex = total + overshoot;              // peak
-  const landIndex = total;                           // where we settle
+  const pool = poolNames();
+  const total = 60 + Math.floor(Math.random()*15);
+  const overshoot = 2;
 
   const start = performance.now();
-  const accelDur = 220;     // initial inertia
+  const accelDur = 220;
   const fullDur  = 2200 + Math.random()*600;
-  const decelDur = 1400;    // includes overshoot+bounce
+  const decelDur = 1400;
 
   let lastWholeIdx = -1;
   let phase = 'accel';
@@ -1491,8 +1699,6 @@ function spinReel(winnerName, onDone) {
   function easeOutCubic(t) { return 1 - Math.pow(1-t, 3); }
   function easeInCubic(t)  { return t*t*t; }
   function bounceBack(t) {
-    // Returns position in rows from 0..1: goes to 1+overshoot/total then back to 1
-    // We split: 0..0.78 ease-out into peak, 0.78..1 ease-out back
     const overFrac = overshoot / total;
     if (t < 0.78) {
       const k = easeOutCubic(t/0.78);
@@ -1506,48 +1712,42 @@ function spinReel(winnerName, onDone) {
 
   function frame(now) {
     const elapsed = now - start;
-    let pos; // current logical index (float)
+    let pos;
     if (elapsed < accelDur) {
       phase = 'accel';
       const t = elapsed / accelDur;
-      pos = easeInCubic(t) * (total * 0.05); // cover ~5% in accel
+      pos = easeInCubic(t) * (total * 0.05);
     } else if (elapsed < accelDur + fullDur) {
       phase = 'cruise';
       const baseDone = total * 0.05;
       const t = (elapsed - accelDur) / fullDur;
-      pos = baseDone + t * (total * 0.55); // cruise covers ~55%
+      pos = baseDone + t * (total * 0.55);
     } else if (elapsed < accelDur + fullDur + decelDur) {
       phase = 'decel';
       const baseDone = total * 0.6;
       const t = (elapsed - accelDur - fullDur) / decelDur;
-      // bounceBack returns 0..1; map to remaining 40% (+ overshoot bounce)
-      const rem = total - baseDone; // 40% of total
+      const rem = total - baseDone;
       pos = baseDone + bounceBack(t) * rem;
     } else {
-      // settle
       pos = total;
     }
 
     const wholeIdx = Math.floor(pos);
     if (wholeIdx !== lastWholeIdx) {
       lastWholeIdx = wholeIdx;
-      // change center name
       let name;
       if (wholeIdx >= total - 1) {
-        // last few = winner so we end clean
         name = winnerName;
       } else {
         name = pool[(wholeIdx * 7919 + 13) % pool.length];
       }
       setCenterName(name);
-      // also update neighbors
-      const half = (rowEls.length - 1) / 2;
+      const halfL = (rowEls.length - 1) / 2;
       for (let i = 0; i < rowEls.length; i++) {
-        const dist = Math.abs(i - half);
+        const dist = Math.abs(i - halfL);
         if (dist === 0) continue;
         rowEls[i].textContent = pool[(wholeIdx * 31 + i*113) % pool.length] || '—';
       }
-      // pitch slows down to mimic mechanical ticks
       let pitch = 1;
       if (phase === 'accel') pitch = 0.6 + (elapsed/accelDur)*0.4;
       else if (phase === 'cruise') pitch = 1.0;
@@ -1555,34 +1755,31 @@ function spinReel(winnerName, onDone) {
       Audio.tick(pitch);
     }
 
-    // visual blur during cruise
     let blur = 0;
-    if (phase === 'cruise') blur = 1.4;
-    else if (phase === 'accel') blur = (elapsed/accelDur) * 1.4;
+    if (phase === 'cruise') blur = 1.6;
+    else if (phase === 'accel') blur = (elapsed/accelDur) * 1.6;
     else if (phase === 'decel') {
       const t = (elapsed - accelDur - fullDur) / decelDur;
-      blur = Math.max(0, 1.4 * (1 - t));
+      blur = Math.max(0, 1.6 * (1 - t));
     }
     rowEls.forEach((r, i) => {
-      const half = (rowEls.length - 1) / 2;
-      const dist = Math.abs(i - half);
-      r.style.filter = `blur(${blur * (dist === 0 ? 0.6 : 1)}px)`;
+      const halfL = (rowEls.length - 1) / 2;
+      const dist = Math.abs(i - halfL);
+      r.style.filter = `blur(${blur * (dist === 0 ? 0.4 : 1)}px)`;
     });
 
     if (elapsed < accelDur + fullDur + decelDur) {
       requestAnimationFrame(frame);
     } else {
-      // landed
       setCenterName(winnerName);
       rowEls.forEach(r => r.style.filter = 'none');
-      const half = (rowEls.length - 1) / 2;
-      rowEls[half].classList.add('winner');
-      // slight bounce on the winner element
-      rowEls[half].animate(
-        [{ transform: 'translateY(-50%) scale(1.15)' },
-         { transform: 'translateY(-50%) scale(.95)' },
+      const halfL = (rowEls.length - 1) / 2;
+      rowEls[halfL].classList.add('winner');
+      rowEls[halfL].animate(
+        [{ transform: 'translateY(-50%) scale(1.18)' },
+         { transform: 'translateY(-50%) scale(.96)' },
          { transform: 'translateY(-50%) scale(1.0)' }],
-        { duration: 320, easing: 'cubic-bezier(.2,1.6,.4,1)' }
+        { duration: 380, easing: 'cubic-bezier(.2,1.6,.4,1)' }
       );
       Audio.humStop();
       Audio.kerchunk();
@@ -1614,26 +1811,22 @@ rollBtn.addEventListener('click', async () => {
   Audio.ensure();
   Audio.thunk();
   rollBtn.classList.add('pressed');
-  setTimeout(() => rollBtn.classList.remove('pressed'), 140);
+  setTimeout(() => rollBtn.classList.remove('pressed'), 160);
 
-  // refresh chatters before each roll for fairness
   await loadChatters();
   const pool = eligible();
   if (!pool.length) { showToast('NO ELIGIBLE CHATTERS'); return; }
 
-  // crypto-fair pick
   const buf = new Uint32Array(1);
   crypto.getRandomValues(buf);
   const idx = buf[0] % pool.length;
   const winner = pool[idx];
   state.winner = winner;
 
-  // seed display
   document.getElementById('cntSeed').textContent = buf[0].toString(16).toUpperCase().padStart(8,'0');
 
   rollBtn.disabled = true;
   spinReel((winner.user_name || winner.user_login).toUpperCase(), async () => {
-    // Save winner
     if (state.channel) {
       const k = state.channel.login;
       const list = state.pastWinners[k] || [];
@@ -1641,7 +1834,6 @@ rollBtn.addEventListener('click', async () => {
       state.pastWinners[k] = list;
       localStorage.setItem('vt_past_winners', JSON.stringify(state.pastWinners));
     }
-    // Try VIP grant
     try {
       await helix(`channels/vips?broadcaster_id=${state.channel.id}&user_id=${winner.user_id}`, { method: 'POST' });
       showToast('VIP GRANTED · ' + (winner.user_name || winner.user_login).toUpperCase());
@@ -1657,10 +1849,15 @@ rollBtn.addEventListener('click', async () => {
    ============================================================ */
 let toastTimer;
 function showToast(msg) {
-  const el = document.getElementById('toast') || (() => {
-    const x = document.createElement('div'); x.className='toast'; x.id='toastFloat';
-    document.getElementById('crt').appendChild(x); return x;
-  })();
+  let el = document.getElementById('toast');
+  if (!document.getElementById('setup').classList.contains('hidden') === false || !el) {
+    el = document.getElementById('toastFloat');
+    if (!el) {
+      el = document.createElement('div');
+      el.className = 'toast'; el.id = 'toastFloat';
+      document.getElementById('crt').appendChild(el);
+    }
+  }
   el.textContent = msg;
   el.classList.add('show');
   clearTimeout(toastTimer);
@@ -1684,8 +1881,6 @@ document.addEventListener('keydown', (e) => {
    ============================================================ */
 seedReel();
 bootAuth();
-
-/* Pre-prime audio context on first user gesture (browser autoplay policies) */
 window.addEventListener('pointerdown', () => Audio.ensure(), { once: true });
 </script>
 </body>
