@@ -82,6 +82,29 @@ body::after{
   position: relative;
   z-index: 1;
 }
+/* Warm floor reflection — yellow paint bouncing off the ground under the cabinet */
+.room::before {
+  content: '';
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 50vh;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(900px 220px at 50% 100%, rgba(255, 170, 80, .09), transparent 70%),
+    radial-gradient(500px 140px at 50% 100%, rgba(255, 200, 100, .05), transparent 75%);
+}
+/* Edge vignette + faint neighbor-cabinet silhouette on the right */
+.room::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 150% 100% at 50% 50%, transparent 55%, rgba(0,0,0,.6) 100%),
+    linear-gradient(90deg, transparent 0%, transparent 92%, rgba(20,15,8,.45) 96%, rgba(40,30,15,.18) 100%);
+}
 
 /* ============ CABINET ============ */
 .cabinet {
@@ -539,12 +562,15 @@ body::after{
 
 /* WIN BANNER */
 .win-banner {
-  position: absolute; left: 22px; right: 22px; top: 50px;
+  position: absolute; left: 22px; right: 22px; bottom: 38px;
   text-align: center;
-  font-family: var(--mono); font-size: 12px; letter-spacing: .4em;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .35em;
   color: var(--red);
-  text-shadow: 0 0 10px rgba(255,69,48,.8);
+  text-shadow: 0 0 8px rgba(255,69,48,.7);
   opacity: 0; pointer-events: none; z-index: 4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .win-banner.show { opacity: 1; animation: blink-fast .35s steps(2,end) infinite; }
 
@@ -976,12 +1002,12 @@ body::after{
 /* Side warning sticker */
 .cab-warning {
   position: absolute;
-  right: 22px; top: 78px;
+  left: -8px; top: 230px;
   width: 118px;
   background: var(--hazard-bright);
   border: 2px solid #0d0b08;
   padding: 6px 8px 8px;
-  transform: rotate(2.2deg);
+  transform: rotate(-4deg);
   z-index: 2;
   box-shadow: 0 3px 0 rgba(0,0,0,.45), 0 6px 12px rgba(0,0,0,.35);
 }
@@ -1606,27 +1632,35 @@ function refreshCounts() {
    REEL
    ============================================================ */
 const reel = document.getElementById('reel');
-const ROW_HEIGHT = 64;
-const VISIBLE_ROWS = 9;
+const ROW_HEIGHT = 60;
+const VISIBLE_ROWS = 7;
 let rowEls = [];
 
 function buildStrip(centerName, padNames) {
   reel.innerHTML = '';
   rowEls = [];
   const HALF = Math.floor(VISIBLE_ROWS/2);
+  // Sharper perspective via progressive scale + nonlinear top spacing
+  const scaleFor = (d) => d === 0 ? 1.0 : d === 1 ? 0.78 : d === 2 ? 0.56 : 0.36;
+  const opacityFor = (d) => d === 0 ? 1.0 : d === 1 ? 0.55 : d === 2 ? 0.25 : 0.10;
+  // Progressive offset: each row a bit closer to center than the previous (cylinder effect)
+  const offsetFor = (d) => d === 0 ? 0 : d === 1 ? 1.0 : d === 2 ? 1.78 : 2.36;
   for (let i = -HALF; i <= HALF; i++) {
     const row = document.createElement('div');
     row.className = 'name';
     const dist = Math.abs(i);
-    const scale = Math.max(0.45, 1 - dist*0.13);
-    const opacity = Math.max(0.08, 1 - dist*0.20);
+    const dir = i < 0 ? -1 : i > 0 ? 1 : 0;
+    const scale = scaleFor(dist);
+    const opacity = opacityFor(dist);
+    const topPx = dir * offsetFor(dist) * ROW_HEIGHT;
     row.style.position = 'absolute';
     row.style.left = '0'; row.style.right = '0';
-    row.style.top = `calc(50% + ${i*ROW_HEIGHT}px)`;
+    row.style.top = `calc(50% + ${topPx}px)`;
     row.style.transform = `translateY(-50%) scale(${scale})`;
     row.style.setProperty('--s', scale);
     row.style.opacity = opacity;
-    row.style.fontSize = `${Math.round(40*scale)}px`;
+    // Fixed base size — scale handles perspective. Center pops via clamp.
+    row.style.fontSize = 'clamp(34px, 4vw, 48px)';
     if (dist === 0) {
       row.textContent = centerName || '— STANDBY —';
     } else {
