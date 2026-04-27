@@ -3,50 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VIP ROULETTE — Twitch arcade giveaway</title>
+<title>VIP ROULETTE — Twitch Slot Machine</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:        #050308;
-    --bg-2:      #0c0814;
-    --bg-3:      #15101e;
+    --bg:        #0a0414;
+    --bg-2:      #14081e;
+    --velvet:    #2a0a1e;
+    --velvet-d:  #180510;
+
+    --gold:      #ffd54a;
+    --gold-hi:   #fff0a8;
+    --gold-d:    #b8941f;
+    --gold-dd:   #5a4810;
+    --gold-ddd:  #2e2408;
+    --brass:     #d4a843;
+
+    --cherry:    #ff2e5c;
+    --cherry-d:  #4a0818;
+    --cherry-dd: #1f0408;
 
     --cyan:      #5cf5ff;
     --cyan-d:    #0a3d44;
-    --cyan-dd:   #051f24;
-
     --green:     #56ff5e;
     --green-d:   #0c4413;
-    --green-dd:  #051f06;
-
     --red:       #ff4d4d;
     --red-d:     #4d0a0a;
-    --red-dd:    #200505;
-
     --yellow:    #ffe14a;
     --yellow-d:  #443d0a;
-    --yellow-dd: #1f1c05;
-
     --orange:    #ff9b3a;
-    --orange-d:  #4d2a08;
-    --orange-dd: #221204;
-
     --magenta:   #ff5cf0;
-    --magenta-d: #4a0d44;
-
     --blue:      #5c9cff;
     --blue-d:    #0a234d;
-    --blue-dd:   #051022;
 
-    --paper:     #ebe6f5;
-    --paper-dim: #8a8499;
-    --paper-faint: #4a4659;
-
-    --bezel:     #2a2438;
-    --bezel-hi:  #4a4258;
-    --bezel-lo:  #18141f;
+    --paper:     #f5e9d0;
+    --paper-dim: #b3a48c;
+    --paper-faint: #6a5e4a;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -56,7 +50,6 @@
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
   }
-  svg { image-rendering: pixelated; }
 
   body {
     background: var(--bg);
@@ -71,28 +64,49 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* ─────────── Animated chart background ─────────── */
-  .bg-chart {
+  /* ─────────── Casino starfield background ─────────── */
+  .stars {
     position: fixed;
     inset: 0;
     z-index: 0;
-    overflow: hidden;
     pointer-events: none;
-    opacity: 0.18;
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(2px 2px at 20px 30px, var(--gold) 50%, transparent 50%),
+      radial-gradient(1px 1px at 60px 70px, var(--cyan) 50%, transparent 50%),
+      radial-gradient(2px 2px at 110px 40px, var(--magenta) 50%, transparent 50%),
+      radial-gradient(1px 1px at 50px 160px, var(--paper) 50%, transparent 50%),
+      radial-gradient(1px 1px at 130px 110px, var(--green) 50%, transparent 50%),
+      radial-gradient(2px 2px at 170px 200px, var(--gold) 50%, transparent 50%),
+      radial-gradient(1px 1px at 220px 80px, var(--yellow) 50%, transparent 50%),
+      radial-gradient(1px 1px at 280px 150px, var(--cyan) 50%, transparent 50%),
+      radial-gradient(2px 2px at 320px 60px, var(--paper) 50%, transparent 50%),
+      radial-gradient(1px 1px at 360px 220px, var(--orange) 50%, transparent 50%);
+    background-size: 400px 280px;
+    background-repeat: repeat;
+    opacity: 0.5;
+    animation: starDrift 90s linear infinite, starTwinkle 3s ease-in-out infinite;
   }
-  .bg-chart::before {
+  .stars::after {
     content: '';
     position: absolute;
-    inset: -10% -50%;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='200' viewBox='0 0 320 200'><g shape-rendering='crispEdges'><rect x='4' y='80' width='6' height='40' fill='%2356ff5e'/><rect x='6' y='60' width='2' height='80' fill='%2356ff5e'/><rect x='18' y='100' width='6' height='30' fill='%23ff4d4d'/><rect x='20' y='90' width='2' height='50' fill='%23ff4d4d'/><rect x='32' y='70' width='6' height='50' fill='%2356ff5e'/><rect x='34' y='50' width='2' height='90' fill='%2356ff5e'/><rect x='46' y='90' width='6' height='40' fill='%23ff4d4d'/><rect x='48' y='80' width='2' height='60' fill='%23ff4d4d'/><rect x='60' y='50' width='6' height='40' fill='%2356ff5e'/><rect x='62' y='30' width='2' height='80' fill='%2356ff5e'/><rect x='74' y='40' width='6' height='30' fill='%2356ff5e'/><rect x='76' y='25' width='2' height='60' fill='%2356ff5e'/><rect x='88' y='60' width='6' height='40' fill='%23ff4d4d'/><rect x='90' y='40' width='2' height='80' fill='%23ff4d4d'/><rect x='102' y='80' width='6' height='30' fill='%2356ff5e'/><rect x='104' y='65' width='2' height='60' fill='%2356ff5e'/><rect x='116' y='100' width='6' height='40' fill='%23ff4d4d'/><rect x='118' y='90' width='2' height='70' fill='%23ff4d4d'/><rect x='130' y='70' width='6' height='30' fill='%2356ff5e'/><rect x='132' y='55' width='2' height='60' fill='%2356ff5e'/><rect x='144' y='80' width='6' height='40' fill='%2356ff5e'/><rect x='146' y='60' width='2' height='80' fill='%2356ff5e'/><rect x='158' y='110' width='6' height='30' fill='%23ff4d4d'/><rect x='160' y='100' width='2' height='50' fill='%23ff4d4d'/><rect x='172' y='90' width='6' height='40' fill='%2356ff5e'/><rect x='174' y='70' width='2' height='80' fill='%2356ff5e'/><rect x='186' y='50' width='6' height='30' fill='%2356ff5e'/><rect x='188' y='35' width='2' height='60' fill='%2356ff5e'/><rect x='200' y='30' width='6' height='40' fill='%23ff4d4d'/><rect x='202' y='20' width='2' height='60' fill='%23ff4d4d'/><rect x='214' y='60' width='6' height='30' fill='%2356ff5e'/><rect x='216' y='45' width='2' height='60' fill='%2356ff5e'/><rect x='228' y='40' width='6' height='50' fill='%2356ff5e'/><rect x='230' y='25' width='2' height='80' fill='%2356ff5e'/><rect x='242' y='80' width='6' height='30' fill='%23ff4d4d'/><rect x='244' y='70' width='2' height='50' fill='%23ff4d4d'/><rect x='256' y='50' width='6' height='40' fill='%2356ff5e'/><rect x='258' y='35' width='2' height='70' fill='%2356ff5e'/><rect x='270' y='40' width='6' height='30' fill='%2356ff5e'/><rect x='272' y='25' width='2' height='60' fill='%2356ff5e'/><rect x='284' y='80' width='6' height='40' fill='%23ff4d4d'/><rect x='286' y='65' width='2' height='70' fill='%23ff4d4d'/><rect x='298' y='30' width='6' height='30' fill='%2356ff5e'/><rect x='300' y='15' width='2' height='60' fill='%2356ff5e'/></g></svg>");
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 80px 50px, var(--magenta) 50%, transparent 50%),
+      radial-gradient(2px 2px at 200px 120px, var(--gold) 50%, transparent 50%),
+      radial-gradient(1px 1px at 300px 180px, var(--cyan) 50%, transparent 50%),
+      radial-gradient(1px 1px at 50px 220px, var(--paper) 50%, transparent 50%),
+      radial-gradient(2px 2px at 380px 30px, var(--yellow) 50%, transparent 50%);
+    background-size: 420px 260px;
     background-repeat: repeat;
-    background-size: 320px 200px;
-    animation: bgScroll 60s linear infinite;
-    image-rendering: pixelated;
+    animation: starDrift2 60s linear infinite reverse, starTwinkle 4s ease-in-out infinite reverse;
+    opacity: 0.6;
   }
-  @keyframes bgScroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-320px); }
+  @keyframes starDrift { from { background-position: 0 0; } to { background-position: -400px 280px; } }
+  @keyframes starDrift2 { from { background-position: 0 0; } to { background-position: 420px -260px; } }
+  @keyframes starTwinkle {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.6); }
   }
 
   /* ─────────── CRT scanlines + vignette ─────────── */
@@ -101,11 +115,8 @@
     position: fixed;
     inset: 0;
     background-image: repeating-linear-gradient(
-      0deg,
-      rgba(0,0,0,0) 0,
-      rgba(0,0,0,0) 2px,
-      rgba(0,0,0,0.4) 2px,
-      rgba(0,0,0,0.4) 3px
+      0deg, rgba(0,0,0,0) 0, rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0.4) 2px, rgba(0,0,0,0.4) 3px
     );
     pointer-events: none;
     z-index: 100;
@@ -116,61 +127,61 @@
     inset: 0;
     background:
       radial-gradient(ellipse 100% 80% at 50% 50%, transparent 50%, rgba(0,0,0,0.7) 100%),
-      radial-gradient(ellipse 60% 40% at 100% 0%, rgba(255, 77, 77, 0.05), transparent 50%),
-      radial-gradient(ellipse 60% 40% at 0% 100%, rgba(86, 255, 94, 0.04), transparent 50%);
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255, 213, 74, 0.06), transparent 60%);
     pointer-events: none;
     z-index: 99;
   }
 
-  ::selection { background: var(--cyan); color: var(--bg); }
+  ::selection { background: var(--gold); color: var(--velvet); }
 
-  /* ─────────── Cabinet (outer frame) ─────────── */
+  /* ─────────── Cabinet ─────────── */
   .cabinet {
     max-width: 800px;
     margin: 24px auto;
-    padding: 0;
+    background:
+      linear-gradient(180deg, var(--velvet) 0%, var(--velvet-d) 100%);
+    border: 4px solid var(--gold-d);
+    border-radius: 6px;
+    box-shadow:
+      0 0 0 2px var(--gold-dd) inset,
+      0 0 0 6px var(--velvet-d) inset,
+      0 0 0 1px var(--gold-d),
+      0 0 50px rgba(255, 213, 74, 0.15),
+      0 8px 0 0 var(--gold-ddd),
+      0 0 80px rgba(0, 0, 0, 0.9);
     position: relative;
     z-index: 2;
-    background: var(--bg);
-    border: 4px solid var(--bezel-hi);
-    border-radius: 4px;
-    box-shadow:
-      0 0 0 2px var(--bezel) inset,
-      0 0 0 6px var(--bezel-lo) inset,
-      0 0 32px rgba(92, 245, 255, 0.08),
-      0 0 60px rgba(0, 0, 0, 0.8);
   }
   .cabinet-inner {
-    padding: 24px 22px 28px;
+    padding: 24px 22px 32px;
     position: relative;
   }
 
-  /* Cabinet corner brackets — bigger, multi-line */
-  .corner-bracket {
+  /* Decorative corner ornaments — gold filigree */
+  .corner-orn {
     position: absolute;
-    width: 28px;
-    height: 28px;
+    width: 34px; height: 34px;
     pointer-events: none;
   }
-  .corner-bracket.tl { top: 8px; left: 8px; }
-  .corner-bracket.tr { top: 8px; right: 8px; transform: scaleX(-1); }
-  .corner-bracket.bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
-  .corner-bracket.br { bottom: 8px; right: 8px; transform: scale(-1, -1); }
-  .corner-bracket svg { width: 100%; height: 100%; }
+  .corner-orn.tl { top: 8px; left: 8px; }
+  .corner-orn.tr { top: 8px; right: 8px; transform: scaleX(-1); }
+  .corner-orn.bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
+  .corner-orn.br { bottom: 8px; right: 8px; transform: scale(-1, -1); }
 
   /* ─────────── Top status bar ─────────── */
   .topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 0 18px;
+    margin-bottom: 16px;
     padding: 8px 6px;
-    border-bottom: 1px dashed var(--green-d);
+    border-bottom: 1px dashed var(--gold-dd);
     font-family: 'Press Start 2P', monospace;
     font-size: 9px;
-    color: var(--green);
+    color: var(--gold);
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    text-shadow: 0 0 4px var(--gold-d);
   }
   .topbar-left { display: flex; align-items: center; gap: 10px; }
   .led-cluster { display: flex; gap: 5px; align-items: center; }
@@ -179,6 +190,7 @@
     background: var(--green);
     box-shadow: 0 0 8px var(--green);
     animation: ledBlink 1.6s ease-in-out infinite;
+    border-radius: 50%;
   }
   .led.r { background: var(--red); box-shadow: 0 0 8px var(--red); animation-delay: 0.4s; }
   .led.y { background: var(--yellow); box-shadow: 0 0 8px var(--yellow); animation-delay: 0.8s; }
@@ -186,24 +198,24 @@
     0%, 100% { opacity: 1; }
     50% { opacity: 0.25; }
   }
-  .topbar-right { color: var(--cyan); display: flex; align-items: center; gap: 6px; }
+  .topbar-right { color: var(--cyan); display: flex; align-items: center; gap: 6px; text-shadow: 0 0 4px currentColor; }
   .topbar-right .blink { animation: blink 0.9s step-end infinite; color: var(--yellow); }
   @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
 
-  /* ─────────── Marquee (hero) ─────────── */
+  /* ─────────── Marquee header ─────────── */
   .marquee {
     position: relative;
-    margin: 4px 0 24px;
-    padding: 28px 16px 22px;
+    margin: 0 0 22px;
+    padding: 22px 16px 18px;
     background:
-      radial-gradient(ellipse at center, rgba(92, 245, 255, 0.06) 0%, transparent 70%),
-      var(--bg);
-    border: 3px solid var(--bezel-hi);
-    border-top-color: var(--bezel-lo);
-    border-left-color: var(--bezel-lo);
+      radial-gradient(ellipse at center, rgba(255, 213, 74, 0.08) 0%, transparent 70%),
+      var(--velvet-d);
+    border: 3px solid var(--gold-d);
+    border-radius: 4px;
     box-shadow:
-      0 0 0 2px var(--bg) inset,
-      0 0 24px rgba(92, 245, 255, 0.06);
+      0 0 0 2px var(--velvet-d) inset,
+      0 0 0 4px var(--gold-dd) inset,
+      0 0 24px rgba(255, 213, 74, 0.1);
     overflow: hidden;
   }
   .marquee::before {
@@ -225,17 +237,7 @@
     z-index: 1;
     flex-wrap: wrap;
   }
-  .hero-mascot {
-    width: 96px;
-    flex-shrink: 0;
-    filter: drop-shadow(0 0 8px rgba(92, 245, 255, 0.4));
-    animation: mascotBob 2.4s ease-in-out infinite;
-  }
-  @keyframes mascotBob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
-  }
-  .hero-text { text-align: left; }
+  .hero-text { text-align: center; }
 
   h1.title {
     font-family: 'Press Start 2P', monospace;
@@ -244,41 +246,40 @@
     letter-spacing: 0.02em;
     position: relative;
     display: inline-block;
-    color: var(--cyan);
-    text-shadow:
-      3px 0 0 rgba(255, 80, 80, 0.85),
-      -3px 0 0 rgba(80, 255, 255, 0.7),
-      0 0 18px rgba(92, 245, 255, 0.5),
-      0 0 36px rgba(92, 245, 255, 0.3);
+    color: var(--gold);
     background: linear-gradient(180deg,
-      var(--cyan) 0%, var(--cyan) 62%,
-      var(--green) 62%, var(--green) 76%,
-      var(--yellow) 76%, var(--yellow) 88%,
-      var(--red) 88%, var(--red) 100%);
+      var(--gold-hi) 0%, var(--gold-hi) 28%,
+      var(--gold) 28%, var(--gold) 56%,
+      var(--brass) 56%, var(--brass) 78%,
+      var(--gold-d) 78%, var(--gold-d) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: titleGlitch 4s infinite;
+    text-shadow:
+      3px 0 0 rgba(255, 46, 92, 0.6),
+      -3px 0 0 rgba(92, 245, 255, 0.5),
+      0 0 18px rgba(255, 213, 74, 0.5);
+    animation: titleGlitch 5s infinite;
   }
   @keyframes titleGlitch {
     0%, 92%, 100% {
       text-shadow:
-        3px 0 0 rgba(255, 80, 80, 0.85),
-        -3px 0 0 rgba(80, 255, 255, 0.7),
-        0 0 18px rgba(92, 245, 255, 0.5);
+        3px 0 0 rgba(255, 46, 92, 0.6),
+        -3px 0 0 rgba(92, 245, 255, 0.5),
+        0 0 18px rgba(255, 213, 74, 0.5);
     }
     93% {
       text-shadow:
-        5px 0 0 rgba(255, 80, 80, 1),
-        -5px 0 0 rgba(80, 255, 255, 1),
-        0 0 18px rgba(92, 245, 255, 0.5);
-      transform: translateX(1px);
+        5px 0 0 rgba(255, 46, 92, 1),
+        -5px 0 0 rgba(92, 245, 255, 1),
+        0 0 18px rgba(255, 213, 74, 0.5);
+      transform: translateX(2px);
     }
     94% {
       text-shadow:
-        2px 0 0 rgba(255, 80, 80, 0.85),
-        -2px 0 0 rgba(80, 255, 255, 0.7),
-        0 0 18px rgba(92, 245, 255, 0.5);
+        2px 0 0 rgba(255, 46, 92, 0.6),
+        -2px 0 0 rgba(92, 245, 255, 0.5),
+        0 0 18px rgba(255, 213, 74, 0.5);
       transform: translateX(-1px);
     }
   }
@@ -289,15 +290,15 @@
     text-shadow: 0 0 6px rgba(92,245,255,0.5);
     margin-top: 10px;
   }
-  .tagline .b { color: var(--yellow); text-shadow: 0 0 6px var(--yellow); }
-  .tagline .arrow { color: var(--green); }
+  .tagline .b { color: var(--gold); text-shadow: 0 0 6px var(--gold); }
+  .tagline .arrow { color: var(--cherry); }
 
-  /* Marquee bulbs (decorative) */
+  /* Marquee bulbs */
   .marquee-bulbs {
     display: flex;
     justify-content: center;
     gap: 12px;
-    margin-top: 16px;
+    margin-top: 14px;
     position: relative;
     z-index: 1;
   }
@@ -305,53 +306,29 @@
     width: 6px; height: 6px;
     border-radius: 50%;
     background: var(--yellow);
-    box-shadow: 0 0 6px var(--yellow);
+    box-shadow: 0 0 8px var(--yellow);
     animation: bulbChase 1.5s ease-in-out infinite;
   }
-  .marquee-bulbs span:nth-child(2) { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); animation-delay: 0.15s; }
-  .marquee-bulbs span:nth-child(3) { background: var(--green); box-shadow: 0 0 6px var(--green); animation-delay: 0.3s; }
-  .marquee-bulbs span:nth-child(4) { background: var(--magenta); box-shadow: 0 0 6px var(--magenta); animation-delay: 0.45s; }
-  .marquee-bulbs span:nth-child(5) { background: var(--red); box-shadow: 0 0 6px var(--red); animation-delay: 0.6s; }
-  .marquee-bulbs span:nth-child(6) { background: var(--orange); box-shadow: 0 0 6px var(--orange); animation-delay: 0.75s; }
-  .marquee-bulbs span:nth-child(7) { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); animation-delay: 0.9s; }
+  .marquee-bulbs span:nth-child(2) { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); animation-delay: 0.15s; }
+  .marquee-bulbs span:nth-child(3) { background: var(--green); box-shadow: 0 0 8px var(--green); animation-delay: 0.3s; }
+  .marquee-bulbs span:nth-child(4) { background: var(--magenta); box-shadow: 0 0 8px var(--magenta); animation-delay: 0.45s; }
+  .marquee-bulbs span:nth-child(5) { background: var(--red); box-shadow: 0 0 8px var(--red); animation-delay: 0.6s; }
+  .marquee-bulbs span:nth-child(6) { background: var(--orange); box-shadow: 0 0 8px var(--orange); animation-delay: 0.75s; }
+  .marquee-bulbs span:nth-child(7) { background: var(--gold); box-shadow: 0 0 8px var(--gold); animation-delay: 0.9s; }
   @keyframes bulbChase {
     0%, 100% { opacity: 0.3; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.2); }
+    50% { opacity: 1; transform: scale(1.3); }
   }
-
-  /* ─────────── Candy stripes (BIG dividers) ─────────── */
-  .cstripe {
-    height: 14px;
-    margin: 0 -22px 18px;
-    background: repeating-linear-gradient(
-      45deg,
-      var(--red) 0, var(--red) 10px,
-      var(--yellow) 10px, var(--yellow) 20px,
-      var(--green) 20px, var(--green) 30px,
-      var(--bg) 30px, var(--bg) 40px
-    );
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.15),
-      inset 0 -1px 0 rgba(0,0,0,0.4),
-      0 2px 8px rgba(0,0,0,0.6);
-    animation: stripeSlide 16s linear infinite;
-    position: relative;
-  }
-  @keyframes stripeSlide {
-    0% { background-position: 0 0; }
-    100% { background-position: 80px 0; }
-  }
-  .cstripe.thin { height: 8px; margin-bottom: 14px; }
 
   /* ─────────── Section header ─────────── */
   .sec-h {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: 24px 0 14px;
+    margin: 22px 0 14px;
   }
   .sec-h .icon {
-    width: 32px; height: 32px;
+    width: 30px; height: 30px;
     flex-shrink: 0;
     filter: drop-shadow(0 0 5px currentColor);
   }
@@ -359,7 +336,7 @@
     font-family: 'Press Start 2P', monospace;
     font-size: 10px;
     background: var(--cyan);
-    color: var(--bg);
+    color: var(--velvet-d);
     padding: 5px 7px;
     box-shadow: 0 0 6px rgba(92,245,255,0.4);
   }
@@ -378,34 +355,33 @@
     color: var(--cyan-d);
     margin-left: 4px;
   }
-
   .sec-h.green { color: var(--green); }
-  .sec-h.green .num { background: var(--green); box-shadow: 0 0 6px rgba(86,255,94,0.4); }
-  .sec-h.green .label { color: var(--green); text-shadow: 0 0 6px rgba(86,255,94,0.5); }
+  .sec-h.green .num { background: var(--green); }
+  .sec-h.green .label { color: var(--green); }
   .sec-h.green .line { color: var(--green-d); }
-
-  .sec-h.red { color: var(--red); }
-  .sec-h.red .num { background: var(--red); box-shadow: 0 0 6px rgba(255,77,77,0.4); }
-  .sec-h.red .label { color: var(--red); text-shadow: 0 0 6px rgba(255,77,77,0.5); }
-  .sec-h.red .line { color: var(--red-d); }
+  .sec-h.gold { color: var(--gold); }
+  .sec-h.gold .num { background: var(--gold); color: var(--velvet-d); box-shadow: 0 0 8px var(--gold); }
+  .sec-h.gold .label { color: var(--gold); text-shadow: 0 0 6px var(--gold); }
+  .sec-h.gold .line { color: var(--gold-dd); }
 
   /* ─────────── Panels ─────────── */
   .panel {
     border: 3px solid var(--cyan);
-    background: var(--cyan-dd);
+    background: rgba(10, 60, 68, 0.4);
     padding: 18px;
     margin-bottom: 14px;
     position: relative;
     box-shadow:
-      0 0 0 1px var(--bg) inset,
+      0 0 0 1px var(--velvet-d) inset,
       0 0 18px rgba(92,245,255,0.08),
       0 4px 0 0 var(--cyan-d);
   }
-  .panel.green { border-color: var(--green); background: var(--green-dd); box-shadow: 0 0 0 1px var(--bg) inset, 0 0 18px rgba(86,255,94,0.08), 0 4px 0 0 var(--green-d); }
-  .panel.red { border-color: var(--red); background: var(--red-dd); box-shadow: 0 0 0 1px var(--bg) inset, 0 0 18px rgba(255,77,77,0.1), 0 4px 0 0 var(--red-d); }
-  .panel.yellow { border-color: var(--yellow); background: var(--yellow-dd); box-shadow: 0 0 0 1px var(--bg) inset, 0 0 18px rgba(255,225,74,0.08), 0 4px 0 0 var(--yellow-d); }
-  .panel.orange { border-color: var(--orange); background: var(--orange-dd); box-shadow: 0 0 0 1px var(--bg) inset, 0 0 18px rgba(255,155,58,0.08), 0 4px 0 0 var(--orange-d); }
-  .panel.blue { border-color: var(--blue); background: var(--blue-dd); box-shadow: 0 0 0 1px var(--bg) inset, 0 0 18px rgba(92,156,255,0.08), 0 4px 0 0 var(--blue-d); }
+  .panel.green { border-color: var(--green); background: rgba(12, 68, 19, 0.4); box-shadow: 0 0 0 1px var(--velvet-d) inset, 0 0 18px rgba(86,255,94,0.08), 0 4px 0 0 var(--green-d); }
+  .panel.red { border-color: var(--red); background: rgba(77, 10, 10, 0.4); box-shadow: 0 0 0 1px var(--velvet-d) inset, 0 0 18px rgba(255,77,77,0.1), 0 4px 0 0 var(--red-d); }
+  .panel.yellow { border-color: var(--yellow); background: rgba(68, 61, 10, 0.4); box-shadow: 0 0 0 1px var(--velvet-d) inset, 0 0 18px rgba(255,225,74,0.08), 0 4px 0 0 var(--yellow-d); }
+  .panel.orange { border-color: var(--orange); background: rgba(77, 42, 8, 0.4); box-shadow: 0 0 0 1px var(--velvet-d) inset, 0 0 18px rgba(255,155,58,0.08), 0 4px 0 0 #4d2a08; }
+  .panel.blue { border-color: var(--blue); background: rgba(10, 35, 77, 0.4); box-shadow: 0 0 0 1px var(--velvet-d) inset, 0 0 18px rgba(92,156,255,0.08), 0 4px 0 0 var(--blue-d); }
+  .panel.gold { border-color: var(--gold); background: rgba(184, 148, 31, 0.15); box-shadow: 0 0 0 1px var(--velvet-d) inset, 0 0 22px rgba(255,213,74,0.18), 0 4px 0 0 var(--gold-dd); }
 
   .panel-label {
     font-family: 'Press Start 2P', monospace;
@@ -421,8 +397,7 @@
   }
   .panel-label::before {
     content: '';
-    width: 5px;
-    height: 14px;
+    width: 5px; height: 14px;
     background: currentColor;
     box-shadow: 0 0 6px currentColor;
   }
@@ -431,6 +406,7 @@
   .panel.yellow .panel-label { color: var(--yellow); }
   .panel.orange .panel-label { color: var(--orange); }
   .panel.blue .panel-label { color: var(--blue); }
+  .panel.gold .panel-label { color: var(--gold); }
 
   /* ─────────── Body text ─────────── */
   .lead {
@@ -442,8 +418,8 @@
   .lead .hl-c { color: var(--cyan); text-shadow: 0 0 4px currentColor; }
   .lead .hl-y { color: var(--yellow); text-shadow: 0 0 4px currentColor; }
   .lead .hl-g { color: var(--green); text-shadow: 0 0 4px currentColor; }
+  .lead .hl-gold { color: var(--gold); text-shadow: 0 0 4px currentColor; }
 
-  /* ─────────── Steps ─────────── */
   ol.steps { list-style: none; counter-reset: s; }
   ol.steps > li {
     counter-increment: s;
@@ -469,10 +445,10 @@
     border-bottom: 1px solid var(--cyan-d);
     text-shadow: 0 0 4px rgba(92,245,255,0.4);
   }
-  ol.steps a:hover { color: var(--yellow); border-color: var(--yellow); text-shadow: 0 0 4px var(--yellow); }
+  ol.steps a:hover { color: var(--gold); border-color: var(--gold); text-shadow: 0 0 4px var(--gold); }
   code.kbd {
     font-family: 'VT323', monospace;
-    background: var(--bg);
+    background: var(--velvet-d);
     border: 1px solid var(--green-d);
     color: var(--green);
     padding: 0 6px;
@@ -498,7 +474,7 @@
 
   input[type="text"] {
     width: 100%;
-    background: var(--bg);
+    background: var(--velvet-d);
     border: 2px solid var(--cyan-d);
     color: var(--cyan);
     padding: 10px 12px;
@@ -513,9 +489,9 @@
   input[type="text"]:focus { border-color: var(--cyan); box-shadow: 0 0 10px rgba(92,245,255,0.3), inset 0 0 8px rgba(92,245,255,0.1); }
   input[type="text"]::placeholder { color: var(--paper-faint); text-shadow: none; }
   .panel.green input[type="text"] { border-color: var(--green-d); color: var(--green); caret-color: var(--green); }
-  .panel.green input[type="text"]:focus { border-color: var(--green); box-shadow: 0 0 10px rgba(86,255,94,0.3), inset 0 0 8px rgba(86,255,94,0.1); }
+  .panel.green input[type="text"]:focus { border-color: var(--green); box-shadow: 0 0 10px rgba(86,255,94,0.3); }
   .panel.blue input[type="text"] { border-color: var(--blue-d); color: var(--blue); caret-color: var(--blue); }
-  .panel.blue input[type="text"]:focus { border-color: var(--blue); box-shadow: 0 0 10px rgba(92,156,255,0.3), inset 0 0 8px rgba(92,156,255,0.1); }
+  .panel.blue input[type="text"]:focus { border-color: var(--blue); box-shadow: 0 0 10px rgba(92,156,255,0.3); }
 
   .hint {
     font-size: 17px;
@@ -529,7 +505,7 @@
   .copy-row input { flex: 1; }
   .copy-btn {
     background: var(--green);
-    color: var(--bg);
+    color: var(--velvet-d);
     border: 2px solid var(--green);
     padding: 0 14px;
     font-family: 'Press Start 2P', monospace;
@@ -541,10 +517,10 @@
     transition: all 0.1s;
     border-left: none;
   }
-  .copy-btn:hover { background: var(--yellow); border-color: var(--yellow); color: var(--bg); }
+  .copy-btn:hover { background: var(--gold); border-color: var(--gold); }
   .copy-btn.copied { background: var(--cyan); border-color: var(--cyan); }
 
-  /* ─────────── Buttons (arcade) ─────────── */
+  /* ─────────── Buttons ─────────── */
   .btn {
     display: flex;
     align-items: center;
@@ -552,7 +528,7 @@
     gap: 10px;
     padding: 14px 16px;
     background: var(--cyan);
-    color: var(--bg);
+    color: var(--velvet-d);
     border: 3px solid var(--cyan);
     font-family: 'Press Start 2P', monospace;
     font-size: 12px;
@@ -560,19 +536,15 @@
     text-transform: uppercase;
     cursor: pointer;
     width: 100%;
-    box-shadow:
-      0 5px 0 0 #044750,
-      0 0 14px rgba(92,245,255,0.5);
+    box-shadow: 0 5px 0 0 #044750, 0 0 14px rgba(92,245,255,0.5);
     transition: transform 0.08s, box-shadow 0.08s, background 0.15s;
     text-decoration: none;
     position: relative;
-    text-shadow: none;
   }
   .btn:hover:not(:disabled) {
-    background: var(--yellow);
-    border-color: var(--yellow);
-    color: var(--bg);
-    box-shadow: 0 5px 0 0 #4d4400, 0 0 18px rgba(255,225,74,0.6);
+    background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0 5px 0 0 var(--gold-dd), 0 0 18px rgba(255,213,74,0.6);
   }
   .btn:active:not(:disabled) {
     transform: translateY(4px);
@@ -581,16 +553,16 @@
   .btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: 0 5px 0 0 #044750; }
 
   .btn.green { background: var(--green); border-color: var(--green); box-shadow: 0 5px 0 0 #033810, 0 0 14px rgba(86,255,94,0.5); }
-  .btn.green:hover:not(:disabled) { background: var(--yellow); border-color: var(--yellow); box-shadow: 0 5px 0 0 #4d4400, 0 0 18px rgba(255,225,74,0.6); }
+  .btn.green:hover:not(:disabled) { background: var(--gold); border-color: var(--gold); box-shadow: 0 5px 0 0 var(--gold-dd), 0 0 18px rgba(255,213,74,0.6); }
   .btn.green:active:not(:disabled) { box-shadow: 0 1px 0 0 #033810; }
 
   .btn.red { background: var(--red); color: var(--paper); border-color: var(--red); box-shadow: 0 5px 0 0 #380505, 0 0 14px rgba(255,77,77,0.5); }
-  .btn.red:hover:not(:disabled) { background: var(--yellow); color: var(--bg); border-color: var(--yellow); box-shadow: 0 5px 0 0 #4d4400, 0 0 18px rgba(255,225,74,0.6); }
+  .btn.red:hover:not(:disabled) { background: var(--gold); color: var(--velvet-d); border-color: var(--gold); box-shadow: 0 5px 0 0 var(--gold-dd), 0 0 18px rgba(255,213,74,0.6); }
   .btn.red:active:not(:disabled) { box-shadow: 0 1px 0 0 #380505; }
 
-  .btn.yellow { background: var(--yellow); border-color: var(--yellow); box-shadow: 0 5px 0 0 #4d4400, 0 0 14px rgba(255,225,74,0.5); }
-  .btn.yellow:hover:not(:disabled) { background: var(--cyan); border-color: var(--cyan); box-shadow: 0 5px 0 0 #044750, 0 0 18px rgba(92,245,255,0.6); }
-  .btn.yellow:active:not(:disabled) { box-shadow: 0 1px 0 0 #4d4400; }
+  .btn.gold { background: var(--gold); border-color: var(--gold); box-shadow: 0 5px 0 0 var(--gold-dd), 0 0 14px rgba(255,213,74,0.5); }
+  .btn.gold:hover:not(:disabled) { background: var(--cherry); color: var(--paper); border-color: var(--cherry); box-shadow: 0 5px 0 0 var(--cherry-d), 0 0 18px rgba(255,46,92,0.6); }
+  .btn.gold:active:not(:disabled) { box-shadow: 0 1px 0 0 var(--gold-dd); }
 
   .btn.outline {
     background: transparent;
@@ -599,53 +571,10 @@
   }
   .btn.outline:hover:not(:disabled) {
     background: var(--cyan);
-    color: var(--bg);
+    color: var(--velvet-d);
     box-shadow: 0 5px 0 0 #044750, 0 0 14px rgba(92,245,255,0.5);
   }
-  .btn.outline:active:not(:disabled) {
-    box-shadow: 0 1px 0 0 var(--cyan-d);
-  }
-
-  /* HUGE arcade spin button */
-  .spin-wrap {
-    position: relative;
-    margin: 0 0 18px;
-  }
-  .btn.huge {
-    padding: 24px;
-    font-size: 22px;
-    letter-spacing: 0.1em;
-    background: var(--red);
-    color: var(--paper);
-    border: 4px solid var(--red);
-    box-shadow:
-      0 7px 0 0 #380505,
-      0 0 0 3px var(--bg) inset,
-      0 0 28px rgba(255,77,77,0.5);
-  }
-  .btn.huge:hover:not(:disabled) {
-    background: var(--yellow);
-    color: var(--bg);
-    border-color: var(--yellow);
-    box-shadow:
-      0 7px 0 0 #4d4400,
-      0 0 0 3px var(--bg) inset,
-      0 0 28px rgba(255,225,74,0.6);
-  }
-  .btn.huge:active:not(:disabled) {
-    transform: translateY(6px);
-    box-shadow:
-      0 1px 0 0 #380505,
-      0 0 0 3px var(--bg) inset;
-  }
-  .btn.huge:disabled {
-    background: var(--red-d);
-    border-color: var(--red-d);
-    color: var(--paper-faint);
-    box-shadow:
-      0 7px 0 0 #200505,
-      0 0 0 3px var(--bg) inset;
-  }
+  .btn.outline:active:not(:disabled) { box-shadow: 0 1px 0 0 var(--cyan-d); }
 
   .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
   .btn-row > .btn { flex: 1; min-width: 150px; }
@@ -665,7 +594,7 @@
     gap: 14px;
     padding: 12px;
     border: 3px solid var(--green);
-    background: var(--green-dd);
+    background: rgba(12, 68, 19, 0.4);
     margin-bottom: 16px;
     box-shadow: 0 0 14px rgba(86,255,94,0.1), 0 4px 0 0 var(--green-d);
   }
@@ -708,7 +637,7 @@
   }
   .user-strip .logout-btn:hover {
     background: var(--red);
-    color: var(--bg);
+    color: var(--paper);
     border-color: var(--red);
     box-shadow: 0 0 8px rgba(255,77,77,0.5);
   }
@@ -720,18 +649,18 @@
     align-items: center;
     gap: 12px;
     padding: 10px 12px;
-    background: var(--orange-dd);
-    border: 2px solid var(--orange-d);
+    background: rgba(77, 42, 8, 0.4);
+    border: 2px solid #4d2a08;
     cursor: pointer;
     user-select: none;
     transition: all 0.1s;
   }
-  .toggle:hover { border-color: var(--orange); background: #2a1808; }
+  .toggle:hover { border-color: var(--orange); background: rgba(77, 42, 8, 0.7); }
   .toggle input { display: none; }
   .toggle .box {
     width: 18px; height: 18px;
-    border: 2px solid var(--orange-d);
-    background: var(--bg);
+    border: 2px solid #4d2a08;
+    background: var(--velvet-d);
     flex-shrink: 0;
     position: relative;
     transition: all 0.1s;
@@ -747,7 +676,7 @@
     position: absolute;
     left: 3px; top: 0;
     width: 6px; height: 10px;
-    border: solid var(--bg);
+    border: solid var(--velvet-d);
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
   }
@@ -756,9 +685,6 @@
     font-size: 19px;
     color: var(--paper);
     flex: 1;
-    text-transform: none;
-    letter-spacing: 0;
-    margin: 0;
   }
   .toggle .label-aux {
     font-family: 'Press Start 2P', monospace;
@@ -768,23 +694,384 @@
     text-transform: uppercase;
   }
 
-  /* ─────────── Stats (LED score panels) ─────────── */
-  .stats {
+  /* ════════════════════════════════════════════════
+     ★ ★ ★  THE SLOT MACHINE  ★ ★ ★
+     ════════════════════════════════════════════════ */
+  .slot-machine {
+    position: relative;
+    margin: 0 auto 18px;
+    max-width: 540px;
+    background:
+      linear-gradient(180deg, var(--gold-hi) 0%, var(--gold) 12%, var(--brass) 50%, var(--gold-d) 88%, var(--gold-dd) 100%);
+    border-radius: 16px 16px 8px 8px;
+    padding: 18px 16px 22px;
+    box-shadow:
+      inset 0 0 0 2px var(--gold-hi),
+      inset 0 0 0 4px var(--brass),
+      inset 0 0 0 6px var(--gold-dd),
+      0 8px 0 0 var(--gold-ddd),
+      0 0 60px rgba(255, 213, 74, 0.25),
+      0 12px 30px rgba(0, 0, 0, 0.7);
+    transform-origin: center bottom;
+  }
+  .slot-machine.shaking { animation: machineShake 0.15s linear infinite; }
+  @keyframes machineShake {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-1px, 1px); }
+    50% { transform: translate(1px, -1px); }
+    75% { transform: translate(-1px, -1px); }
+  }
+  .slot-machine.win { animation: machineWin 0.5s ease-out; }
+  @keyframes machineWin {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+  }
+
+  /* Bulbs around slot machine perimeter */
+  .sm-bulbs-top, .sm-bulbs-bot {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4px;
+    gap: 6px;
+    height: 12px;
+    align-items: center;
+  }
+  .sm-bulbs-top { margin-bottom: 6px; }
+  .sm-bulbs-bot { margin-top: 6px; }
+  .sm-bulbs-top i, .sm-bulbs-bot i {
+    flex: 1;
+    height: 8px;
+    max-width: 8px;
+    border-radius: 50%;
+    background: var(--gold-dd);
+    box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+  }
+  .slot-machine.idle .sm-bulbs-top i,
+  .slot-machine.idle .sm-bulbs-bot i {
+    animation: bulbIdle 2s ease-in-out infinite;
+  }
+  @keyframes bulbIdle {
+    0%, 100% { background: var(--gold-dd); box-shadow: inset 0 0 2px rgba(0,0,0,0.5); }
+    50% { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+  }
+  .slot-machine.spinning .sm-bulbs-top i,
+  .slot-machine.spinning .sm-bulbs-bot i {
+    animation: bulbChaseSpin 0.5s linear infinite;
+  }
+  @keyframes bulbChaseSpin {
+    0% { background: var(--cherry); box-shadow: 0 0 8px var(--cherry); }
+    33% { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+    66% { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+    100% { background: var(--cherry); box-shadow: 0 0 8px var(--cherry); }
+  }
+  .slot-machine.spinning .sm-bulbs-top i:nth-child(2n) { animation-delay: 0.1s; }
+  .slot-machine.spinning .sm-bulbs-top i:nth-child(3n) { animation-delay: 0.2s; }
+  .slot-machine.spinning .sm-bulbs-bot i:nth-child(2n) { animation-delay: 0.15s; }
+  .slot-machine.win .sm-bulbs-top i,
+  .slot-machine.win .sm-bulbs-bot i {
+    animation: bulbWin 0.4s ease-in-out infinite;
+  }
+  @keyframes bulbWin {
+    0%, 100% { background: var(--gold); box-shadow: 0 0 10px var(--gold); }
+    50% { background: var(--paper); box-shadow: 0 0 14px var(--paper); }
+  }
+
+  /* JACKPOT marquee */
+  .sm-jackpot {
+    background: linear-gradient(180deg, var(--cherry-dd) 0%, var(--cherry-d) 100%);
+    border: 3px solid var(--gold-dd);
+    border-radius: 4px;
+    padding: 8px 14px;
+    margin-bottom: 10px;
+    text-align: center;
+    box-shadow:
+      inset 0 0 0 1px var(--gold),
+      inset 0 0 12px rgba(255, 46, 92, 0.4),
+      0 2px 0 0 var(--gold-ddd);
+    position: relative;
+  }
+  .sm-jackpot-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: var(--gold-hi);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-shadow:
+      0 0 4px var(--gold),
+      0 0 10px var(--gold),
+      0 0 18px var(--cherry);
+    animation: jackpotPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes jackpotPulse {
+    0%, 100% { text-shadow: 0 0 4px var(--gold), 0 0 10px var(--gold), 0 0 18px var(--cherry); }
+    50% { text-shadow: 0 0 8px var(--gold-hi), 0 0 16px var(--gold), 0 0 28px var(--cherry); }
+  }
+  .sm-jackpot-stars {
+    color: var(--gold);
+    font-size: 12px;
+    text-shadow: 0 0 6px var(--gold);
+    margin: 0 8px;
+    animation: jackpotPulse 1.5s ease-in-out infinite;
+  }
+
+  /* SM body — main display + reels */
+  .sm-body {
+    background:
+      linear-gradient(180deg, var(--cherry-d) 0%, var(--cherry-dd) 100%);
+    border: 3px solid var(--gold-dd);
+    border-radius: 4px;
+    padding: 14px;
+    box-shadow:
+      inset 0 0 0 1px var(--gold),
+      inset 0 4px 12px rgba(0, 0, 0, 0.5);
+    position: relative;
+  }
+
+  /* Main name display (CRT) */
+  .sm-display {
+    background: radial-gradient(ellipse at center, #04080a 0%, #000 100%);
+    border: 3px solid var(--gold-dd);
+    border-radius: 3px;
+    padding: 22px 14px;
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+    box-shadow:
+      inset 0 0 0 1px rgba(0, 0, 0, 0.8),
+      inset 0 0 24px rgba(0, 0, 0, 0.9),
+      0 2px 0 0 var(--gold-ddd);
+  }
+  .sm-display::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, transparent 50%, rgba(0,0,0,0.6) 100%);
+    pointer-events: none;
+    z-index: 3;
+  }
+  .sm-display::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent 0, transparent 2px,
+      rgba(0,0,0,0.5) 2px, rgba(0,0,0,0.5) 3px
+    );
+    pointer-events: none;
+    z-index: 4;
+  }
+  .sm-display-content { position: relative; z-index: 5; width: 100%; }
+
+  .sm-display-idle {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: var(--cherry);
+    text-shadow: 0 0 8px var(--cherry);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.6;
+    opacity: 0.5;
+  }
+  .sm-display-idle.ready {
+    color: var(--cyan);
+    text-shadow: 0 0 12px var(--cyan), 0 0 4px var(--cyan);
+    opacity: 1;
+    animation: insertCoin 1s step-end infinite;
+  }
+  @keyframes insertCoin {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+  }
+  .sm-display-idle .small {
+    display: block;
+    font-size: 9px;
+    color: var(--paper-faint);
+    margin-top: 12px;
+    text-shadow: none;
+    animation: none;
+    letter-spacing: 0.05em;
+  }
+  .sm-display-idle.ready .small { color: var(--green); text-shadow: 0 0 4px var(--green); animation: none; opacity: 1; }
+
+  /* Spinning name */
+  .sm-name-mono {
+    font-family: 'VT323', monospace;
+    font-size: clamp(28px, 7vw, 44px);
+    color: var(--cyan);
+    text-shadow: 0 0 12px currentColor, 0 0 24px currentColor;
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    word-break: break-all;
+    text-transform: uppercase;
+  }
+  .slot-machine.spinning .sm-name-mono { animation: nameJitter 0.05s linear infinite; }
+  @keyframes nameJitter {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-1px, 1px); }
+    50% { transform: translate(1px, -1px); }
+    75% { transform: translate(-1px, -1px); }
+    100% { transform: translate(0, 0); }
+  }
+
+  /* Winner reveal */
+  .sm-name-final {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(18px, 5vw, 32px);
+    color: var(--gold);
+    line-height: 1.15;
+    letter-spacing: 0.05em;
+    word-break: break-word;
+    animation: chromaSplit 1.4s ease-out forwards, winnerPop 0.5s ease-out;
+    text-transform: uppercase;
+  }
+  @keyframes winnerPop {
+    0% { opacity: 0; transform: scale(0.4); }
+    60% { opacity: 1; transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
+  @keyframes chromaSplit {
+    0% { text-shadow: -5px 0 0 var(--cherry), 5px 0 0 var(--cyan), 0 0 28px var(--gold); }
+    40% { text-shadow: -3px 0 0 var(--cherry), 3px 0 0 var(--cyan), 0 0 22px var(--gold); }
+    100% { text-shadow: 0 0 16px var(--gold), 0 0 32px rgba(255, 213, 74, 0.5); }
+  }
+  .sm-eyebrow {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: var(--gold-hi);
+    text-shadow: 0 0 8px var(--gold), 0 0 4px var(--gold);
+    letter-spacing: 0.15em;
+    margin-bottom: 14px;
+    animation: blink 0.5s step-end infinite;
+  }
+
+  /* ─────────── 3 REELS ─────────── */
+  .sm-reels-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+    background: var(--velvet-d);
+    border: 3px solid var(--gold-dd);
+    border-radius: 3px;
+    padding: 8px;
+    box-shadow:
+      inset 0 0 0 1px var(--gold),
+      inset 0 4px 12px rgba(0, 0, 0, 0.7),
+      0 2px 0 0 var(--gold-ddd);
+    position: relative;
+  }
+  /* Payline (horizontal red line across center) */
+  .sm-reels-row::before {
+    content: '';
+    position: absolute;
+    left: 4px; right: 4px;
+    top: 50%;
+    height: 2px;
+    background: var(--cherry);
+    box-shadow: 0 0 6px var(--cherry), 0 0 12px var(--cherry);
+    z-index: 5;
+    pointer-events: none;
+    transform: translateY(-50%);
+  }
+  .reel {
+    background: linear-gradient(180deg, #f5e9d0 0%, #e0d0a8 50%, #f5e9d0 100%);
+    border: 2px solid var(--gold-dd);
+    border-radius: 2px;
+    height: 72px;
+    overflow: hidden;
+    position: relative;
+    box-shadow:
+      inset 0 4px 8px rgba(0,0,0,0.4),
+      inset 0 -4px 8px rgba(0,0,0,0.4);
+  }
+  .reel::before, .reel::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 18px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .reel::before {
+    top: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+  }
+  .reel::after {
+    bottom: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+  }
+  .reel-strip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .reel.spinning .reel-strip {
+    animation: reelSpin 0.18s linear infinite;
+    transition: none;
+  }
+  @keyframes reelSpin {
+    from { transform: translateY(0); }
+    to { transform: translateY(-72px); }
+  }
+  .symbol {
+    width: 100%;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 32px;
+    line-height: 1;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .symbol.s7 { color: var(--cherry); text-shadow: 2px 2px 0 var(--gold-d); }
+  .symbol.star { color: var(--gold-d); text-shadow: 0 0 4px var(--gold); font-size: 38px; }
+  .symbol.diamond { color: var(--magenta); font-size: 34px; }
+  .symbol.bar { color: var(--velvet-d); font-size: 16px; letter-spacing: -0.05em; }
+  .symbol.heart { color: var(--cherry); font-size: 40px; }
+  .symbol.cherry { color: var(--cherry); font-size: 36px; }
+  .symbol.bell { color: var(--gold-d); font-size: 36px; }
+
+  /* Jackpot — when winner reveal, all 3 show "777" with extra glow */
+  .reel.jackpot {
+    background: linear-gradient(180deg, var(--gold-hi) 0%, var(--gold) 50%, var(--gold-hi) 100%);
+    animation: reelGlow 0.6s ease-in-out infinite alternate;
+  }
+  @keyframes reelGlow {
+    from { box-shadow: inset 0 4px 8px rgba(0,0,0,0.4), inset 0 -4px 8px rgba(0,0,0,0.4), 0 0 12px rgba(255, 213, 74, 0.6); }
+    to { box-shadow: inset 0 4px 8px rgba(0,0,0,0.4), inset 0 -4px 8px rgba(0,0,0,0.4), 0 0 24px rgba(255, 213, 74, 1); }
+  }
+  .reel.jackpot .symbol.s7 { animation: jackpotShake 0.2s ease-in-out infinite; }
+  @keyframes jackpotShake {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  /* ─────────── Stats inside slot machine (counters) ─────────── */
+  .sm-counters {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 18px;
+    gap: 8px;
+    margin-bottom: 4px;
   }
-  .stat {
-    border: 3px solid var(--green);
-    background: var(--green-dd);
-    padding: 12px 14px;
+  .sm-counter {
+    background: var(--velvet-d);
+    border: 2px solid var(--gold-dd);
+    padding: 8px 10px;
     text-align: center;
+    box-shadow: inset 0 0 0 1px rgba(255, 213, 74, 0.3), inset 0 2px 4px rgba(0,0,0,0.6);
     position: relative;
-    box-shadow: 0 0 12px rgba(86,255,94,0.1), 0 4px 0 0 var(--green-d);
     overflow: hidden;
   }
-  .stat::before {
+  .sm-counter::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -794,334 +1081,190 @@
     );
     pointer-events: none;
   }
-  .stat.cyan { border-color: var(--cyan); background: var(--cyan-dd); box-shadow: 0 0 12px rgba(92,245,255,0.1), 0 4px 0 0 var(--cyan-d); }
-  .stat-label {
+  .sm-counter-lbl {
     font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-    color: var(--green);
-    text-shadow: 0 0 4px currentColor;
+    font-size: 7px;
+    color: var(--gold);
     letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
+    text-shadow: 0 0 4px currentColor;
     position: relative;
     z-index: 1;
   }
-  .stat.cyan .stat-label { color: var(--cyan); }
-  .stat-num {
+  .sm-counter-val {
     font-family: 'Press Start 2P', monospace;
-    font-size: 30px;
-    color: var(--green);
-    text-shadow: 0 0 12px currentColor;
+    font-size: 18px;
+    color: var(--cherry);
+    text-shadow: 0 0 8px currentColor;
     line-height: 1;
     position: relative;
     z-index: 1;
   }
-  .stat.cyan .stat-num { color: var(--cyan); }
+  .sm-counter.cyan .sm-counter-val { color: var(--cyan); }
 
-  /* ─────────── ROULETTE — main CRT stage ─────────── */
-  .stage-cabinet {
-    position: relative;
-    margin-bottom: 18px;
-  }
-  /* Side LEDs */
-  .stage-side {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    z-index: 5;
-  }
-  .stage-side.left { left: -22px; }
-  .stage-side.right { right: -22px; }
-  .stage-side .led-big {
-    width: 14px; height: 14px;
-    border: 2px solid var(--bezel);
-    background: var(--red-dd);
-    border-radius: 50%;
-    position: relative;
-  }
-  .stage-side .led-big::after {
-    content: '';
-    position: absolute;
-    inset: 2px;
-    border-radius: 50%;
-    background: var(--red-dd);
-    transition: all 0.15s;
-  }
-  .stage-cabinet.spinning .stage-side .led-big::after {
-    background: var(--yellow);
-    box-shadow: 0 0 10px var(--yellow);
-    animation: ledChase 0.6s ease-in-out infinite alternate;
-  }
-  .stage-side .led-big:nth-child(2)::after { animation-delay: 0.1s; }
-  .stage-side .led-big:nth-child(3)::after { animation-delay: 0.2s; }
-  .stage-side .led-big:nth-child(4)::after { animation-delay: 0.3s; }
-  .stage-side .led-big:nth-child(5)::after { animation-delay: 0.4s; }
-  @keyframes ledChase {
-    from { opacity: 1; }
-    to { opacity: 0.3; }
-  }
-  .stage-cabinet.win .stage-side .led-big::after {
-    background: var(--green);
-    box-shadow: 0 0 12px var(--green);
-  }
-
-  .stage-wrap {
-    border: 4px solid var(--red);
-    background: var(--red-dd);
-    padding: 16px;
-    position: relative;
-    box-shadow:
-      0 0 22px rgba(255,77,77,0.18),
-      0 5px 0 0 var(--red-d);
-  }
-  .stage-titlebar {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    color: var(--red);
-    text-shadow: 0 0 6px currentColor;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-  }
-  .stage-titlebar .live {
-    font-size: 9px;
-    padding: 4px 7px;
-    background: var(--paper-faint);
-    color: var(--bg);
-    box-shadow: none;
-    transition: all 0.15s;
-  }
-  .stage-titlebar .live.spinning { background: var(--yellow); animation: liveBlink 0.4s step-end infinite; box-shadow: 0 0 8px rgba(255,225,74,0.6); }
-  .stage-titlebar .live.win { background: var(--green); box-shadow: 0 0 10px rgba(86,255,94,0.6); }
-  .stage-titlebar .live.error { background: var(--red); color: var(--paper); box-shadow: 0 0 8px rgba(255,77,77,0.6); }
-  @keyframes liveBlink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0.3; } }
-
-  .stage {
-    background:
-      radial-gradient(ellipse at center, #04080a 0%, #000 100%);
-    border: 3px solid var(--red-d);
-    padding: 48px 16px;
+  /* Coin slot decoration */
+  .sm-coin-slot {
+    margin-top: 12px;
     text-align: center;
-    min-height: 220px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    box-shadow:
-      inset 0 0 0 1px rgba(0, 0, 0, 0.8),
-      inset 0 0 30px rgba(0, 0, 0, 0.9);
-  }
-  /* CRT screen curvature */
-  .stage::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 50% 50%, transparent 50%, rgba(0,0,0,0.6) 100%);
-    pointer-events: none;
-    z-index: 3;
-  }
-  /* Internal scanlines, denser */
-  .stage::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(
-      0deg,
-      transparent 0,
-      transparent 2px,
-      rgba(0,0,0,0.5) 2px,
-      rgba(0,0,0,0.5) 3px
-    );
-    pointer-events: none;
-    z-index: 4;
-  }
-  .stage-content { position: relative; z-index: 5; width: 100%; }
-
-  /* Idle states */
-  .stage-idle {
+    padding: 6px;
+    background: var(--velvet-d);
+    border: 2px solid var(--gold-dd);
+    border-radius: 2px;
     font-family: 'Press Start 2P', monospace;
-    font-size: 16px;
-    color: var(--red-d);
-    text-shadow: 0 0 8px var(--red-d);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    line-height: 1.6;
-  }
-  .stage-idle.ready {
-    color: var(--cyan);
-    text-shadow: 0 0 12px var(--cyan), 0 0 4px var(--cyan);
-    animation: insertCoin 1s step-end infinite;
-  }
-  @keyframes insertCoin {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0.3; }
-  }
-  .stage-idle .small {
-    display: block;
-    font-size: 10px;
-    color: var(--paper-faint);
-    margin-top: 14px;
-    text-shadow: none;
-    animation: none;
-    letter-spacing: 0.05em;
-  }
-  .stage-idle.ready .small { color: var(--green); text-shadow: 0 0 4px var(--green); animation: none; opacity: 1; }
-
-  /* Animated coin in idle ready state */
-  .coin-anim {
-    width: 24px;
-    height: 24px;
-    margin: 0 auto 16px;
-    background: var(--yellow);
-    border: 2px solid var(--orange);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--yellow);
-    animation: coinFlip 1.6s ease-in-out infinite;
-    position: relative;
-  }
-  .coin-anim::after {
-    content: '$';
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    color: var(--orange);
-  }
-  @keyframes coinFlip {
-    0%, 100% { transform: scaleX(1); }
-    50% { transform: scaleX(-1); }
-  }
-
-  /* Spinning name */
-  .stage-name-mono {
-    font-family: 'VT323', monospace;
-    font-size: clamp(32px, 8vw, 52px);
-    color: var(--cyan);
-    text-shadow: 0 0 12px currentColor, 0 0 24px currentColor;
-    letter-spacing: 0.05em;
-    line-height: 1.1;
-    word-break: break-all;
-    text-transform: uppercase;
-  }
-  .stage-cabinet.spinning .stage-name-mono { animation: jitter 0.05s linear infinite; }
-  @keyframes jitter {
-    0% { transform: translate(0, 0); }
-    25% { transform: translate(-1px, 1px); }
-    50% { transform: translate(1px, -1px); }
-    75% { transform: translate(-1px, -1px); }
-    100% { transform: translate(0, 0); }
-  }
-
-  /* Winner reveal */
-  .stage-name-final {
-    font-family: 'Press Start 2P', monospace;
-    font-size: clamp(22px, 6vw, 40px);
-    color: var(--cyan);
-    line-height: 1.15;
-    letter-spacing: 0.05em;
-    word-break: break-word;
-    animation: chromaSplit 1.4s ease-out forwards, winnerPop 0.5s ease-out;
-    text-transform: uppercase;
-    position: relative;
-  }
-  @keyframes winnerPop {
-    0% { opacity: 0; transform: scale(0.4); }
-    60% { opacity: 1; transform: scale(1.12); }
-    100% { transform: scale(1); }
-  }
-  @keyframes chromaSplit {
-    0% {
-      text-shadow:
-        -5px 0 0 var(--red),
-        5px 0 0 var(--green),
-        0 0 28px var(--cyan);
-    }
-    40% {
-      text-shadow:
-        -3px 0 0 var(--red),
-        3px 0 0 var(--green),
-        0 0 22px var(--cyan);
-    }
-    100% {
-      text-shadow:
-        0 0 16px var(--cyan),
-        0 0 32px rgba(92, 245, 255, 0.5);
-    }
-  }
-  .stage-eyebrow {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 12px;
-    color: var(--yellow);
-    text-shadow: 0 0 8px currentColor, 0 0 4px currentColor;
+    font-size: 8px;
+    color: var(--gold);
     letter-spacing: 0.15em;
-    margin-bottom: 18px;
-    animation: blink 0.5s step-end infinite;
+    text-transform: uppercase;
+    text-shadow: 0 0 4px currentColor;
+    box-shadow: inset 0 0 0 1px var(--gold), inset 0 2px 4px rgba(0,0,0,0.5);
   }
-  .stage-stripes {
-    display: flex;
-    justify-content: center;
-    gap: 0;
-    margin-top: 18px;
-    height: 6px;
-    opacity: 0;
-    animation: stripeIn 0.5s 0.4s ease-out forwards;
-  }
-  @keyframes stripeIn {
-    0% { opacity: 0; transform: scaleX(0); }
-    100% { opacity: 1; transform: scaleX(1); }
-  }
-  .stage-stripes div { flex: 1; max-width: 50px; }
-  .stage-stripes div:nth-child(1) { background: var(--red); box-shadow: 0 0 6px var(--red); }
-  .stage-stripes div:nth-child(2) { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
-  .stage-stripes div:nth-child(3) { background: var(--green); box-shadow: 0 0 6px var(--green); }
-
-  .stage-cabinet.win .stage-wrap { border-color: var(--cyan); background: rgba(10, 61, 68, 0.4); box-shadow: 0 0 28px rgba(92, 245, 255, 0.25), 0 5px 0 0 var(--cyan-d); }
-  .stage-cabinet.win .stage { border-color: var(--cyan-d); animation: winFlash 0.4s ease-out; }
-  .stage-cabinet.win .stage-titlebar { color: var(--cyan); }
-  @keyframes winFlash {
-    0% { background: var(--paper); }
-    18% { background: var(--paper); }
-    100% { background: radial-gradient(ellipse at center, #04080a 0%, #000 100%); }
+  .sm-coin-slot .slit {
+    display: inline-block;
+    width: 30px;
+    height: 3px;
+    background: #000;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.9);
+    margin: 0 6px;
+    vertical-align: middle;
   }
 
-  /* Confetti pixels */
+  /* ─────────── LEVER (right side) ─────────── */
+  .sm-lever-mount {
+    position: absolute;
+    right: -28px;
+    top: 80px;
+    width: 56px;
+    height: 200px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .sm-lever {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    width: 16px;
+    transform-origin: 50% 100%;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: translateX(-50%) rotate(0deg);
+  }
+  .sm-lever.pulled {
+    transform: translateX(-50%) rotate(55deg);
+    transition: transform 0.15s ease-in;
+  }
+  .sm-lever-pole {
+    width: 8px;
+    height: 130px;
+    margin: 0 auto;
+    background: linear-gradient(90deg, #555 0%, #aaa 30%, #ddd 50%, #aaa 70%, #555 100%);
+    border-radius: 4px;
+    box-shadow: inset 0 0 1px rgba(0,0,0,0.8), 0 2px 4px rgba(0,0,0,0.5);
+  }
+  .sm-lever-ball {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--gold-hi) 0%, var(--gold) 30%, var(--gold-d) 70%, var(--gold-dd) 100%);
+    box-shadow:
+      inset 0 -2px 4px rgba(0,0,0,0.5),
+      inset 2px 2px 4px var(--gold-hi),
+      0 0 12px rgba(255, 213, 74, 0.6),
+      0 4px 8px rgba(0,0,0,0.6);
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .sm-lever-base {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 14px;
+    background: linear-gradient(180deg, #555 0%, #222 100%);
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  }
+  .sm-lever-base::before {
+    content: '';
+    position: absolute;
+    top: 2px; left: 4px; right: 4px;
+    height: 2px;
+    background: #888;
+    border-radius: 1px;
+  }
+
+  /* ─────────── Main SPIN button ─────────── */
+  .spin-btn-wrap {
+    margin: 0 0 18px;
+    position: relative;
+  }
+  .btn.spin-huge {
+    padding: 24px;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    background: var(--cherry);
+    color: var(--gold-hi);
+    border: 4px solid var(--gold);
+    box-shadow:
+      0 7px 0 0 var(--cherry-d),
+      0 0 0 3px var(--cherry-dd) inset,
+      0 0 0 6px var(--gold) inset,
+      0 0 28px rgba(255, 46, 92, 0.5);
+    text-shadow: 0 0 6px var(--gold);
+  }
+  .btn.spin-huge:hover:not(:disabled) {
+    background: var(--gold);
+    color: var(--cherry-dd);
+    border-color: var(--cherry);
+    box-shadow:
+      0 7px 0 0 var(--gold-dd),
+      0 0 0 3px var(--gold-d) inset,
+      0 0 0 6px var(--cherry) inset,
+      0 0 28px rgba(255, 213, 74, 0.7);
+    text-shadow: 0 0 6px var(--cherry);
+  }
+  .btn.spin-huge:active:not(:disabled),
+  .btn.spin-huge.active {
+    transform: translateY(6px);
+    box-shadow:
+      0 1px 0 0 var(--cherry-d),
+      0 0 0 3px var(--cherry-dd) inset,
+      0 0 0 6px var(--gold) inset;
+  }
+  .btn.spin-huge:disabled {
+    background: var(--cherry-d);
+    border-color: var(--gold-dd);
+    color: var(--paper-faint);
+    box-shadow:
+      0 7px 0 0 var(--cherry-dd),
+      0 0 0 3px var(--cherry-dd) inset,
+      0 0 0 6px var(--gold-dd) inset;
+    text-shadow: none;
+  }
+
+  /* Confetti */
   .confetti {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    overflow: hidden;
-    z-index: 6;
+    overflow: visible;
+    z-index: 50;
   }
   .confetti i {
     position: absolute;
-    width: 6px;
-    height: 6px;
     top: 50%;
     left: 50%;
-    box-shadow: 0 0 4px currentColor;
-    animation: confettiBurst 1.5s ease-out forwards;
   }
 
-  /* ─────────── Status messages ─────────── */
+  /* Status messages */
   .status {
     padding: 10px 12px;
     margin-top: 12px;
     border-left: 4px solid;
     font-family: 'VT323', monospace;
     font-size: 18px;
-    background: var(--bg-2);
+    background: var(--velvet-d);
     line-height: 1.3;
   }
   .status::before {
@@ -1134,142 +1277,119 @@
   .status.success { border-color: var(--green); color: var(--green); text-shadow: 0 0 4px currentColor; }
   .status.info { border-color: var(--cyan); color: var(--cyan); text-shadow: 0 0 4px currentColor; }
 
-  /* ─────────── Footer ─────────── */
+  /* Footer */
   footer {
-    margin-top: 32px;
+    margin-top: 28px;
     padding-top: 16px;
-    border-top: 2px dashed var(--green-d);
+    border-top: 2px dashed var(--gold-dd);
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-family: 'Press Start 2P', monospace;
     font-size: 8px;
-    color: var(--green-d);
+    color: var(--gold-dd);
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
   footer .credits { color: var(--paper-faint); }
-  footer .v { color: var(--green); text-shadow: 0 0 4px currentColor; }
+  footer .v { color: var(--gold); text-shadow: 0 0 4px currentColor; }
 
-  /* ─────────── Helpers ─────────── */
   .hidden { display: none !important; }
+
+  /* Sound toggle */
+  .sound-toggle {
+    background: transparent;
+    border: 1px solid var(--gold-dd);
+    color: var(--gold);
+    padding: 4px 8px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    cursor: pointer;
+    text-shadow: 0 0 4px currentColor;
+  }
+  .sound-toggle:hover { border-color: var(--gold); background: rgba(255, 213, 74, 0.1); }
+  .sound-toggle.muted { color: var(--paper-faint); border-color: var(--paper-faint); text-shadow: none; }
 
   /* ─────────── Mobile ─────────── */
   @media (max-width: 600px) {
     .cabinet { margin: 8px; border-width: 3px; }
-    .cabinet-inner { padding: 16px 14px 22px; }
-    .cstripe { margin-left: -14px; margin-right: -14px; }
+    .cabinet-inner { padding: 16px 12px 22px; }
     .stats { grid-template-columns: 1fr; }
-    .stage { padding: 32px 12px; min-height: 180px; }
     h1.title { font-size: clamp(22px, 8.5vw, 40px); }
     .topbar { font-size: 7px; }
     .panel { padding: 14px; }
     .user-strip .uname { font-size: 11px; }
-    .stat-num { font-size: 22px; }
-    .stage-name-final { font-size: clamp(18px, 6vw, 30px); }
     ol.steps > li { font-size: 17px; }
     input[type="text"] { font-size: 18px; }
     .lead { font-size: 17px; }
     .toggle .label-text { font-size: 17px; }
-    .hero-row { flex-direction: column; gap: 12px; }
-    .hero-text { text-align: center; }
-    .hero-mascot { width: 72px; }
-    .stage-side { display: none; }
-    .btn.huge { font-size: 18px; padding: 20px; }
-    .corner-bracket { width: 18px; height: 18px; }
-    .sec-h .icon { width: 24px; height: 24px; }
-    .sec-h .label { font-size: 10px; }
+    .hero-row { gap: 12px; }
+    .btn.spin-huge { font-size: 18px; padding: 20px; }
+    .sm-jackpot-title { font-size: 12px; }
+    .symbol { font-size: 28px; }
+    .symbol.bar { font-size: 14px; }
+    .reel { height: 64px; }
+    .symbol { height: 64px; }
+    @keyframes reelSpin {
+      from { transform: translateY(0); }
+      to { transform: translateY(-64px); }
+    }
+    .sm-counter-val { font-size: 16px; }
+    .sm-counter-lbl { font-size: 6px; }
+    .sm-lever-mount { right: -18px; width: 36px; }
+    .sm-lever-pole { height: 100px; width: 6px; }
+    .sm-lever-ball { width: 22px; height: 22px; top: -10px; }
+    .sm-lever-base { width: 28px; height: 12px; }
   }
 </style>
 </head>
 <body>
 
-<!-- Animated chart background -->
-<div class="bg-chart"></div>
+<div class="stars"></div>
 
 <div class="cabinet">
 <div class="cabinet-inner">
 
-  <!-- Decorative corner brackets -->
-  <div class="corner-bracket tl">
-    <svg viewBox="0 0 28 28"><path fill="#56ff5e" d="M0 0h22v3H3v19H0z M5 5h14v3H8v11H5z"/></svg>
-  </div>
-  <div class="corner-bracket tr">
-    <svg viewBox="0 0 28 28"><path fill="#56ff5e" d="M0 0h22v3H3v19H0z M5 5h14v3H8v11H5z"/></svg>
-  </div>
-  <div class="corner-bracket bl">
-    <svg viewBox="0 0 28 28"><path fill="#56ff5e" d="M0 0h22v3H3v19H0z M5 5h14v3H8v11H5z"/></svg>
-  </div>
-  <div class="corner-bracket br">
-    <svg viewBox="0 0 28 28"><path fill="#56ff5e" d="M0 0h22v3H3v19H0z M5 5h14v3H8v11H5z"/></svg>
-  </div>
+  <!-- Corner ornaments -->
+  <svg class="corner-orn tl" viewBox="0 0 34 34" shape-rendering="crispEdges">
+    <path fill="#ffd54a" d="M0 0h26v3H3v23H0z"/>
+    <path fill="#b8941f" d="M5 5h17v3H8v14H5z"/>
+    <path fill="#ffd54a" d="M10 10h2v2h-2zM14 10h2v2h-2zM10 14h2v2h-2z"/>
+  </svg>
+  <svg class="corner-orn tr" viewBox="0 0 34 34" shape-rendering="crispEdges">
+    <path fill="#ffd54a" d="M0 0h26v3H3v23H0z"/>
+    <path fill="#b8941f" d="M5 5h17v3H8v14H5z"/>
+    <path fill="#ffd54a" d="M10 10h2v2h-2zM14 10h2v2h-2zM10 14h2v2h-2z"/>
+  </svg>
+  <svg class="corner-orn bl" viewBox="0 0 34 34" shape-rendering="crispEdges">
+    <path fill="#ffd54a" d="M0 0h26v3H3v23H0z"/>
+    <path fill="#b8941f" d="M5 5h17v3H8v14H5z"/>
+    <path fill="#ffd54a" d="M10 10h2v2h-2zM14 10h2v2h-2zM10 14h2v2h-2z"/>
+  </svg>
+  <svg class="corner-orn br" viewBox="0 0 34 34" shape-rendering="crispEdges">
+    <path fill="#ffd54a" d="M0 0h26v3H3v23H0z"/>
+    <path fill="#b8941f" d="M5 5h17v3H8v14H5z"/>
+    <path fill="#ffd54a" d="M10 10h2v2h-2zM14 10h2v2h-2zM10 14h2v2h-2z"/>
+  </svg>
 
-  <!-- Status bar -->
+  <!-- Top status bar -->
   <div class="topbar">
     <div class="topbar-left">
       <div class="led-cluster"><div class="led"></div><div class="led r"></div><div class="led y"></div></div>
       <span>VIP-ROULETTE v.1</span>
     </div>
     <div class="topbar-right">
+      <button class="sound-toggle" id="soundToggle" onclick="toggleSound()" title="Sound">♪ SFX</button>
       <span id="sessionStatus">SYSTEM IDLE</span><span class="blink">_</span>
     </div>
   </div>
 
-  <!-- Marquee with mascot + title -->
+  <!-- Marquee -->
   <div class="marquee">
     <div class="hero-row">
-      <!-- Pixel-art slot machine mascot -->
-      <svg class="hero-mascot" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-        <!-- Antenna -->
-        <rect x="30" y="0" width="4" height="4" fill="#ffe14a"/>
-        <rect x="31" y="4" width="2" height="6" fill="#666"/>
-        <!-- Top dome -->
-        <rect x="22" y="10" width="20" height="2" fill="#ff8888"/>
-        <rect x="20" y="12" width="24" height="4" fill="#ff4d4d"/>
-        <rect x="16" y="16" width="32" height="4" fill="#ff4d4d"/>
-        <rect x="12" y="20" width="40" height="2" fill="#ff4d4d"/>
-        <rect x="14" y="14" width="3" height="2" fill="#ffaaaa"/>
-        <!-- Body shell -->
-        <rect x="10" y="22" width="44" height="42" fill="#5cf5ff"/>
-        <rect x="10" y="22" width="44" height="2" fill="#9fffff"/>
-        <rect x="10" y="62" width="44" height="2" fill="#0a3d44"/>
-        <rect x="50" y="22" width="4" height="42" fill="#0a3d44"/>
-        <!-- Display -->
-        <rect x="14" y="28" width="32" height="18" fill="#000"/>
-        <rect x="14" y="28" width="32" height="2" fill="#0a3d44"/>
-        <!-- Reels -->
-        <rect x="16" y="32" width="8" height="10" fill="#56ff5e"/>
-        <rect x="20" y="35" width="2" height="4" fill="#0c4413"/>
-        <rect x="18" y="34" width="2" height="2" fill="#9fff9f"/>
-        <rect x="26" y="32" width="8" height="10" fill="#ffe14a"/>
-        <rect x="30" y="35" width="2" height="4" fill="#443d0a"/>
-        <rect x="28" y="34" width="2" height="2" fill="#fff8aa"/>
-        <rect x="36" y="32" width="8" height="10" fill="#ff4d4d"/>
-        <rect x="40" y="35" width="2" height="4" fill="#4d0a0a"/>
-        <rect x="38" y="34" width="2" height="2" fill="#ff9999"/>
-        <!-- Coin slot -->
-        <rect x="22" y="50" width="14" height="2" fill="#000"/>
-        <!-- Buttons -->
-        <rect x="14" y="55" width="6" height="5" fill="#ff4d4d"/>
-        <rect x="22" y="55" width="6" height="5" fill="#ffe14a"/>
-        <rect x="30" y="55" width="6" height="5" fill="#56ff5e"/>
-        <rect x="38" y="55" width="6" height="5" fill="#5c9cff"/>
-        <!-- Lever -->
-        <rect x="56" y="38" width="2" height="14" fill="#888"/>
-        <rect x="54" y="34" width="6" height="6" fill="#ffe14a"/>
-        <rect x="55" y="34" width="2" height="2" fill="#fff8aa"/>
-        <!-- Base -->
-        <rect x="6" y="64" width="52" height="4" fill="#444"/>
-        <rect x="2" y="68" width="60" height="4" fill="#222"/>
-        <rect x="0" y="72" width="64" height="2" fill="#000"/>
-        <!-- Sparkles -->
-        <rect x="2" y="14" width="2" height="2" fill="#ffe14a"/>
-        <rect x="60" y="6" width="2" height="2" fill="#5cf5ff"/>
-        <rect x="58" y="22" width="2" height="2" fill="#56ff5e"/>
-      </svg>
       <div class="hero-text">
-        <h1 class="title" data-text="VIP ROULETTE">VIP<br>ROULETTE</h1>
-        <div class="tagline"><span class="arrow">&gt;</span> <span class="b">TWITCH</span> chat giveaway machine <span class="arrow">&lt;</span></div>
+        <h1 class="title">VIP<br>ROULETTE</h1>
+        <div class="tagline"><span class="arrow">&gt;</span> <span class="b">TWITCH</span> chat slot machine <span class="arrow">&lt;</span></div>
       </div>
     </div>
     <div class="marquee-bulbs">
@@ -1277,21 +1397,16 @@
     </div>
   </div>
 
-  <div class="cstripe"></div>
-
   <!-- ═════════ SETUP ═════════ -->
   <div id="setup" class="hidden">
 
     <div class="sec-h green">
-      <!-- Lock icon -->
-      <svg class="icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+      <svg class="icon" viewBox="0 0 32 32" shape-rendering="crispEdges">
         <rect x="10" y="6" width="12" height="2" fill="#56ff5e"/>
         <rect x="8" y="8" width="2" height="6" fill="#56ff5e"/>
         <rect x="22" y="8" width="2" height="6" fill="#56ff5e"/>
         <rect x="6" y="14" width="20" height="14" fill="#56ff5e"/>
-        <rect x="6" y="14" width="20" height="2" fill="#9fff9f"/>
         <rect x="14" y="18" width="4" height="6" fill="#0c4413"/>
-        <rect x="15" y="20" width="2" height="2" fill="#56ff5e"/>
       </svg>
       <span class="num">01</span>
       <span class="label">AUTH</span>
@@ -1307,13 +1422,13 @@
       <ol class="steps">
         <li>Открой <a href="https://dev.twitch.tv/console/apps/create" target="_blank" rel="noopener">dev.twitch.tv/console/apps/create</a></li>
         <li>Name → любой (например <code class="kbd">vip-roulette</code>). Category → <code class="kbd">Website Integration</code></li>
-        <li>В поле <span style="color:var(--yellow); text-shadow:0 0 4px var(--yellow);">OAuth Redirect URLs</span> вставь:
+        <li>В поле <span style="color:var(--gold); text-shadow:0 0 4px var(--gold);">OAuth Redirect URLs</span> вставь:
           <div class="copy-row">
             <input id="redirectURI" type="text" readonly>
             <button class="copy-btn" onclick="copyRedirect(this)">COPY</button>
           </div>
         </li>
-        <li>Сохрани и скопируй <span style="color:var(--yellow); text-shadow:0 0 4px var(--yellow);">Client ID</span> ↓</li>
+        <li>Сохрани и скопируй <span style="color:var(--gold); text-shadow:0 0 4px var(--gold);">Client ID</span> ↓</li>
       </ol>
 
       <div class="field" style="margin-top:18px;">
@@ -1347,8 +1462,7 @@
 
     <!-- CHANNEL -->
     <div class="sec-h">
-      <!-- Target icon -->
-      <svg class="icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+      <svg class="icon" viewBox="0 0 32 32" shape-rendering="crispEdges">
         <rect x="10" y="4" width="12" height="2" fill="#5cf5ff"/>
         <rect x="6" y="6" width="4" height="2" fill="#5cf5ff"/>
         <rect x="22" y="6" width="4" height="2" fill="#5cf5ff"/>
@@ -1362,10 +1476,6 @@
         <rect x="22" y="24" width="4" height="2" fill="#5cf5ff"/>
         <rect x="10" y="26" width="12" height="2" fill="#5cf5ff"/>
         <rect x="14" y="14" width="4" height="4" fill="#ff4d4d"/>
-        <rect x="12" y="12" width="2" height="2" fill="#5cf5ff"/>
-        <rect x="18" y="12" width="2" height="2" fill="#5cf5ff"/>
-        <rect x="12" y="18" width="2" height="2" fill="#5cf5ff"/>
-        <rect x="18" y="18" width="2" height="2" fill="#5cf5ff"/>
       </svg>
       <span class="num">02</span>
       <span class="label">TARGET</span>
@@ -1405,82 +1515,112 @@
       </div>
     </div>
 
-    <button class="btn green" id="loadBtn" onclick="loadChatters()" style="margin-bottom: 18px;">
+    <button class="btn green" id="loadBtn" onclick="loadChatters()" style="margin-bottom: 20px;">
       <span>↻ LOAD CHAT</span>
       <span class="arrow">»</span>
     </button>
     <div id="loadStatus"></div>
 
-    <div class="cstripe thin"></div>
-
-    <!-- ROULETTE -->
-    <div class="sec-h red">
-      <!-- Slot icon -->
-      <svg class="icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-        <rect x="6" y="4" width="20" height="2" fill="#ff4d4d"/>
-        <rect x="4" y="6" width="24" height="20" fill="#ff4d4d"/>
-        <rect x="4" y="6" width="24" height="2" fill="#ff8888"/>
+    <!-- ═════ THE SLOT MACHINE ═════ -->
+    <div class="sec-h gold">
+      <svg class="icon" viewBox="0 0 32 32" shape-rendering="crispEdges">
+        <rect x="6" y="4" width="20" height="2" fill="#ffd54a"/>
+        <rect x="4" y="6" width="24" height="20" fill="#ffd54a"/>
         <rect x="6" y="10" width="20" height="10" fill="#000"/>
-        <rect x="8" y="12" width="4" height="6" fill="#56ff5e"/>
-        <rect x="14" y="12" width="4" height="6" fill="#ffe14a"/>
+        <rect x="8" y="12" width="4" height="6" fill="#ff2e5c"/>
+        <rect x="14" y="12" width="4" height="6" fill="#ffd54a"/>
         <rect x="20" y="12" width="4" height="6" fill="#5cf5ff"/>
-        <rect x="6" y="22" width="6" height="2" fill="#ffe14a"/>
-        <rect x="14" y="22" width="4" height="2" fill="#56ff5e"/>
+        <rect x="6" y="22" width="6" height="2" fill="#ff2e5c"/>
+        <rect x="14" y="22" width="4" height="2" fill="#ffd54a"/>
         <rect x="20" y="22" width="6" height="2" fill="#5cf5ff"/>
-        <rect x="4" y="26" width="24" height="2" fill="#222"/>
+        <rect x="4" y="26" width="24" height="2" fill="#5a4810"/>
       </svg>
       <span class="num">03</span>
-      <span class="label">ROULETTE</span>
+      <span class="label">SLOT MACHINE</span>
       <span class="line"></span>
     </div>
 
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-label">▸ IN CHAT</div>
-        <div class="stat-num" id="statTotal">000</div>
-      </div>
-      <div class="stat cyan">
-        <div class="stat-label">▸ ELIGIBLE</div>
-        <div class="stat-num" id="statEligible">000</div>
-      </div>
-    </div>
+    <!-- The Slot Machine itself -->
+    <div class="slot-machine idle" id="slotMachine">
 
-    <div class="stage-cabinet" id="stageCabinet">
-      <div class="stage-side left">
-        <div class="led-big"></div>
-        <div class="led-big"></div>
-        <div class="led-big"></div>
-        <div class="led-big"></div>
-        <div class="led-big"></div>
-      </div>
-      <div class="stage-side right">
-        <div class="led-big"></div>
-        <div class="led-big"></div>
-        <div class="led-big"></div>
-        <div class="led-big"></div>
-        <div class="led-big"></div>
+      <!-- Top bulbs -->
+      <div class="sm-bulbs-top">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
       </div>
 
-      <div class="stage-wrap">
-        <div class="stage-titlebar">
-          <span>◆ MAIN DISPLAY</span>
-          <span class="live" id="stageLive">STANDBY</span>
-        </div>
-        <div class="stage" id="stage">
-          <div class="stage-content" id="stageContent">
-            <div class="stage-idle">
+      <!-- Jackpot marquee -->
+      <div class="sm-jackpot">
+        <span class="sm-jackpot-title">
+          <span class="sm-jackpot-stars">★</span>VIP JACKPOT<span class="sm-jackpot-stars">★</span>
+        </span>
+      </div>
+
+      <!-- Body: display + reels + counters -->
+      <div class="sm-body">
+
+        <!-- Main name display -->
+        <div class="sm-display">
+          <div class="sm-display-content" id="stageContent">
+            <div class="sm-display-idle">
               ◆ AWAITING<br>SIGNAL ◆
               <span class="small">load chat to begin</span>
             </div>
           </div>
           <div class="confetti" id="confetti"></div>
         </div>
+
+        <!-- Three reels -->
+        <div class="sm-reels-row">
+          <div class="reel" id="reel1">
+            <div class="reel-strip" id="reelStrip1"></div>
+          </div>
+          <div class="reel" id="reel2">
+            <div class="reel-strip" id="reelStrip2"></div>
+          </div>
+          <div class="reel" id="reel3">
+            <div class="reel-strip" id="reelStrip3"></div>
+          </div>
+        </div>
+
+        <!-- Counters -->
+        <div class="sm-counters">
+          <div class="sm-counter">
+            <div class="sm-counter-lbl">▸ CREDITS</div>
+            <div class="sm-counter-val" id="statTotal">000</div>
+          </div>
+          <div class="sm-counter cyan">
+            <div class="sm-counter-lbl">▸ ELIGIBLE</div>
+            <div class="sm-counter-val" id="statEligible">000</div>
+          </div>
+        </div>
+
+        <!-- Coin slot decoration -->
+        <div class="sm-coin-slot">
+          ▼ <span class="slit"></span> INSERT <span class="slit"></span> ▼
+        </div>
+
       </div>
+
+      <!-- Bottom bulbs -->
+      <div class="sm-bulbs-bot">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <!-- Lever on the right -->
+      <div class="sm-lever-mount">
+        <div class="sm-lever-base"></div>
+        <div class="sm-lever" id="lever">
+          <div class="sm-lever-ball"></div>
+          <div class="sm-lever-pole"></div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="spin-wrap">
-      <button class="btn huge" id="rollBtn" onclick="roll()" disabled>
-        ▶ &nbsp;SPIN!&nbsp; ◀
+    <!-- SPIN button -->
+    <div class="spin-btn-wrap">
+      <button class="btn spin-huge" id="rollBtn" onclick="roll()" disabled>
+        ▶ &nbsp;PULL THE LEVER!&nbsp; ◀
       </button>
     </div>
 
@@ -1488,14 +1628,13 @@
   </div>
 
   <footer>
-    <span class="credits">TWITCH HELIX · CLIENT-SIDE</span>
+    <span class="credits">TWITCH HELIX · CLIENT-SIDE · NO COINS NEEDED</span>
     <span class="v" id="footerYear">2026</span>
   </footer>
 
 </div>
 </div>
 
-<!-- Confetti animation keyframes (dynamic) -->
 <style id="confettiKeyframes"></style>
 
 <script>
@@ -1520,10 +1659,147 @@ const state = {
   eligible: [],
   winners: new Set(),
   spinning: false,
+  soundOn: true,
 };
 
+// ═══════════ SOUND (Web Audio API) ═══════════
+let audioCtx = null;
+function ensureAudio() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    catch (e) { return null; }
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+function beep(freq, dur, type, vol) {
+  if (!state.soundOn) return;
+  const ctx = ensureAudio();
+  if (!ctx) return;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = type || 'square';
+  osc.frequency.value = freq;
+  gain.gain.value = 0;
+  osc.connect(gain).connect(ctx.destination);
+  const t = ctx.currentTime;
+  const v = vol || 0.15;
+  gain.gain.setValueAtTime(0, t);
+  gain.gain.linearRampToValueAtTime(v, t + 0.005);
+  gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+  osc.start(t);
+  osc.stop(t + dur);
+}
+function sndClick() { beep(720, 0.05, 'square', 0.1); }
+function sndReelTick() { beep(180, 0.025, 'square', 0.05); }
+function sndReelStop() { beep(280, 0.08, 'square', 0.18); setTimeout(() => beep(140, 0.1, 'square', 0.12), 30); }
+function sndJackpot() {
+  if (!state.soundOn) return;
+  const notes = [523, 659, 784, 1047, 1319, 1568];
+  notes.forEach((f, i) => setTimeout(() => beep(f, 0.15, 'square', 0.18), i * 80));
+}
+function sndCoin() {
+  beep(880, 0.05, 'square', 0.12);
+  setTimeout(() => beep(1320, 0.08, 'square', 0.1), 40);
+}
+function sndLever() {
+  beep(220, 0.1, 'sawtooth', 0.1);
+  setTimeout(() => beep(120, 0.1, 'sawtooth', 0.08), 80);
+}
+
+function toggleSound() {
+  state.soundOn = !state.soundOn;
+  const btn = document.getElementById('soundToggle');
+  if (state.soundOn) {
+    btn.textContent = '♪ SFX';
+    btn.classList.remove('muted');
+    sndClick();
+  } else {
+    btn.textContent = '✕ SFX';
+    btn.classList.add('muted');
+  }
+}
+
+// ═══════════ REELS ═══════════
+const SYMBOLS = [
+  { c: 's7', t: '7' },
+  { c: 'star', t: '★' },
+  { c: 'diamond', t: '◆' },
+  { c: 'bar', t: 'BAR' },
+  { c: 'cherry', t: '♥' },
+  { c: 'bell', t: '⌂' },
+];
+
+function buildReelStrip(reelNum) {
+  // Build a long strip: 24 random symbols, then "777" jackpot at the end (so we can land on 7-7-7)
+  const strip = document.getElementById('reelStrip' + reelNum);
+  let html = '';
+  // 30 random symbols
+  for (let i = 0; i < 30; i++) {
+    const s = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+    html += '<div class="symbol ' + s.c + '">' + s.t + '</div>';
+  }
+  // Final 7 (jackpot)
+  html += '<div class="symbol s7">7</div>';
+  // Tail (so transition to last 7 looks natural)
+  for (let i = 0; i < 3; i++) {
+    const s = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+    html += '<div class="symbol ' + s.c + '">' + s.t + '</div>';
+  }
+  strip.innerHTML = html;
+  // Reset position
+  strip.style.transform = 'translateY(0)';
+}
+
+function startReels() {
+  for (let i = 1; i <= 3; i++) {
+    buildReelStrip(i);
+    const reel = document.getElementById('reel' + i);
+    reel.classList.remove('jackpot');
+    // Slightly vary speed per reel
+    const strip = document.getElementById('reelStrip' + i);
+    strip.style.animation = 'reelSpin ' + (0.14 + i * 0.02) + 's linear infinite';
+    reel.classList.add('spinning');
+  }
+}
+
+function stopReel(num, callback) {
+  const reel = document.getElementById('reel' + num);
+  const strip = document.getElementById('reelStrip' + num);
+  reel.classList.remove('spinning');
+  strip.style.animation = '';
+  // Land on the "7" (which is at index 30, so translateY = -30 * 72)
+  const symbolH = window.innerWidth <= 600 ? 64 : 72;
+  // We want the "7" to be in the center of the visible window (the payline).
+  // Reel viewport is 1 symbol high, "7" is at index 30.
+  // To show index 30 in middle, we translate so symbol 30 sits where the payline is.
+  // Since reel height = 72px showing 1 symbol, translate -30*72 brings symbol 30 to top.
+  strip.style.transform = 'translateY(-' + (30 * symbolH) + 'px)';
+  reel.classList.add('jackpot');
+  sndReelStop();
+  if (callback) setTimeout(callback, 100);
+}
+
+// ═══════════ INIT ═══════════
 document.getElementById('redirectURI').value = window.location.origin + window.location.pathname;
 document.getElementById('footerYear').textContent = 'v.' + new Date().getFullYear();
+
+// Build reels initially with random symbols visible
+function showRandomReels() {
+  for (let i = 1; i <= 3; i++) {
+    const strip = document.getElementById('reelStrip' + i);
+    const s1 = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+    const s2 = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+    const s3 = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+    strip.innerHTML =
+      '<div class="symbol ' + s1.c + '">' + s1.t + '</div>' +
+      '<div class="symbol ' + s2.c + '">' + s2.t + '</div>' +
+      '<div class="symbol ' + s3.c + '">' + s3.t + '</div>';
+    strip.style.transform = 'translateY(0)';
+    document.getElementById('reel' + i).classList.remove('jackpot', 'spinning');
+  }
+}
+showRandomReels();
 
 function showSetup() {
   document.getElementById('setup').classList.remove('hidden');
@@ -1536,11 +1812,6 @@ function showMain() {
   setSession('CONNECTED');
 }
 function setSession(s) { document.getElementById('sessionStatus').textContent = s; }
-function setStageLive(text, cls) {
-  const el = document.getElementById('stageLive');
-  el.textContent = text;
-  el.className = 'live ' + (cls || '');
-}
 
 (function init() {
   const hash = window.location.hash.substring(1);
@@ -1585,6 +1856,7 @@ function startLogin() {
     setStatus('setupStatus', 'error', 'Вставь Client ID из dev.twitch.tv');
     return;
   }
+  sndClick();
   const stateData = btoa(JSON.stringify({ cid: cid, n: Math.random().toString(36).slice(2) }));
   const redirect = window.location.origin + window.location.pathname;
   const url = 'https://id.twitch.tv/oauth2/authorize'
@@ -1673,11 +1945,11 @@ async function loadChatters() {
     setStatus('loadStatus', 'error', 'Укажи логин канала');
     return;
   }
+  sndClick();
   const btn = document.getElementById('loadBtn');
   btn.disabled = true;
   btn.querySelector('span').textContent = 'LOADING...';
   setSession('LOADING');
-  setStageLive('LOADING', 'spinning');
   setStatus('loadStatus', 'info', 'Получаю список чата...');
 
   try {
@@ -1695,7 +1967,7 @@ async function loadChatters() {
       chatters.length + ' в чате · ' + state.eligible.length + ' допущено');
     document.getElementById('rollBtn').disabled = state.eligible.length === 0;
     setSession('READY');
-    setStageLive('READY', '');
+    sndCoin();
     renderStageIdle(true);
   } catch (err) {
     let msg = err.message || 'неизвестная ошибка';
@@ -1704,7 +1976,6 @@ async function loadChatters() {
     }
     setStatus('loadStatus', 'error', 'ERROR: ' + msg);
     setSession('ERROR');
-    setStageLive('ERROR', 'error');
   } finally {
     btn.disabled = false;
     btn.querySelector('span').textContent = '↻ RELOAD CHAT';
@@ -1740,13 +2011,15 @@ function applyFilters() {
 
 function renderStageIdle(ready) {
   const c = document.getElementById('stageContent');
-  const cab = document.getElementById('stageCabinet');
-  cab.classList.remove('spinning','win');
+  const sm = document.getElementById('slotMachine');
+  sm.classList.remove('spinning','win','shaking');
+  sm.classList.add('idle');
   document.getElementById('confetti').innerHTML = '';
+  showRandomReels();
   if (ready) {
-    c.innerHTML = '<div class="coin-anim"></div><div class="stage-idle ready">PRESS START<span class="small">▸ click [ SPIN! ] button below</span></div>';
+    c.innerHTML = '<div class="sm-display-idle ready">PRESS START<span class="small">▸ pull the lever or press [ SPIN ]</span></div>';
   } else {
-    c.innerHTML = '<div class="stage-idle">◆ AWAITING<br>SIGNAL ◆<span class="small">load chat to begin</span></div>';
+    c.innerHTML = '<div class="sm-display-idle">◆ AWAITING<br>SIGNAL ◆<span class="small">load chat to begin</span></div>';
   }
 }
 
@@ -1759,23 +2032,22 @@ function escapeHtml(s) {
 function spawnConfetti() {
   const wrap = document.getElementById('confetti');
   wrap.innerHTML = '';
-  const colors = ['#5cf5ff', '#56ff5e', '#ffe14a', '#ff9b3a', '#ff5cf0', '#ff4d4d'];
-  // Generate keyframes for varied trajectories
+  const colors = ['#5cf5ff', '#56ff5e', '#ffe14a', '#ff9b3a', '#ff5cf0', '#ff2e5c', '#ffd54a'];
   let kf = '';
-  const count = 36;
+  const count = 48;
   for (let i = 0; i < count; i++) {
-    const angle = (i / count) * Math.PI * 2 + Math.random() * 0.6;
-    const dist = 140 + Math.random() * 180;
+    const angle = (i / count) * Math.PI * 2 + Math.random() * 0.5;
+    const dist = 160 + Math.random() * 200;
     const dx = Math.cos(angle) * dist;
-    const dy = Math.sin(angle) * dist + 60; // slight gravity bias
+    const dy = Math.sin(angle) * dist + 80;
     const rot = (Math.random() - 0.5) * 720;
     const c = colors[Math.floor(Math.random() * colors.length)];
-    const sz = 4 + Math.floor(Math.random() * 5);
-    const dur = 1.0 + Math.random() * 0.8;
+    const sz = 4 + Math.floor(Math.random() * 6);
+    const dur = 1.0 + Math.random() * 0.9;
     kf += `@keyframes cf${i} { 0% { transform: translate(-50%,-50%) rotate(0); opacity:1; } 100% { transform: translate(calc(${dx}px - 50%), calc(${dy}px - 50%)) rotate(${rot}deg); opacity:0; } }`;
     const piece = document.createElement('i');
     piece.style.background = c;
-    piece.style.color = c;
+    piece.style.boxShadow = '0 0 6px ' + c;
     piece.style.width = sz + 'px';
     piece.style.height = sz + 'px';
     piece.style.animation = `cf${i} ${dur}s ease-out forwards`;
@@ -1784,55 +2056,85 @@ function spawnConfetti() {
   document.getElementById('confettiKeyframes').textContent = kf;
 }
 
+function pullLever() {
+  const lever = document.getElementById('lever');
+  lever.classList.add('pulled');
+  sndLever();
+  setTimeout(() => lever.classList.remove('pulled'), 400);
+}
+
 function roll() {
   if (state.spinning) return;
   if (state.eligible.length === 0) return;
 
   state.spinning = true;
   document.getElementById('rollBtn').disabled = true;
+  const rollBtn = document.getElementById('rollBtn');
+  rollBtn.classList.add('active');
+  setTimeout(() => rollBtn.classList.remove('active'), 100);
   document.getElementById('winnerActions').innerHTML = '';
   document.getElementById('confetti').innerHTML = '';
 
-  const cabinet = document.getElementById('stageCabinet');
-  const content = document.getElementById('stageContent');
-  cabinet.classList.remove('win');
-  cabinet.classList.add('spinning');
-  setSession('ROLLING');
-  setStageLive('SPINNING', 'spinning');
+  pullLever();
 
+  const sm = document.getElementById('slotMachine');
+  const content = document.getElementById('stageContent');
+  sm.classList.remove('idle','win');
+  sm.classList.add('spinning','shaking');
+  setSession('ROLLING');
+
+  // Pick winner cryptographically
   const idx = secureRandomIndex(state.eligible.length);
   const winner = state.eligible[idx];
 
-  const total = 3000;
+  // Start reels
+  startReels();
+
+  // Reel tick sound during spin (every 80ms)
+  const tickInterval = setInterval(() => {
+    if (!state.spinning) clearInterval(tickInterval);
+    else sndReelTick();
+  }, 80);
+
+  // Stop reels in sequence
+  setTimeout(() => stopReel(1), 1500);
+  setTimeout(() => stopReel(2), 2200);
+  setTimeout(() => {
+    stopReel(3);
+    clearInterval(tickInterval);
+  }, 2900);
+
+  // Spinning name display
+  const nameTotal = 3000;
   const start = performance.now();
   let last = 0;
-  const flickerColors = ['#5cf5ff', '#56ff5e', '#ffe14a', '#ff9b3a', '#ff5cf0'];
+  const flickerColors = ['#5cf5ff', '#56ff5e', '#ffe14a', '#ff9b3a', '#ff5cf0', '#ff2e5c', '#ffd54a'];
   let colorIdx = 0;
 
   function frame(now) {
     const t = now - start;
-    if (t >= total) {
+    if (t >= nameTotal) {
+      // Reveal!
       content.innerHTML =
-        '<div class="stage-eyebrow">★ ★ ★ &nbsp; WINNER &nbsp; ★ ★ ★</div>' +
-        '<div class="stage-name-final">' + escapeHtml(winner.user_name) + '</div>' +
-        '<div class="stage-stripes"><div></div><div></div><div></div></div>';
-      cabinet.classList.remove('spinning');
-      cabinet.classList.add('win');
+        '<div class="sm-eyebrow">★ ★ ★ &nbsp; JACKPOT &nbsp; ★ ★ ★</div>' +
+        '<div class="sm-name-final">' + escapeHtml(winner.user_name) + '</div>';
+      sm.classList.remove('spinning','shaking');
+      sm.classList.add('win');
+      sndJackpot();
       spawnConfetti();
       revealWinnerActions(winner);
       state.spinning = false;
       document.getElementById('rollBtn').disabled = state.eligible.length === 0;
-      setSession('WINNER!');
-      setStageLive('WINNER', 'win');
+      setSession('JACKPOT!');
       return;
     }
-    const progress = t / total;
+    const progress = t / nameTotal;
     const interval = 30 + Math.pow(progress, 2.6) * 460;
     if (now - last >= interval) {
       const r = state.eligible[Math.floor(Math.random() * state.eligible.length)];
       const color = flickerColors[colorIdx % flickerColors.length];
       colorIdx++;
-      content.innerHTML = '<div class="stage-name-mono" style="color:' + color + '">' + escapeHtml(r.user_name) + '</div>';
+      content.innerHTML = '<div class="sm-name-mono" style="color:' + color + '; text-shadow: 0 0 12px ' + color + ', 0 0 24px ' + color + '">' + escapeHtml(r.user_name) + '</div>';
       last = now;
     }
     requestAnimationFrame(frame);
@@ -1855,11 +2157,11 @@ function revealWinnerActions(w) {
   const isOwnChannel = state.broadcaster && state.broadcaster.id === state.user.id;
   const area = document.getElementById('winnerActions');
   area.innerHTML = `
-    <div class="panel yellow" style="margin-top: 16px; animation: winnerPop 0.5s 0.3s both;">
-      <div class="panel-label">[ ★ ACTIONS ]</div>
+    <div class="panel gold" style="margin-top: 14px; animation: winnerPop 0.5s 0.4s both;">
+      <div class="panel-label">[ ★ JACKPOT ACTIONS ]</div>
       <div class="btn-row">
         ${isOwnChannel
-          ? '<button class="btn yellow" onclick="grantVIP(\''+escapeHtml(w.user_id)+'\', \''+escapeHtml(w.user_name)+'\', this)"><span>★ GRANT VIP</span><span class="arrow">»</span></button>'
+          ? '<button class="btn gold" onclick="grantVIP(\''+escapeHtml(w.user_id)+'\', \''+escapeHtml(w.user_name)+'\', this)"><span>★ GRANT VIP</span><span class="arrow">»</span></button>'
           : '<div class="hint" style="text-align:left; flex:1; padding:8px 0; margin:0; font-size:18px;">VIP может выдать только сам стример. Скопируй: <code class="kbd">/vip '+escapeHtml(w.user_login)+'</code></div>'}
         <button class="btn outline" onclick="rerollExcluding('${escapeHtml(w.user_login)}')"><span>↻ RE-ROLL</span><span class="arrow">»</span></button>
       </div>
@@ -1870,11 +2172,13 @@ function revealWinnerActions(w) {
 async function grantVIP(userId, userName, btn) {
   btn.disabled = true;
   btn.querySelector('span').textContent = 'GRANTING...';
+  sndClick();
   try {
     await addVIP(state.broadcaster.id, userId);
     btn.querySelector('span').textContent = '✓ VIP GRANTED!';
     btn.style.background = 'var(--green)';
     btn.style.borderColor = 'var(--green)';
+    sndJackpot();
     setStatus('vipStatus', 'success', userName + ' получил(а) VIP! gg');
   } catch (err) {
     btn.disabled = false;
@@ -1907,6 +2211,7 @@ function setStatus(elId, kind, msg) {
 function copyRedirect(btn) {
   const inp = document.getElementById('redirectURI');
   inp.select();
+  sndClick();
   const done = () => {
     btn.classList.add('copied');
     btn.textContent = 'OK!';
